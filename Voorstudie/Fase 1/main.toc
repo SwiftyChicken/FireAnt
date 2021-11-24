@@ -1,0 +1,4 @@
+\contentsline {chapter}{\numberline {1}Intorductie}{2}{}%
+\contentsline {chapter}{\numberline {2}ADTs}{3}{}%
+\contentsline {chapter}{\numberline {3}Afhankelijkheidsdiagram}{4}{}%
+\contentsline {chapter}{\numberline {4}Planning}{5}{}%
