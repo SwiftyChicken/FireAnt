@@ -3,6 +3,8 @@
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}
 \usepackage{titlesec}
+\usepackage{etoolbox}
+\usepackage{parskip}
 
 \graphicspath{{images/}}
 
@@ -11,7 +13,13 @@
 [hang]
 {\bfseries\huge}
 {\thechapter\quad}
-{0.5ex}{}[]
+{0.2ex}{}[]
+
+\titlespacing{\chapter}{0pc}{1ex minus 5ex}{1pc}
+
+\makeatletter
+\patchcmd{\chapter}{\if@openright\cleardoublepage\else\clearpage\fi}{}{}{}
+\makeatother
 
 \title{{Programmeerproject 1:}\\
 				{FireAnt}\\
@@ -26,6 +34,7 @@
 \maketitle
 
 \tableofcontents
+\newpage
 
 \chapter{Intorductie}
 \input{chapters/1_Introductie}

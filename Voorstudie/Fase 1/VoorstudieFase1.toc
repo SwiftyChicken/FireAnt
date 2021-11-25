@@ -1,6 +1,18 @@
 \contentsline {chapter}{\numberline {1}Intorductie}{2}{}%
 \contentsline {section}{\numberline {1.1}Spelbeschrijving}{2}{}%
 \contentsline {section}{\numberline {1.2}Implementatie}{2}{}%
-\contentsline {chapter}{\numberline {2}ADTs}{4}{}%
-\contentsline {chapter}{\numberline {3}Afhankelijkheidsdiagram}{5}{}%
-\contentsline {chapter}{\numberline {4}Planning}{6}{}%
+\contentsline {chapter}{\numberline {2}ADTs}{3}{}%
+\contentsline {section}{\numberline {2.1}Game ADT}{4}{}%
+\contentsline {section}{\numberline {2.2}Level ADT}{4}{}%
+\contentsline {section}{\numberline {2.3}Positie ADT}{4}{}%
+\contentsline {section}{\numberline {2.4}Item ADT}{4}{}%
+\contentsline {section}{\numberline {2.5}Character ADT}{4}{}%
+\contentsline {section}{\numberline {2.6}View\textunderscore Level ADT}{4}{}%
+\contentsline {section}{\numberline {2.7}Scorpion ADT}{4}{}%
+\contentsline {section}{\numberline {2.8}View\textunderscore Scorpion ADT}{4}{}%
+\contentsline {section}{\numberline {2.9}Ant ADT}{4}{}%
+\contentsline {section}{\numberline {2.10}View\textunderscore Ant ADT}{4}{}%
+\contentsline {section}{\numberline {2.11}Eggs ADT}{4}{}%
+\contentsline {section}{\numberline {2.12}View\textunderscore Eggs ADT}{4}{}%
+\contentsline {chapter}{\numberline {3}Afhankelijkheidsdiagram}{4}{}%
+\contentsline {chapter}{\numberline {4}Planning}{4}{}%
