@@ -1,10 +1,16 @@
 \documentclass[12pt]{report}
 
 \usepackage[utf8]{inputenc}
+\usepackage[dutch]{babel}
 \usepackage{graphicx}
 \usepackage{titlesec}
 \usepackage{etoolbox}
 \usepackage{parskip}
+\usepackage{hyperref}
+\usepackage{amssymb}
+\usepackage[table,xcdraw]{xcolor}
+
+\selectlanguage{dutch}
 
 \graphicspath{{images/}}
 
@@ -15,7 +21,7 @@
 {\thechapter\quad}
 {0.2ex}{}[]
 
-\titlespacing{\chapter}{0pc}{1ex minus 5ex}{1pc}
+\titlespacing{\chapter}{1pc}{1ex minus 5ex}{1pc}
 
 \makeatletter
 \patchcmd{\chapter}{\if@openright\cleardoublepage\else\clearpage\fi}{}{}{}
