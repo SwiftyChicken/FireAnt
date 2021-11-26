@@ -1,5 +1,5 @@
 # Fdb version 3
-["pdflatex"] 1637965766 "VoorstudieFase1.tex" "VoorstudieFase1.pdf" "VoorstudieFase1" 1637965774
+["pdflatex"] 1637967157 "VoorstudieFase1.tex" "VoorstudieFase1.pdf" "VoorstudieFase1" 1637967168
   "/usr/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1617738065 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/share/texmf-dist/fonts/map/fontname/texfonts.map" 1617738065 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texmf-dist/fonts/tfm/jknappen/ec/tcrm1200.tfm" 1617738065 1536 74b7293ec3713bb7fdca8dd1bd1f469c ""
@@ -96,17 +96,17 @@
   "/usr/share/texmf-dist/web2c/texmf.cnf" 1617738065 39911 2da6c67557ec033436fe5418a70a8a61 ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1637539455 356325 82f4faa2e1b7eddc8858c8a475ca1dfb ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1637346689 2812681 dad79515fcd6c8991dcc6c63cac99c73 ""
-  "VoorstudieFase1.aux" 1637965767 7753 e0abf7ce168f12d0bab7eafdb491474c "pdflatex"
-  "VoorstudieFase1.out" 1637965767 2117 698af25343d3df1903c77af7c7a9c907 "pdflatex"
-  "VoorstudieFase1.tex" 1637965769 1047 f9696be4de354c533d5a51c6133a57c6 ""
-  "VoorstudieFase1.toc" 1637965767 1448 91538963c91a334f2a91804b3f5be309 "pdflatex"
+  "VoorstudieFase1.aux" 1637967158 7753 7c9f5405437ee85ad52f874051e06913 "pdflatex"
+  "VoorstudieFase1.out" 1637967158 2122 1281c644c3798f27a45bc2b44925f9b1 "pdflatex"
+  "VoorstudieFase1.tex" 1637967160 1047 f9696be4de354c533d5a51c6133a57c6 ""
+  "VoorstudieFase1.toc" 1637967158 1451 9a10631877f0ead965c519180d224c83 "pdflatex"
   "chapters/1_Introductie.tex" 1637949345 2213 da064c6c642182e7762f0549edb1a7ab ""
-  "chapters/2_ADTs.tex" 1637965766 13143 5a1a915b542e495221f1bdad5db41288 ""
+  "chapters/2_ADTs.tex" 1637967158 13821 e62266c48f2cc2e64dfceafca349770e ""
   "chapters/3_Afhankelijkheidsdiagram.tex" 1637760374 4 ed20d984b757ad5291963389fc209864 ""
   "chapters/4_Planning.tex" 1637760382 4 ed20d984b757ad5291963389fc209864 ""
   (generated)
+  "VoorstudieFase1.pdf"
+  "VoorstudieFase1.out"
+  "VoorstudieFase1.log"
   "VoorstudieFase1.aux"
   "VoorstudieFase1.toc"
-  "VoorstudieFase1.pdf"
-  "VoorstudieFase1.log"
-  "VoorstudieFase1.out"

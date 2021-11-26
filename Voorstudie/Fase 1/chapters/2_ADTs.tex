@@ -67,7 +67,7 @@ Het \texttt{\nameref{section:level}} bevat de volgende operaties:
 	\item \textbf{<??>}: <??>
 \end{itemize}
 
-\section{Positie ADT}
+\section{Position ADT}
 \label{section:positie}
 
 De \texttt{\nameref{section:positie}} dit is een simpel ADT dat de positie in een level voorstelt.
@@ -168,7 +168,9 @@ Het \texttt{\nameref{section:maze}} is verantwoordelijk om het spellogica van he
 \hline
 \rowcolor[HTML]{000000} 
 {\color[HTML]{FFFFFF} \textbf{Naam}} & {\color[HTML]{FFFFFF} \textbf{Signatuur}} \\ \hline
-<++>                                 & (<++> $\rightarrow$ <++>)                                       \\ \hline
+newMaze                              & (string $\rightarrow$ Maze)               \\ \hline
+isValidPosition?                      & (Positie $\rightarrow$ boolean)           \\ \hline
+ <??>                                & (<??> $\rightarrow$ <??>)                 \\ \hline
 \end{tabular}
 \caption{Operaties van het \texttt{\nameref{section:maze}}}
 \label{table:maze}
@@ -177,14 +179,15 @@ Het \texttt{\nameref{section:maze}} is verantwoordelijk om het spellogica van he
 Het \texttt{\nameref{section:maze}} bevat de volgende operaties:
 
 \begin{itemize}
-	\item \textbf{<++>}: <++>
-	\item \textbf{<++>}: <++>
+	\item \textbf{newMaze}: Deze operatie maakt een object van het \texttt{\nameref{section:maze}} aan.
+	\item \textbf{isValidPosition?}: Checkt als deze positie niet bezet is door een muur en dat het een bestaande positie is in het \texttt{\nameref{section:maze}}.
+	\item \textbf{<??>}: <??>
 \end{itemize}
 
 \section{View\textunderscore Maze ADT}
-\label{section:view_level}
+\label{section:view_maze}
 
-<++>
+Het \texttt{\nameref{section:view_maze}} is verantwoordelijk om het \texttt{\nameref{section:maze}} voor te stellen in teken logica gedeelte van het spel.
 
 \begin{table}[hbt]
 \centering
@@ -192,13 +195,14 @@ Het \texttt{\nameref{section:maze}} bevat de volgende operaties:
 \hline
 \rowcolor[HTML]{000000} 
 {\color[HTML]{FFFFFF} \textbf{Naam}} & {\color[HTML]{FFFFFF} \textbf{Signatuur}} \\ \hline
-<++>                                 & (<++> $\rightarrow$ <++>)                                       \\ \hline
+newView\textunderscore Maze                                 & (Maze $\rightarrow$ View\textunderscore Maze)                                       \\ \hline
+ <??>                                & (<??> $\rightarrow$ <??>)                 \\ \hline
 \end{tabular}
-\caption{Operaties van het \texttt{\nameref{section:view_level}}}
-\label{table:view_level}
+\caption{Operaties van het \texttt{\nameref{section:view_maze}}}
+\label{table:view_maze}
 \end{table}
 
-Het \texttt{\nameref{section:view_level}} bevat de volgende operaties:
+Het \texttt{\nameref{section:view_maze}} bevat de volgende operaties:
 
 \begin{itemize}
 	\item \textbf{++}: <++>

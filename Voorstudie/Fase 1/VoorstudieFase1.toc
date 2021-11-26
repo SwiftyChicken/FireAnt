@@ -6,7 +6,7 @@
 \contentsline {chapter}{\numberline {2}ADTs}{3}{chapter.2}%
 \contentsline {section}{\numberline {2.1}Game ADT}{3}{section.2.1}%
 \contentsline {section}{\numberline {2.2}Level ADT}{4}{section.2.2}%
-\contentsline {section}{\numberline {2.3}Positie ADT}{5}{section.2.3}%
+\contentsline {section}{\numberline {2.3}Position ADT}{5}{section.2.3}%
 \contentsline {section}{\numberline {2.4}Item ADT}{5}{section.2.4}%
 \contentsline {section}{\numberline {2.5}Character ADT}{6}{section.2.5}%
 \contentsline {section}{\numberline {2.6}Maze ADT}{6}{section.2.6}%
@@ -17,5 +17,5 @@
 \contentsline {section}{\numberline {2.11}View\textunderscore Ant ADT}{8}{section.2.11}%
 \contentsline {section}{\numberline {2.12}Eggs ADT}{9}{section.2.12}%
 \contentsline {section}{\numberline {2.13}View\textunderscore Eggs ADT}{9}{section.2.13}%
-\contentsline {chapter}{\numberline {3}Afhankelijkheidsdiagram}{9}{chapter.3}%
-\contentsline {chapter}{\numberline {4}Planning}{9}{chapter.4}%
+\contentsline {chapter}{\numberline {3}Afhankelijkheidsdiagram}{10}{chapter.3}%
+\contentsline {chapter}{\numberline {4}Planning}{10}{chapter.4}%

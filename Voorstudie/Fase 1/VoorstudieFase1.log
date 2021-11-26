@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021/Arch Linux) (preloaded format=pdflatex 2021.11.19)  26 NOV 2021 23:29
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021/Arch Linux) (preloaded format=pdflatex 2021.11.19)  26 NOV 2021 23:52
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -308,23 +308,23 @@ Hoofdstuk 2.
 Hoofdstuk 3.
 (./chapters/3_Afhankelijkheidsdiagram.tex)
 Hoofdstuk 4.
-(./chapters/4_Planning.tex) [9] (./VoorstudieFase1.aux)
+(./chapters/4_Planning.tex) [9] [10] (./VoorstudieFase1.aux)
 Package rerunfilecheck Info: File `VoorstudieFase1.out' has not changed.
-(rerunfilecheck)             Checksum: 698AF25343D3DF1903C77AF7C7A9C907;2117.
+(rerunfilecheck)             Checksum: 1281C644C3798F27A45BC2B44925F9B1;2122.
  ) 
 Here is how much of TeX's memory you used:
- 10351 strings out of 478994
- 146506 string characters out of 5864750
+ 10352 strings out of 478994
+ 146511 string characters out of 5864750
  476805 words of memory out of 5000000
  27641 multiletter control sequences out of 15000+600000
  413405 words of font info for 65 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 71i,10n,74p,1204b,393s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 71i,10n,74p,1204b,397s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}</usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmbxti10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb>
-Output written on VoorstudieFase1.pdf (10 pages, 119567 bytes).
+Output written on VoorstudieFase1.pdf (11 pages, 120674 bytes).
 PDF statistics:
- 269 PDF objects out of 1000 (max. 8388607)
- 244 compressed objects within 3 object streams
- 43 named destinations out of 1000 (max. 500000)
+ 277 PDF objects out of 1000 (max. 8388607)
+ 251 compressed objects within 3 object streams
+ 44 named destinations out of 1000 (max. 500000)
  153 words of extra memory for PDF output out of 10000 (max. 10000000)
 
