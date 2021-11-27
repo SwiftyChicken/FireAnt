@@ -9,6 +9,10 @@
 \usepackage{hyperref}
 \usepackage{amssymb}
 \usepackage[table,xcdraw]{xcolor}
+\usepackage{tikz}
+
+\usetikzlibrary{arrows,automata}
+\usetikzlibrary{positioning}
 
 \selectlanguage{dutch}
 
@@ -27,11 +31,23 @@
 \patchcmd{\chapter}{\if@openright\cleardoublepage\else\clearpage\fi}{}{}{}
 \makeatother
 
+
+\tikzset{
+    state/.style={
+           rectangle,
+           rounded corners,
+           draw=black, very thick,
+           minimum height=2em,
+           inner sep=3pt,
+           text centered,
+           },
+}
+
 \title{{Programmeerproject 1:}\\
 				{FireAnt}\\
 				{\large Fase 1}}
 \author{{Erneste Richard Rwema Rugema}\\
-				{(erneste.richard.rwema.rugema@vub.be)}\\
+    {(erneste.richard.rwema.rugema@vub.be)}\\
 			{\leftmark rolnummer: 0580198}}
 \date{Academiejaar 2021-2022}
 
