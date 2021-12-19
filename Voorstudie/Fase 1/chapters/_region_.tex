@@ -1,0 +1,32 @@
+\message{ !name(3_Afhankelijkheidsdiagram.tex)}
+\message{ !name(3_Afhankelijkheidsdiagram.tex) !offset(-2) }
+\begin{center}
+\begin{tikzpicture}[-latex, line width=0.5mm, >=stealth']
+
+ % Position of GAM 
+ % Use previously defined 'state' as layout (see above)
+ % use tabular for content to get columns/rows
+ % parbox to limit width of the listing
+ \node[state] (GAM) 
+ { Game ADT };
+  
+ % State: LEV with different content
+ \node[state,    	% layout (defined above)
+  below of=GAM, 	% Position is to the right of GAM
+  node distance=2cm, 	% distance to GAM
+  anchor=east] (LEV) 	% posistion relative to the center of the 'box'
+	{Level ADT};
+
+ \node[state,    	% layout (defined above)
+  right of=LEV, 	% Position is to the right of GAM
+  node distance=2cm, 	% distance to GAM
+  anchor=west] (ANT) 	% posistion relative to the center of the 'box'
+	{Ant ADT};
+
+ \path 
+	 (GAM) 	edge 	node[anchor=east,below]{} (ANT)
+	 (GAM)	edge  node[anchor=west,below]{} (LEV);
+\end{tikzpicture}
+\end{center}
+
+\message{ !name(3_Afhankelijkheidsdiagram.tex) !offset(-32) }
