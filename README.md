@@ -10,3 +10,15 @@ The Game is implemented in scheme, more specifically R<sup>5</sup>RS.
 
 # How to run the game
 Just run `racket -I r5rs Fire-Ant.rkt` on your command line.
+
+# To-Do
+
+- [x] Game window open
+- [ ] A Movable Ant
+
+### Model
+- [ ] **Level ADT**
+	- [ ] Text to Maze ADT
+- [ ] **Game ADT**
+### View
+### Controller
