@@ -21,7 +21,7 @@
 
         ((canvas 'set-update-callback!) ;; Game Loop
          (lambda (ms)
-           (+ 1 1)))))
+           ((current-level 'update))))))
 
     (define (dispatch cmd)
       (cond ((eq? cmd 'start) start)))

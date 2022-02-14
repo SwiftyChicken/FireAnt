@@ -30,9 +30,7 @@
                                                        0 (+ y 1))))
                                     (else (iter (string-append cell (string (read-char input-port)))
                                                 (peek-char input-port) 
-                                                x y)))))))
-      (display (maze 'get-maze))
-      (newline))
+                                                x y))))))))
 
     (define (init-obj obj x y)
       (cond ((string=? obj "#") ((maze 'add-wall!) x y))
@@ -42,8 +40,12 @@
                   (display (string-length obj))
                   (newline))))
 
+    (define (update)
+      (+ 1 1))
+
     (define (dispatch cmd)
-      (cond ((eq? cmd 'init) init)))
+      (cond ((eq? cmd 'init) init)
+            ((eq? cmd 'update) update)))
 
     (init map-file)
     dispatch))
