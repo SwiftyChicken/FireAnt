@@ -1,8 +1,13 @@
 (define (new-level player file)
-  (define (init-maze file)
-    (let fill-maze (maze ()<++>)<++>)<++>)
+  (define objects '(("#" . #t)
+                    (" " . #f)))
 
-  (let ((maze (init-maze file))
+  (define (initialize file)
+    (let fill-level ((maze (make-vector 25 (make-vector 40 #f))))
+      (display maze)
+      (newline)))
+
+  (let ((maze (initialize file))
         (ant player))
 
     (define (start)
