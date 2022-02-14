@@ -1,8 +1,10 @@
 (define (new-level player file)
-  (define (get-walls file)
-    0)
-  (let ((maze (get-walls file))
-        (player 0))
+  (define (init-maze file)
+    (let fill-maze (maze ()<++>)<++>)<++>)
+
+  (let ((maze (init-maze file))
+        (ant player))
+
     (define (start)
       (let ((levels (directory-list "level")))
         (display levels)))
