@@ -1,20 +1,17 @@
 (define (new-level player file)
-  (define objects '(("#" . #t)
+  (define obj-dict '(("#" . #t)
                     (" " . #f)))
 
-  (define (initialize file)
-    (let fill-level ((maze (make-vector 25 (make-vector 40 #f))))
-      (display maze)
-      (newline)))
+  (let ((ant player)
+        (scorpions '())
+        (eggs '())
+        (maze (maze (make-vector 25 (make-vector 40 #f))))
+        (finished #f))
 
-  (let ((maze (initialize file))
-        (ant player))
+    (define (init)
+      ())
 
-    (define (start)
-      (let ((levels (directory-list "level")))
-        (display levels)))
+    (define (dispatch cmd)
+      (cond ((eq? cmd 'init) init)))
 
-    (define (dispatch-game cmd)
-      (cond ((eq? cmd 'start) start)))
-
-    dispatch-game))
+    dispatch))
