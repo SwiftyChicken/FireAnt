@@ -1,12 +1,12 @@
-(define (new-positie)
-  (let ((pos_x 0)
-        (pos_y 0))
+(define (new-positie x y)
+  (let ((pos (cons x y)))
 
     (define (get-positie)
       (cons x y))
+
     (define (set-positie x y)
-      (set! pos_x x)
-      (set! pos_y y))
+      (set-car! pos x)
+      (set-car! pos y))
 
     (define (dispatch cmd)
       (cond ((eq? cmd 'get-positie) get-positie)

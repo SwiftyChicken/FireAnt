@@ -19,10 +19,9 @@
             (current-level (new-level player ;; Start with level 1
                                       (car levels))))
 
-        ((canvas 'set-update-callback!)
+        ((canvas 'set-update-callback!) ;; Game Loop
          (lambda (ms)
-           (display levels)
-           (newline)))))
+           (+ 1 1)))))
 
     (define (dispatch cmd)
       (cond ((eq? cmd 'start) start)))
