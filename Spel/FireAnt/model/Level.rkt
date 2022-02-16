@@ -1,4 +1,5 @@
 (load "model/Maze.rkt")
+(load "view/View_Maze.rkt")
 
 (define (new-level player map-file)
 

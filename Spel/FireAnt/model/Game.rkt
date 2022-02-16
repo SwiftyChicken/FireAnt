@@ -4,9 +4,10 @@
 
 (load "model/Level.rkt")
 (load "model/Player.rkt")
+(load "view/View.rkt")
 
 (define (new-game)
-  (let ((canvas (make-window 1600 1000 "Fire Ant"))
+  (let ((view (new-view))
         (level-dir "level"))
 
     (define (start)
