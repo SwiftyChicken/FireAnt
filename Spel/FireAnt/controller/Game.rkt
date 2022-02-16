@@ -1,12 +1,12 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Game ADT is verantwoordelijk voor:
-;; [ ] Starten van juiste level
-;; [ ] Intializatie van de Player ADT
+;; [X] Starten van juiste level
+;; [ ] Initialisatie van de Player ADT
 ;; [ ] Updaten van de modellen
 ;; [ ] Updaten van de view
 ;; [ ] Checken voor collisions met Player ADT
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(#%require compatibility/mlist (only racket/base
+(#%require compatibility/mlist (only racket
                                      directory-list
                                      path->string))
 
@@ -19,12 +19,10 @@
         (level-dir "level"))
 
     (define (start)
-      (let* ((levels (map (lambda (path) ;; List all levels in level-dir
-                            (string-append level-dir
-                                           "/"
-                                           (path->string path)))
+      (let* ((player (new-player))
+             (levels (map (lambda (path) ;; List all levels in level-dir
+                            (string-append level-dir "/" (path->string path)))
                           (list->mlist (directory-list level-dir))))
-            (player (new-player))
             (current-level (new-level player ;; Start with level 1
                                       (car levels))))
 
@@ -38,12 +36,8 @@
 
         ((view 'game-loop)
          (lambda (ms)
-           (display current-level)
-           (newline)
-           (display levels)
-           (newline)
-           (display (next-level))
-           (newline)))))
+           ;; do something
+           #f))))
 
     (define (dispatch cmd)
       (cond ((eq? cmd 'start) start)))
