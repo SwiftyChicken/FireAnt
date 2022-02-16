@@ -1,3 +1,8 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Level ADT is verantwoordelijk voor:
+;; [ ] Initialiseert nodige model objecten
+;; [ ] 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (load "model/Maze.rkt")
 (load "view/View_Maze.rkt")
 
@@ -36,17 +41,18 @@
     (define (init-obj obj x y)
       (cond ((string=? obj "#") ((maze 'add-wall!) x y))
             ((string=? obj " ") ((maze 'del-wall!) x y))
-            (else (display obj)
+            ((string=? obj "entry") (display "player position")
+                                    (display (cons x y)))
+            (else (display obj) ;; Debugging
                   (display "->")
                   (display (string-length obj))
                   (newline))))
 
-    (define (update)
-      (+ 1 1))
-
     (define (dispatch cmd)
-      (cond ((eq? cmd 'init) init)
-            ((eq? cmd 'update) update)))
+      (cond ((eq? cmd 'restart) init)
+            ((eq? cmd 'get-scorpions) scorpions)
+            ((eq? cmd 'get-eggs) eggs)
+            ))
 
     (init map-file)
     dispatch))
