@@ -1,7 +1,7 @@
 (#%require (only racket random))
 (#%require "lib/Graphics.rkt")
 
-(load "model/Game.rkt")
+(load "controller/Game.rkt")
 
 (define game (new-game))
 ((game 'start))
