@@ -4,15 +4,16 @@
 ;; [ ] 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (load "model/Maze.rkt")
-(load "view/View_Maze.rkt")
+(load "model/Position.rkt")
 
 (define (new-level player map-file)
 
-  (let ((ant player)
+  (let ((spawn (new-position 0 0))
         (scorpions '())
         (eggs '())
         (maze (new-maze))
         (finished #f))
+
     (define (init file)
       (call-with-input-file file
                             (lambda (input-port)
@@ -41,18 +42,27 @@
     (define (init-obj obj x y)
       (cond ((string=? obj "#") ((maze 'add-wall!) x y))
             ((string=? obj " ") ((maze 'del-wall!) x y))
-            ((string=? obj "entry") (display "player position")
-                                    (display (cons x y)))
+            ((string=? obj "entry") (set! spawn (new-position x y))
+                                    ((player 'set-position) (spawn 'get-position)))
             (else (display obj) ;; Debugging
                   (display "->")
                   (display (string-length obj))
                   (newline))))
 
+    (define (respawn player)
+      ((player 'set-position) (spawn 'get-position)))
+
+
+    (define (is-finished player) ;; player has reached the exit
+      (set! finished (eq? ((player 'get-positie) 'get-y)
+                          (- (maze 'get-height) 1)))
+          finished)
+
     (define (dispatch cmd)
-      (cond ((eq? cmd 'restart) init)
+      (cond ((eq? cmd 'respawn) respawn)
+            ((eq? cmd 'is-finished) is-finished)
             ((eq? cmd 'get-scorpions) scorpions)
-            ((eq? cmd 'get-eggs) eggs)
-            ))
+            ((eq? cmd 'get-eggs) eggs)))
 
     (init map-file)
     dispatch))
