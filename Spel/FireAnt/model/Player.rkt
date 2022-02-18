@@ -11,6 +11,12 @@
         (lives 3)
         (alive #t))
 
+    (define (get-type)
+      type)
+
+    (define (get-position)
+      position)
+
     (define (set-position! pos)
       (set! position pos))
 
@@ -19,11 +25,14 @@
         (begin (set! alive #f)
                (set! lives (- lives 1)))))
 
-    (define (dispatch cmd)
-      (cond ((eq? cmd 'get-type) type)
-            ((eq? cmd 'get-position) position)
-            ((eq? cmd 'set-position) set-position!)
-            ((eq? cmd 'is-dead) (not alive))
-            ((eq? cmd 'die) die!)))
+    (define (is-dead)
+      (not alive))
+    (define (dispatch cmd . args)
+      (cond ((eq? cmd 'get-type) (apply get-type args))
+            ((eq? cmd 'get-position) (apply get-position args))
+            ((eq? cmd 'set-position) (apply set-position! args))
+            ((eq? cmd 'is-dead) (apply is-dead args))
+            ((eq? cmd 'die) (apply die! args))
+            (else (error "Unkown command" cmd))))
 
     dispatch))

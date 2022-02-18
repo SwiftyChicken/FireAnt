@@ -23,10 +23,10 @@
              (levels (map (lambda (path) ;; List all levels in level-dir
                             (string-append level-dir "/" (path->string path)))
                           (list->mlist (directory-list level-dir))))
-            (current-level (new-level player ;; Start with level 1
+             (current-level (new-level player ;; Start with level 1
                                       (car levels))))
 
-        (define (next-levle!) ;; Update variables and return next level
+        (define (next-level!) ;; Update variables and return next level
           (if (not (null? (cdr levels)))
             (begin (set! levels (cdr levels))
                    (set! current-level (new-level player 
@@ -39,15 +39,12 @@
             (current-level 'restart)))
 
         ((view 'game-loop) (lambda (ms)
-           (if (not ((current-level 'is-finished) player))
-             (begin (display (player 'get-position))
-                    (newline)
-               )
-             (if (player 'is-dead)
-               (restart-level)
-               (next-levle!)))))))
+           (if (not (current-level 'is-finished player))
+             (begin #f)
+             (next-level!))))))
 
-    (define (dispatch cmd)
-      (cond ((eq? cmd 'start) start)))
+    (define (dispatch cmd . args)
+      (cond ((eq? cmd 'start) (apply start args))
+            (else (error "Unknown command" cmd))))
 
     dispatch))

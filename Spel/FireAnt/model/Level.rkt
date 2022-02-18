@@ -40,29 +40,38 @@
                                                 x y))))))))
 
     (define (init-obj obj x y)
-      (cond ((string=? obj "#") ((maze 'add-wall!) x y))
-            ((string=? obj " ") ((maze 'del-wall!) x y))
+      (cond ((string=? obj "#") (maze 'add-wall! x y))
+            ((string=? obj " ") (maze 'del-wall! x y))
             ((string=? obj "entry") (set! spawn (new-position x y))
-                                    ((player 'set-position) (spawn 'get-position)))
+                                    (respawn player))
             (else (display obj) ;; Debugging
                   (display "->")
                   (display (string-length obj))
                   (newline))))
 
     (define (respawn player)
-      ((player 'set-position) (spawn 'get-position)))
+      (let ((x (spawn 'get-x))
+            (y (spawn 'get-y)))
+        (player 'set-position (new-position x y))))
 
 
     (define (is-finished player) ;; player has reached the exit
-      (set! finished (eq? ((player 'get-positie) 'get-y)
-                          (- (maze 'get-height) 1)))
+      ;(set! finished (eq? ((player 'get-position) 'get-y)
+      ;                    (- (maze 'get-height) 1)))
           finished)
 
-    (define (dispatch cmd)
-      (cond ((eq? cmd 'respawn) respawn)
-            ((eq? cmd 'is-finished) is-finished)
-            ((eq? cmd 'get-scorpions) scorpions)
-            ((eq? cmd 'get-eggs) eggs)))
+    (define (get-scorpions)
+      scorpions)
+
+    (define (get-eggs)
+      eggs)
+
+    (define (dispatch cmd . args)
+      (cond ((eq? cmd 'respawn) (apply respawn args))
+            ((eq? cmd 'is-finished) (apply is-finished args))
+            ((eq? cmd 'get-scorpions) (apply get-scorpions args))
+            ((eq? cmd 'get-eggs) (apply get-eggs args))
+            (else error "Unknown command" cmd)))
 
     (init map-file)
     dispatch))

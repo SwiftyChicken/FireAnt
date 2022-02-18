@@ -1,17 +1,24 @@
 (define (new-position x y)
   (let ((type 'position)
-        (pos (cons x y)))
+        (position (cons x y)))
+
+    (define (get-x)
+      (car position))
+
+    (define (get-y)
+      (cdr position))
 
     (define (set-x! new-x)
-      (set-car! pos new-x))
+      (set-car! position new-x))
 
     (define (set-y! new-y)
-      (set-cdr! pos new-y))
+      (set-cdr! position new-y))
 
-    (define (dispatch cmd)
-      (cond ((eq? cmd 'get-x) (car pos))
-            ((eq? cmd 'set-x) set-x!)
-            ((eq? cmd 'get-y) (cdr pos))
-            ((eq? cmd 'set-y) set-y!)))
+    (define (dispatch cmd . args)
+      (cond ((eq? cmd 'get-x) (apply get-x args))
+            ((eq? cmd 'set-x) (apply set-x! args))
+            ((eq? cmd 'get-y) (apply get-y args))
+            ((eq? cmd 'set-y) (apply set-y! args))
+            (else (error "Unknown command" cmd))))
 
     dispatch))
