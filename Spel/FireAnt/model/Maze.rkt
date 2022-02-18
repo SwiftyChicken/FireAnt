@@ -8,30 +8,40 @@
   (let* ((type 'maze)
         (height 25)
         (width 40)
-        (maze (let iter ((v (make-vector height))
-                         (i 0))
-                (if (= i (vector-length v))
-                  v
-                  (begin (vector-set! v i (make-vector width #f))
-                         (iter v (+ i 1)))))))
+        (maze (new-matrix height width #f)))
+;;;;;;;;;;;;;;;;;;; GETTERS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    (define (get-type)
+      type)
 
-    (define (add-wall x y)
-      (vector-set! (vector-ref maze y) x #t))
+    (define (get-maze)
+      maze)
 
-    (define (del-wall x y)
-      (vector-set! (vector-ref maze y) x #f))
+    (define (get-height)
+      height)
 
-    (define (is-wall? x y)
-      (vector-ref (vector-ref maze y) x))
+    (define (get-width)
+      width)
 
+;;;;;;;;;;;;;;;;;;; SETTERS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    (define (add-wall row column)
+      (set-cell! maze row column #t))
+
+    (define (del-wall row column)
+      (set-cell! maze row column #f))
+
+;;;;;;;;;;;;;;;;;;; OTHER FUNC ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    (define (is-wall? row y)
+      (get-cell maze row y))
+
+;;;;;;;;;;;;;;;;;;; DISPATCH ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (dispatch cmd . args)
-      (cond ((eq? cmd 'get-type) (apply type args))
+      (cond ((eq? cmd 'get-type) (apply get-type args))
             ((eq? cmd 'del-wall!) (apply del-wall args))
             ((eq? cmd 'add-wall!) (apply add-wall args))
-            ((eq? cmd 'get-maze) (apply maze args))
+            ((eq? cmd 'get-maze) (apply get-maze args))
             ((eq? cmd 'is-wall?) (apply is-wall? args))
-            ((eq? cmd 'get-height) (apply height args))
-            ((eq? cmd 'get-width) (apply width args))
+            ((eq? cmd 'get-height) (apply get-height args))
+            ((eq? cmd 'get-width) (apply get-width args))
             (else (error "Unknown command" cmd))))
 
     dispatch))

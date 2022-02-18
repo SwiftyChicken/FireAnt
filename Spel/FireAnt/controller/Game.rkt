@@ -15,13 +15,12 @@
 (load "view/View.rkt")
 
 (define (new-game)
-  (let ((view (new-view))
-        (level-dir "level"))
+  (let ((view (new-view)))
 
     (define (start)
       (let* ((player (new-player))
              (levels (map (lambda (path) ;; List all levels in level-dir
-                            (string-append level-dir "/" (path->string path)))
+                            (string-append level-dir (path->string path)))
                           (list->mlist (directory-list level-dir))))
              (current-level (new-level player ;; Start with level 1
                                       (car levels))))
@@ -40,7 +39,7 @@
 
         ((view 'game-loop) (lambda (ms)
            (if (not (current-level 'is-finished player))
-             (begin #f)
+             (begin (view 'update (current-level 'get-maze)))
              (next-level!))))))
 
     (define (dispatch cmd . args)

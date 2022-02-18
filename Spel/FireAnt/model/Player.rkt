@@ -10,16 +10,18 @@
         (position #f)
         (lives 3)
         (alive #t))
-
+;;;;;;;;;;;;;;;;;;; GETTERS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (get-type)
       type)
 
     (define (get-position)
       position)
 
+;;;;;;;;;;;;;;;;;;; SETTERS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (set-position! pos)
       (set! position pos))
 
+;;;;;;;;;;;;;;;;;;; OTHER FUNC ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (die!)
       (if (alive)
         (begin (set! alive #f)
@@ -27,6 +29,8 @@
 
     (define (is-dead)
       (not alive))
+
+;;;;;;;;;;;;;;;;;;; DISPATCH ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (dispatch cmd . args)
       (cond ((eq? cmd 'get-type) (apply get-type args))
             ((eq? cmd 'get-position) (apply get-position args))

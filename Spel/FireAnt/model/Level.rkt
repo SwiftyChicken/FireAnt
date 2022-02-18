@@ -13,7 +13,19 @@
         (eggs '())
         (maze (new-maze))
         (finished #f))
+;;;;;;;;;;;;;;;;;;; GETTERS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    (define (get-scorpions)
+      scorpions)
 
+    (define (get-eggs)
+      eggs)
+
+    (define (get-maze)
+      maze)
+
+;;;;;;;;;;;;;;;;;;; SETTERS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;;;;;;;;;;;;;;;;;; OTHER FUNC ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (init file)
       (call-with-input-file file
                             (lambda (input-port)
@@ -39,11 +51,13 @@
                                                 (peek-char input-port) 
                                                 x y))))))))
 
+
     (define (init-obj obj x y)
-      (cond ((string=? obj "#") (maze 'add-wall! x y))
-            ((string=? obj " ") (maze 'del-wall! x y))
-            ((string=? obj "entry") (set! spawn (new-position x y))
+      (cond ((string=? obj "[]") (maze 'add-wall! y x))
+            ((string=? obj "  ") (maze 'del-wall! y x))
+            ((string=? obj "SP") (set! spawn (new-position x y))
                                     (respawn player))
+            ((string=? obj "SY") #f)
             (else (display obj) ;; Debugging
                   (display "->")
                   (display (string-length obj))
@@ -54,23 +68,18 @@
             (y (spawn 'get-y)))
         (player 'set-position (new-position x y))))
 
-
     (define (is-finished player) ;; player has reached the exit
-      ;(set! finished (eq? ((player 'get-position) 'get-y)
-      ;                    (- (maze 'get-height) 1)))
+      (set! finished (eq? ((player 'get-position) 'get-y)
+                          (- (maze 'get-height) 1)))
           finished)
 
-    (define (get-scorpions)
-      scorpions)
-
-    (define (get-eggs)
-      eggs)
-
+;;;;;;;;;;;;;;;;;;; DISPATCH ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (dispatch cmd . args)
       (cond ((eq? cmd 'respawn) (apply respawn args))
             ((eq? cmd 'is-finished) (apply is-finished args))
             ((eq? cmd 'get-scorpions) (apply get-scorpions args))
             ((eq? cmd 'get-eggs) (apply get-eggs args))
+            ((eq? cmd 'get-maze) (apply get-maze args))
             (else error "Unknown command" cmd)))
 
     (init map-file)

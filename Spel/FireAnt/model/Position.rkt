@@ -1,19 +1,22 @@
 (define (new-position x y)
   (let ((type 'position)
         (position (cons x y)))
-
+;;;;;;;;;;;;;;;;;;; GETTERS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (get-x)
       (car position))
 
     (define (get-y)
       (cdr position))
 
+;;;;;;;;;;;;;;;;;;; SETTERS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (set-x! new-x)
       (set-car! position new-x))
 
     (define (set-y! new-y)
       (set-cdr! position new-y))
 
+;;;;;;;;;;;;;;;;;;; OTHER FUNC ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;; DISPATCH ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (dispatch cmd . args)
       (cond ((eq? cmd 'get-x) (apply get-x args))
             ((eq? cmd 'set-x) (apply set-x! args))
