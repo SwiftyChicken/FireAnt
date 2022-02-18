@@ -1,7 +1,7 @@
 (load "view/Maze-View.rkt")
 
 (define (new-view)
-  (let* ((canvas (make-window 1600 1000 "Fire Ant"))
+  (let* ((canvas (make-window 1400 880 "Fire Ant"))
          (maze-view #f))
 
     (define (update model-obj)

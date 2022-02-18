@@ -6,8 +6,8 @@
 
 (define (new-maze)
   (let* ((type 'maze)
-        (height 25)
-        (width 40)
+        (height 20)
+        (width 35)
         (maze (new-matrix height width #f)))
 ;;;;;;;;;;;;;;;;;;; GETTERS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (get-type)
