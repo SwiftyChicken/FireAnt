@@ -37,9 +37,15 @@
           (if (not (player 'game-over?))
             (current-level 'restart)))
 
+        ((view 'key-handler) (lambda (action key)
+                               (cond ((eq? action 'pressed)
+                                      (case key
+                                        ((up down left right) (player 'move key)))))))
+
         ((view 'game-loop) (lambda (ms)
            (if (not (current-level 'is-finished player))
-             (begin (view 'update (current-level 'get-maze)))
+             (begin ;(view 'update (current-level 'get-maze))
+                    (view 'update player))
              (next-level!))))))
 
     (define (dispatch cmd . args)

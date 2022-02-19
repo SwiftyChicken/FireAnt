@@ -3,7 +3,6 @@
          (wall-layer (canvas 'make-layer))
          (height (owner 'get-height))
          (width (owner 'get-width))
-         (tiles (new-matrix height width #f))
          (wall-bitmap (string-append bitmap-dir "wall.png"))
          (floor-bitmap (string-append bitmap-dir "floor.png")))
 
@@ -26,14 +25,12 @@
         ((floor-layer 'add-drawable) tile)))
 
     (define (draw-wall row column)
-      (let* ((size 40)
-             (tile (make-bitmap-tile wall-bitmap))
-             (pos_x (* column size))
-             (pos_y (* row size)))
-        (set-cell! tiles row column tile)
-        ((wall-layer 'add-drawable) tile)
+      (let* ((tile (make-bitmap-tile wall-bitmap))
+             (pos_x (* column tile-size))
+             (pos_y (* row tile-size)))
         ((tile 'set-x!) pos_x)
-        ((tile 'set-y!) pos_y)))
+        ((tile 'set-y!) pos_y)
+        ((wall-layer 'add-drawable) tile)))
 
     (define (dispatch cmd . args)
       (cond ((eq? cmd 'draw) (apply draw args))

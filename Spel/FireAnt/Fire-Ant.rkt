@@ -2,6 +2,7 @@
 (#%require "lib/Graphics.rkt")
 
 (load "etc/paths.rkt")
+(load "etc/constants.rkt")
 (load "etc/functions.rkt")
 (load "controller/Game.rkt")
 
