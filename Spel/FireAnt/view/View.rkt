@@ -2,7 +2,7 @@
 (load "view/Player-View.rkt")
 
 (define (new-view)
-  (let* ((canvas (make-window window-width window-height "Fire Ant"))
+  (let* ((canvas (make-window WINDOW-WIDTH WINDOW-HEIGHT "Fire Ant"))
          (maze-view #f)
          (player-view #f))
 

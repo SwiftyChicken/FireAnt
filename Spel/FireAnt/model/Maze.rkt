@@ -6,8 +6,8 @@
 
 (define (new-maze)
   (let* ((type 'maze)
-        (height grid-height)
-        (width grid-width)
+        (height GRID-HEIGHT)
+        (width GRID-WIDTH)
         (maze (new-matrix height width #f)))
 ;;;;;;;;;;;;;;;;;;; GETTERS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (get-type)

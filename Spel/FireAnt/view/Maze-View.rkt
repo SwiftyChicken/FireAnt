@@ -26,8 +26,8 @@
 
     (define (draw-wall row column)
       (let* ((tile (make-bitmap-tile wall-bitmap))
-             (pos_x (* column tile-size))
-             (pos_y (* row tile-size)))
+             (pos_x (* column TILE-SIZE))
+             (pos_y (* row TILE-SIZE)))
         ((tile 'set-x!) pos_x)
         ((tile 'set-y!) pos_y)
         ((wall-layer 'add-drawable) tile)))

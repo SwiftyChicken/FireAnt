@@ -4,6 +4,7 @@
 ;; [ ] 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (load "model/Maze.rkt")
+(load "model/Egg.rkt")
 (load "model/Position.rkt")
 
 (define (new-level player map-file)
@@ -52,16 +53,21 @@
                                                 x y))))))))
 
 
-    (define (init-obj obj x y)
-      (cond ((string=? obj "[]") (maze 'add-wall! y x))
-            ((string=? obj "  ") (maze 'del-wall! y x))
-            ((string=? obj "SP") (set! spawn (new-position x y))
-                                    (respawn player))
-            ((string=? obj "SY") #f)
-            (else (display obj) ;; Debugging
+    (define (init-obj text x y)
+      (let ((code (string (string-ref text 0)
+                          (string-ref text 1)))
+            (args (list-tail (string->list text) 2)))
+        (cond ((string=? code "[]") (maze 'add-wall! y x))
+            ((string=? code "  ") (maze 'del-wall! y x))
+            ((string=? code "SP") (set! spawn (new-position x y))
+                                     (respawn player))
+            ((string=? code "EG") (set! eggs (cons (new-egg (new-position x y))
+                                                   eggs)))
+            ((string=? code "SY") #f)
+            (else (display code) ;; Debugging
                   (display "->")
-                  (display (string-length obj))
-                  (newline))))
+                  (display (string-length code))
+                  (newline)))))
 
     (define (respawn player)
       (let ((x (spawn 'get-x))

@@ -15,7 +15,7 @@
 (load "view/View.rkt")
 
 (define (new-game)
-  (let ((view (new-view)))
+  (let ()
 
     (define (start)
       (let* ((player (new-player))
@@ -23,7 +23,8 @@
                             (string-append level-dir (path->string path)))
                           (list->mlist (directory-list level-dir))))
              (current-level (new-level player ;; Start with level 1
-                                      (car levels))))
+                                      (car levels)))
+             (view (new-view)))
 
         (define (next-level!) ;; Update variables and return next level
           (if (not (null? (cdr levels)))
