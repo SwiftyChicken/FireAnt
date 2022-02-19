@@ -30,16 +30,6 @@
     (define (is-dead)
       (not alive))
 
-    (define (move direction)
-      (let ((x (position 'get-x))
-            (y (position 'get-y)))
-        (case direction
-          ((up) (position 'set-y (- y 1)))
-          ((down) (position 'set-y (+ y 1)))
-          ((left) (position 'set-x (- x 1)))
-          ((right) (position 'set-x (+ x 1))))
-        (display (list x y))
-        (newline)))
 ;;;;;;;;;;;;;;;;;;; DISPATCH ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (dispatch cmd . args)
       (cond ((eq? cmd 'get-type) (apply get-type args))
@@ -47,7 +37,6 @@
             ((eq? cmd 'set-position) (apply set-position! args))
             ((eq? cmd 'is-dead) (apply is-dead args))
             ((eq? cmd 'die) (apply die! args))
-            ((eq? cmd 'move) (apply move args))
             (else (error "Unkown command" cmd))))
 
     dispatch))

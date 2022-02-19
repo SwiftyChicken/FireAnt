@@ -68,6 +68,14 @@
             (y (spawn 'get-y)))
         (player 'set-position (new-position x y))))
 
+    (define (move-player direction)
+      (let* ((pos (player 'get-position))
+             (peek-pos (pos 'peek direction))
+             (new-x (peek-pos 'get-x))
+             (new-y (peek-pos 'get-y)))
+        (if (not (maze 'is-wall? new-y new-x))
+          (pos 'move direction))))
+
     (define (is-finished player) ;; player has reached the exit
       (set! finished (eq? ((player 'get-position) 'get-y)
                           (- (maze 'get-height) 1)))
@@ -80,6 +88,7 @@
             ((eq? cmd 'get-scorpions) (apply get-scorpions args))
             ((eq? cmd 'get-eggs) (apply get-eggs args))
             ((eq? cmd 'get-maze) (apply get-maze args))
+            ((eq? cmd 'move-player) (apply move-player args))
             (else error "Unknown command" cmd)))
 
     (init map-file)

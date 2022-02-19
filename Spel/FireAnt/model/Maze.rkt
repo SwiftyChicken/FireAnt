@@ -30,8 +30,11 @@
       (set-cell! maze row column #f))
 
 ;;;;;;;;;;;;;;;;;;; OTHER FUNC ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    (define (is-wall? row y)
-      (get-cell maze row y))
+    (define (is-wall? row column)
+      (if (and (<= 0 row (- height 1))
+               (<= 0 column (- width 1)))
+        (get-cell maze row column)
+        #f))
 
 ;;;;;;;;;;;;;;;;;;; DISPATCH ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (dispatch cmd . args)
