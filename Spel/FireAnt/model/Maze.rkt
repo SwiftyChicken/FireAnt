@@ -34,7 +34,7 @@
       (if (and (<= 0 row (- height 1))
                (<= 0 column (- width 1)))
         (get-cell maze row column)
-        #f))
+        #t)) ; Invisible wall to not get out of bound
 
 ;;;;;;;;;;;;;;;;;;; DISPATCH ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (dispatch cmd . args)

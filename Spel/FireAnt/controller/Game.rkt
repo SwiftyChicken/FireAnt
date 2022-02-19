@@ -38,16 +38,17 @@
             (current-level 'restart)))
 
 ;;;;;;;;;;;;;;;;;;; KEY HANDLER ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-        ((view 'key-handler) (lambda (action key)
-                               (cond ((eq? action 'pressed)
+        ((view 'key-handler) (lambda (state key)
+                               (cond ((eq? state 'pressed)
                                       (case key
-                                        ((up down left right) (current-level 'move-player key)))))))
+                                        ((up down left right) (if (not (view 'is-updating? player))
+                                                                (current-level 'move-player key))))))))
 
 ;;;;;;;;;;;;;;;;;;; GAME LOOP ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
         ((view 'game-loop) (lambda (ms)
            (if (not (current-level 'is-finished player))
-             (begin (view 'update (current-level 'get-maze))
-                    (view 'update player))
+             (begin (view 'update (current-level 'get-maze) ms)
+                    (view 'update player ms))
              (next-level!))))))
 
     (define (dispatch cmd . args)
