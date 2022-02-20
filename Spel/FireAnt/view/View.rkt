@@ -51,10 +51,18 @@
           (else (error "Unknown type" type)))))
 
     (define (set-level! new-level)
+      (set! level new-level)
       ;; Clean up layers
+      (floor-layer 'empty)
+      (walls-layer 'empty)
+      (egg-layer 'empty)
+      (player-layer 'empty)
+      (scorpion-layer 'empty)
       ;; Make new tiles
-      ;; Add tiles to layers
-      #f)
+      (set! player-view (new-player-view player player-layer))
+      (set! maze-view (new-maze-view (level 'get-maze) floor-layer walls-layer))
+      (set! egg-views (map (lambda (egg) (new-egg-view egg egg-layer)) (level 'get-eggs)))
+      (set! scorpion-views (map (lambda (scorpion) (new-scorpion-view scorpion scorpion-layer)) (level 'get-scorpions))))
 
     (define (game-loop)
       (canvas 'set-update-callback!))
