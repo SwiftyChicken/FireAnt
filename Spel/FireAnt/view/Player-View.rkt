@@ -45,7 +45,7 @@
 
     (define (remove!)
       (if (not removed)
-        (begin ((layer 'remove-drawable) tile)
+        (begin (layer 'empty)
                (set! removed #t))))
 
     (define (is-removed?)

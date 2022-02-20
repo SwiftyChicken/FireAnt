@@ -1,7 +1,6 @@
-(define (new-position x y)
+(define (new-position pos-x pos-y)
   (let ((type 'position)
-        (position (cons x y))
-        (old-position #f)
+        (position (cons pos-x pos-y))
         (orientation #f)
         (speed 0.17)
         (moving #f))
@@ -12,16 +11,6 @@
 
     (define (get-y)
       (cdr position))
-
-    (define (get-old-x)
-      (if old-position
-        (car old-position)
-        #f))
-
-    (define (get-old-y)
-      (if old-position
-        (cdr old-position)
-        #f))
 
     (define (get-speed)
       speed)
@@ -54,7 +43,6 @@
       (if (not moving)
         (let ((x (get-x))
               (y (get-y)))
-          (set! old-position position)
           (case direction
             ((up) (set-y! (- y 1))
                   (set! orientation 'up))
@@ -67,12 +55,10 @@
           (set-moving! #t))))
 
     (define (is-collision? position)
-      (let ((old-x (get-old-x))
-            (old-y (get-old-y))
-            (x2 (position 'get-x))
-            (y2 (position 'get-y)))
-        (or (and (eq? old-x x2) (eq? old-y y2))
-            (and (eq? x x2) (eq? y y2)))))
+      (let ((x-to-compare (position 'get-x))
+            (y-to-compare (position 'get-y)))
+        (and (eq? (get-x) x-to-compare)
+             (eq? (get-y) y-to-compare))))
 
 ;;;;;;;;;;;;;;;;;;; DISPATCH ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (dispatch cmd . args)

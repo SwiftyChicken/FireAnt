@@ -51,10 +51,10 @@
     (define (update)
       (if (not (position 'is-moving?))
         (if (> iterate 0)
-        (begin (position 'move direction)
-               (set! iterate (- iterate 1)))
-        (begin (next-command)
-               (update)))))
+          (begin (position 'move direction)
+                 (set! iterate (- iterate 1)))
+          (begin (next-command)
+                 (update)))))
 
 ;;;;;;;;;;;;;;;;;;; DISPATCH ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (dispatch cmd . args)

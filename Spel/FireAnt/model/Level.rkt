@@ -114,8 +114,7 @@
                       (egg 'take!)
                       (set! updates (cons egg updates))) eggs)
       (on-collision (lambda (scorpion)
-                      (player 'die!)
-                      (respawn)) scorpions))
+                      (player 'die!)) scorpions))
 
 ;;;;;;;;;;;;;;;;;;; DISPATCH ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (dispatch cmd . args)

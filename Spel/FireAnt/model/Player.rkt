@@ -31,7 +31,7 @@
     (define (die!)
       (if alive
         (begin (set! alive #f)
-               (set! lives (- lives 1)))))
+               (set! lives (- lives 0)))))
 
 ;;;;;;;;;;;;;;;;;;; OTHER FUNC ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;; DISPATCH ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

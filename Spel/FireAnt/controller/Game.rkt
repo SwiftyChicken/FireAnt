@@ -48,7 +48,9 @@
        (lambda (ms)
          (if (not (current-level 'is-finished player))
            (begin (current-level 'update)
-                  (view 'update ms))
+                  (view 'update ms)
+                  (if (player 'is-dead?)
+                    (current-level 'respawn)))
            (next-level!))))))
 
       (define (dispatch cmd . args)
