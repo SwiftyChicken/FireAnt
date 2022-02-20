@@ -11,3 +11,10 @@
 
 (define (set-cell! matrix row column new-value)
 	(vector-set! (vector-ref matrix row) column new-value))
+
+(define (list->circular lst)
+	(let link ((current lst))
+		(if (null? (cdr current))
+			(begin (set-cdr! current lst)
+						 (cdr current))
+			(link (cdr current)))))
