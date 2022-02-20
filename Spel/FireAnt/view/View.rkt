@@ -22,6 +22,9 @@
                         (type (object 'get-type)))
                    (case type
                      ((player) (player-view 'draw ms))
+                     ((scorpion) (let* ((view (get-view object scorpion-views))
+                                        (tile (view 'get-tile)))
+                                   (view 'draw ms)))
                      ((egg) (let* ((view (get-view object egg-views))
                                    (tile (view 'get-tile)))
                               (if (object 'is-taken?)

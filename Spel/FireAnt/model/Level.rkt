@@ -94,7 +94,10 @@
       ; Clear old updates
       (set! updates (list player))
       ; Move Scorpions
-
+      (map (lambda (scorpion)
+             (scorpion 'update)
+             (set! updates (cons scorpion updates)))
+           scorpions)
       ; Check for collisions
       (let iter ((lst eggs))
         (if (not (null? lst))
