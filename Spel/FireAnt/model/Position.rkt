@@ -40,6 +40,11 @@
           ((right) (set-x! (+ x 1))
                    (set! orientation 'right)))))
 
+    (define (is-equal? position)
+      (let ((x2 (position 'get-x))
+            (y2 (position 'get-y)))
+        (and (eq? x x2) (eq? y y2))))
+
 ;;;;;;;;;;;;;;;;;;; DISPATCH ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (dispatch cmd . args)
       (cond ((eq? cmd 'get-x) (apply get-x args))
@@ -47,6 +52,7 @@
             ((eq? cmd 'get-y) (apply get-y args))
             ((eq? cmd 'set-y) (apply set-y! args))
             ((eq? cmd 'peek)(apply peek args))
+            ((eq? cmd 'is-equal?) (apply is-equal? args))
             ((eq? cmd 'move)(apply move args))
             (else (error "Unknown command" cmd))))
 

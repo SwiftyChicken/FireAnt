@@ -1,8 +1,8 @@
-(define (new-egg-view owner layer)
-  (let* ((bitmap (string-append bitmap-dir "egg.png"))
-         (mask (string-append mask-dir "egg.png"))
+(define (new-scorpion-view owner layer)
+  (let* ((bitmap (string-append bitmap-dir "scorpion.png"))
+         (mask (string-append mask-dir "scorpion.png"))
          (tile (make-bitmap-tile bitmap mask))
-         (removed #f))
+         (moving #f))
 
     (define (init)
       (let ((x (* ((owner 'get-position) 'get-x)
@@ -19,11 +19,6 @@
     (define (get-tile)
       tile)
 
-    (define (remove!)
-      (if (not removed)
-        (begin ((layer 'remove-drawable) tile)
-               (set! removed #t))))
-
     (define (is-owner? object)
       (eq? object owner))
 
@@ -35,7 +30,7 @@
                   TILE-SIZE))
             (y (* ((owner 'get-position) 'get-y)
                   TILE-SIZE)))
-        (set! removed (or (transition (tile 'set-x!) old-x x step)
+        (set! moving (or (transition (tile 'set-x!) old-x x step)
                          (transition (tile 'set-y!) old-y y step)))))
 
     (define (transition setter old new step)
@@ -47,15 +42,14 @@
                    (setter (+ old step)))
                  #t)))
 
-    (define (is-removed?)
-      removed)
+    (define (is-moving?)
+      moving)
     (define (dispatch cmd . args)
       (cond ((eq? cmd 'draw) (apply draw args))
             ((eq? cmd 'get-owner) (apply get-owner args))
             ((eq? cmd 'get-tile) (apply get-tile args))
-            ((eq? cmd 'remove!) (apply remove! args))
             ((eq? cmd 'is-owner?) (apply is-owner? args))
-            ((eq? cmd 'is-removed?) (apply is-removed? args))
+            ((eq? cmd 'is-moving?) (apply is-moving? args))
             (else (error "Unknown command" cmd))))
 
     (init)

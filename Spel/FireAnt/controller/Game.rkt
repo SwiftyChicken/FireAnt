@@ -48,7 +48,8 @@
       ((view 'game-loop) 
        (lambda (ms)
          (if (not (current-level 'is-finished player))
-           (begin (view 'update player ms))
+           (begin (current-level 'update)
+                  (view 'update ms))
            (next-level!))))))
 
       (define (dispatch cmd . args)

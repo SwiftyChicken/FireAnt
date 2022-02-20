@@ -14,6 +14,7 @@
         (scorpions '())
         (eggs '())
         (maze (new-maze))
+        (updates '())
         (finished #f))
 ;;;;;;;;;;;;;;;;;;; GETTERS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (get-scorpions)
@@ -24,6 +25,9 @@
 
     (define (get-maze)
       maze)
+
+    (define (get-updates)
+      updates)
 
 ;;;;;;;;;;;;;;;;;;; SETTERS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -86,13 +90,32 @@
                           (- (maze 'get-height) 1)))
           finished)
 
+    (define (update)
+      ; Clear old updates
+      (set! updates (list player))
+      ; Move Scorpions
+
+      ; Check for collisions
+      (let iter ((lst eggs))
+        (if (not (null? lst))
+          (let* ((egg (car lst))
+               (egg-pos (egg 'get-position))
+               (player-pos (player 'get-position))
+               (rest (cdr lst)))
+          (if (egg-pos 'is-equal? player-pos)
+            (begin (egg 'take!)
+                   (set! updates (cons egg updates)))
+            (iter (cdr lst)))))))
+
 ;;;;;;;;;;;;;;;;;;; DISPATCH ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (dispatch cmd . args)
-      (cond ((eq? cmd 'respawn) (apply respawn args))
+      (cond ((eq? cmd 'update) (apply update args))
+            ((eq? cmd 'respawn) (apply respawn args))
             ((eq? cmd 'is-finished) (apply is-finished args))
             ((eq? cmd 'get-scorpions) (apply get-scorpions args))
             ((eq? cmd 'get-eggs) (apply get-eggs args))
             ((eq? cmd 'get-maze) (apply get-maze args))
+            ((eq? cmd 'get-updates) (apply get-updates args))
             ((eq? cmd 'move-player) (apply move-player args))
             (else error "Unknown command" cmd)))
 

@@ -1,6 +1,7 @@
 (load "view/Maze-View.rkt")
 (load "view/Player-View.rkt")
 (load "view/Egg-View.rkt")
+(load "view/Scorpion-View.rkt")
 
 (define (new-view player level)
   (let* ((canvas (make-window WINDOW-WIDTH WINDOW-HEIGHT "Fire Ant"))
@@ -8,19 +9,36 @@
          (walls-layer (canvas 'make-layer))
          (egg-layer (canvas 'make-layer))
          (player-layer (canvas 'make-layer))
+         (scorpion-layer (canvas 'make-layer))
          (player-view (new-player-view player player-layer))
          (maze-view (new-maze-view (level 'get-maze) floor-layer walls-layer))
          (egg-views (map (lambda (egg) (new-egg-view egg egg-layer)) (level 'get-eggs)))
-         (scorpion-views #f))
+         (scorpion-views (map (lambda (scorpion) (new-scorpion-view scorpion scorpion-layer)) (level 'get-scorpions))))
 
-    (define (update model-obj ms)
-      (let ((type (model-obj 'get-type)))
-        (case type
-          ((player) (player-view 'draw ms))
-          (else (error "Unknown type" type)))))
+    (define (update ms)
+      (let iter ((lst (level 'get-updates)))
+        (if (not (null? lst))
+          (begin (let* ((object (car lst))
+                        (type (object 'get-type)))
+                   (case type
+                     ((player) (player-view 'draw ms))
+                     ((egg) (let* ((view (get-view object egg-views))
+                                   (tile (view 'get-tile)))
+                              (if (object 'is-taken?)
+                                (view 'remove!))))
+                     (else (error "Unknown type" type))))
+                 (iter (cdr lst))))))
 
-    (define (is-updating? model-obj)
-      (let ((type (model-obj 'get-type)))
+    (define (get-view obj views)
+      (if (not (null? views))
+        (let ((view (car views)))
+          (if (view 'is-owner? obj)
+            view
+            (get-view obj (cdr views))))
+        #f))
+
+    (define (is-updating? object)
+      (let ((type (object 'get-type)))
         (case type
           ((player) (player-view 'is-moving?))
           (else (error "Unknown type" type)))))
