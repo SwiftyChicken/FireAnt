@@ -30,7 +30,7 @@
                  (set! current-level (new-level player 
                                                 (car levels)))
                  current-level)
-          (display "GAME COMPLETED")))
+          (display "LEVEL COMPLETED")))
 
       (define (restart-level)
         (if (not (player 'game-over?))
