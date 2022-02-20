@@ -23,7 +23,7 @@
            (current-level (new-level player ;; Start with level 1
                                      (car levels)))
            (view (new-view player current-level)))
-
+;;;;;;;;;;;;;;;;;;; AUXILIARY FUNC ;;;;;;;;;;;;;;;;;;;;;;;;;
       (define (next-level!) ;; Update variables and return next level
         (if (not (null? (cdr levels)))
           (begin (set! levels (cdr levels))
@@ -41,8 +41,7 @@
        (lambda (state key)
          (cond ((eq? state 'pressed)
                 (case key
-                  ((up down left right) (if (not (view 'is-updating? player))
-                                          (current-level 'move-player key))))))))
+                  ((up down left right) (current-level 'move-player key)))))))
 
 ;;;;;;;;;;;;;;;;;;; GAME LOOP ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ((view 'game-loop) 

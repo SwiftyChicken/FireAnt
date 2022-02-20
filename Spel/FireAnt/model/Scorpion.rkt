@@ -49,11 +49,12 @@
 
 ;;;;;;;;;;;;;;;;;;; OTHER FUNC ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (update)
-      (if (> iterate 0)
+      (if (not (position 'is-moving?))
+        (if (> iterate 0)
         (begin (position 'move direction)
                (set! iterate (- iterate 1)))
         (begin (next-command)
-               (update))))
+               (update)))))
 
 ;;;;;;;;;;;;;;;;;;; DISPATCH ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (dispatch cmd . args)

@@ -1,8 +1,7 @@
 (define (new-scorpion-view owner layer)
   (let* ((bitmap (string-append bitmap-dir "scorpion.png"))
          (mask (string-append mask-dir "scorpion.png"))
-         (tile (make-bitmap-tile bitmap mask))
-         (moving #f))
+         (tile (make-bitmap-tile bitmap mask)))
 
     (define (init)
       (let ((x (* ((owner 'get-position) 'get-x)
@@ -23,14 +22,15 @@
       (eq? object owner))
 
     (define (draw ms)
-      (let ((step (* ms TRANSITION-SPEED))
-            (old-x (tile 'get-x))
-            (old-y (tile 'get-y))
-            (x (* ((owner 'get-position) 'get-x)
-                  TILE-SIZE))
-            (y (* ((owner 'get-position) 'get-y)
-                  TILE-SIZE)))
-        (set! moving (or (transition (tile 'set-x!) old-x x step)
+      (let* ((step (* ms TRANSITION-SPEED))
+             (old-x (tile 'get-x))
+             (old-y (tile 'get-y))
+             (position (owner 'get-position))
+             (x (* (position 'get-x)
+                   TILE-SIZE))
+             (y (* (position 'get-y)
+                   TILE-SIZE)))
+        (position 'set-moving! (or (transition (tile 'set-x!) old-x x step)
                          (transition (tile 'set-y!) old-y y step)))))
 
     (define (transition setter old new step)
@@ -44,6 +44,7 @@
 
     (define (is-moving?)
       moving)
+
     (define (dispatch cmd . args)
       (cond ((eq? cmd 'draw) (apply draw args))
             ((eq? cmd 'get-owner) (apply get-owner args))

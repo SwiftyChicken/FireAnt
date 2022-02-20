@@ -1,7 +1,8 @@
 (define (new-position x y)
   (let ((type 'position)
         (position (cons x y))
-        (orientation #f))
+        (orientation #f)
+        (moving #f))
 ;;;;;;;;;;;;;;;;;;; GETTERS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (get-x)
       (car position))
@@ -9,12 +10,18 @@
     (define (get-y)
       (cdr position))
 
+    (define (is-moving?)
+      moving)
+
 ;;;;;;;;;;;;;;;;;;; SETTERS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (set-x! new-x)
       (set-car! position new-x))
 
     (define (set-y! new-y)
       (set-cdr! position new-y))
+
+    (define (set-moving! bool)
+      (set! moving bool))
 
 ;;;;;;;;;;;;;;;;;;; OTHER FUNC ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (peek direction)
@@ -28,7 +35,8 @@
         (new-position x y)))
 
     (define (move direction)
-      (let ((x (get-x))
+      (if (not moving)
+        (let ((x (get-x))
             (y (get-y)))
         (case direction
           ((up) (set-y! (- y 1))
@@ -38,7 +46,7 @@
           ((left) (set-x! (- x 1))
                   (set! orientation 'left))
           ((right) (set-x! (+ x 1))
-                   (set! orientation 'right)))))
+                   (set! orientation 'right))))))
 
     (define (is-equal? position)
       (let ((x2 (position 'get-x))
@@ -51,6 +59,8 @@
             ((eq? cmd 'set-x) (apply set-x! args))
             ((eq? cmd 'get-y) (apply get-y args))
             ((eq? cmd 'set-y) (apply set-y! args))
+            ((eq? cmd 'is-moving?) (apply is-moving? args))
+            ((eq? cmd 'set-moving!) (apply set-moving! args))
             ((eq? cmd 'peek)(apply peek args))
             ((eq? cmd 'is-equal?) (apply is-equal? args))
             ((eq? cmd 'move)(apply move args))
