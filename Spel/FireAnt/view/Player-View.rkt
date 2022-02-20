@@ -1,7 +1,8 @@
 (define (new-player-view owner layer)
   (let* ((bitmap (string-append bitmap-dir "ant.png"))
          (mask (string-append mask-dir "ant.png"))
-         (tile (make-bitmap-tile bitmap mask)))
+         (tile (make-bitmap-tile bitmap mask))
+         (removed #f))
 
     (define (init)
       (let ((x (* ((owner 'get-position) 'get-x)
@@ -19,10 +20,10 @@
       tile)
 
     (define (draw ms)
-      (let* ((step (* ms TRANSITION-SPEED))
+      (let* ((position (owner 'get-position))
+             (step (* ms (position 'get-speed)))
              (old-x (tile 'get-x))
              (old-y (tile 'get-y))
-             (position (owner 'get-position))
              (x (* (position 'get-x)
                    TILE-SIZE))
              (y (* (position 'get-y)
@@ -42,11 +43,21 @@
     (define (is-moving?)
       moving)
 
+    (define (remove!)
+      (if (not removed)
+        (begin ((layer 'remove-drawable) tile)
+               (set! removed #t))))
+
+    (define (is-removed?)
+      removed)
+
     (define (dispatch cmd . args)
       (cond ((eq? cmd 'draw) (apply draw args))
             ((eq? cmd 'get-owner) (apply get-owner args))
             ((eq? cmd 'get-tile) (apply get-tile args))
+            ((eq? cmd 'remove!) (apply remove! args))
             ((eq? cmd 'is-moving?) (apply is-moving? args))
+            ((eq? cmd 'is-removed?) (apply is-removed? args))
             (else (error "Unknown command" cmd))))
 
     (init)

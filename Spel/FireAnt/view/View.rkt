@@ -21,7 +21,11 @@
           (begin (let* ((object (car lst))
                         (type (object 'get-type)))
                    (case type
-                     ((player) (player-view 'draw ms))
+                     ((player) (if (object 'is-dead?)
+                                 (begin (player-view 'remove!))
+                                 (begin (if (player-view 'is-removed?)
+                                          (set! player-view (new-player-view player player-layer)))
+                                        (player-view 'draw ms))))
                      ((scorpion) (let* ((view (get-view object scorpion-views))
                                         (tile (view 'get-tile)))
                                    (view 'draw ms)))

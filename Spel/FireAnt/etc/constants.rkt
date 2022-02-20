@@ -3,5 +3,4 @@
 (define GRID-HEIGHT 20)
 (define GRID-WIDTH 35)
 (define TILE-SIZE 40)
-(define TRANSITION-SPEED 0.2)
 

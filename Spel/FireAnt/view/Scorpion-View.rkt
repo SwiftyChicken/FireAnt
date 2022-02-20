@@ -22,10 +22,10 @@
       (eq? object owner))
 
     (define (draw ms)
-      (let* ((step (* ms TRANSITION-SPEED))
+      (let* ((position (owner 'get-position))
+             (step (* ms (position 'get-speed)))
              (old-x (tile 'get-x))
              (old-y (tile 'get-y))
-             (position (owner 'get-position))
              (x (* (position 'get-x)
                    TILE-SIZE))
              (y (* (position 'get-y)

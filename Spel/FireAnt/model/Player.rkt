@@ -17,26 +17,31 @@
     (define (get-position)
       position)
 
+    (define (is-dead?)
+      (not alive))
+
 ;;;;;;;;;;;;;;;;;;; SETTERS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (set-position! pos)
       (set! position pos))
 
-;;;;;;;;;;;;;;;;;;; OTHER FUNC ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    (define (revive!)
+      (if (not (zero? lives))
+        (set! alive #t)))
+
     (define (die!)
-      (if (alive)
+      (if alive
         (begin (set! alive #f)
                (set! lives (- lives 1)))))
 
-    (define (is-dead)
-      (not alive))
-
+;;;;;;;;;;;;;;;;;;; OTHER FUNC ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;; DISPATCH ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (dispatch cmd . args)
       (cond ((eq? cmd 'get-type) (apply get-type args))
             ((eq? cmd 'get-position) (apply get-position args))
             ((eq? cmd 'set-position) (apply set-position! args))
-            ((eq? cmd 'is-dead) (apply is-dead args))
-            ((eq? cmd 'die) (apply die! args))
+            ((eq? cmd 'is-dead?) (apply is-dead? args))
+            ((eq? cmd 'die!) (apply die! args))
+            ((eq? cmd 'revive!) (apply revive! args))
             (else (error "Unkown command" cmd))))
 
     dispatch))
