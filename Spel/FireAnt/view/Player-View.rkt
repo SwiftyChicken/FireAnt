@@ -2,6 +2,7 @@
   (let* ((bitmap (string-append bitmap-dir "ant.png"))
          (mask (string-append mask-dir "ant.png"))
          (tile (make-bitmap-tile bitmap mask))
+         (direction 0)
          (removed #f))
 
     (define (init)
@@ -20,6 +21,7 @@
       tile)
 
     (define (draw ms)
+      (update-direction)
       (let* ((position (owner 'get-position))
              (step (* ms (position 'get-speed)))
              (old-x (tile 'get-x))
@@ -40,6 +42,20 @@
                    (setter (+ old step)))
                  #t)))
 
+    (define (update-direction)
+      (define (get-new-direction)
+        (case ((owner 'get-position) 'get-orientation)
+          ((down) 0)
+          ((left) 1)
+          ((up) 2)
+          ((right) 3)
+          (else direction)))
+      (let iter ((new-direction (get-new-direction)))
+        (if (not (eq? direction new-direction))
+          (begin (set! direction (modulo (+ direction 1) 4))
+                 (tile 'rotate-clockwise)
+                 (iter new-direction)))))
+    
     (define (is-moving?)
       moving)
 

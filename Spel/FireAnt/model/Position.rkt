@@ -12,6 +12,9 @@
     (define (get-y)
       (cdr position))
 
+    (define (get-orientation)
+      orientation)
+
     (define (get-speed)
       speed)
 
@@ -67,6 +70,7 @@
             ((eq? cmd 'get-y) (apply get-y args))
             ((eq? cmd 'set-y) (apply set-y! args))
             ((eq? cmd 'get-speed) (apply get-speed args))
+            ((eq? cmd 'get-orientation) (apply get-orientation args))
             ((eq? cmd 'is-moving?) (apply is-moving? args))
             ((eq? cmd 'set-moving!) (apply set-moving! args))
             ((eq? cmd 'peek)(apply peek args))
