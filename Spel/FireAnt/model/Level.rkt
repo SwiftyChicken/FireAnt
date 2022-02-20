@@ -5,6 +5,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (load "model/Maze.rkt")
 (load "model/Egg.rkt")
+(load "model/Scorpion.rkt")
 (load "model/Position.rkt")
 
 (define (new-level player map-file)
@@ -56,18 +57,16 @@
     (define (init-obj text x y)
       (let ((code (string (string-ref text 0)
                           (string-ref text 1)))
-            (args (list-tail (string->list text) 2)))
+            (arg (list-tail (string->list text) 2)))
         (cond ((string=? code "[]") (maze 'add-wall! y x))
             ((string=? code "  ") (maze 'del-wall! y x))
             ((string=? code "SP") (set! spawn (new-position x y))
                                      (respawn player))
             ((string=? code "EG") (set! eggs (cons (new-egg (new-position x y))
                                                    eggs)))
-            ((string=? code "SY") #f)
-            (else (display code) ;; Debugging
-                  (display "->")
-                  (display (string-length code))
-                  (newline)))))
+            ((string=? code "SY") (set! scorpions (cons (new-scorpion (new-position x y) arg)
+                                                        scorpions)))
+            (else (error "Unkown code in level file" code)))))
 
     (define (respawn player)
       (let ((x (spawn 'get-x))

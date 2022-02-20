@@ -1,6 +1,7 @@
 (define (new-position x y)
   (let ((type 'position)
-        (position (cons x y)))
+        (position (cons x y))
+        (orientation #f))
 ;;;;;;;;;;;;;;;;;;; GETTERS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (get-x)
       (car position))
@@ -30,10 +31,14 @@
       (let ((x (get-x))
             (y (get-y)))
         (case direction
-          ((up) (set-y! (- y 1)))
-          ((down) (set-y! (+ y 1)))
-          ((left) (set-x! (- x 1)))
-          ((right) (set-x! (+ x 1))))))
+          ((up) (set-y! (- y 1))
+                (set! orientation 'up))
+          ((down) (set-y! (+ y 1))
+                  (set! orientation 'down))
+          ((left) (set-x! (- x 1))
+                  (set! orientation 'left))
+          ((right) (set-x! (+ x 1))
+                   (set! orientation 'right)))))
 
 ;;;;;;;;;;;;;;;;;;; DISPATCH ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (dispatch cmd . args)

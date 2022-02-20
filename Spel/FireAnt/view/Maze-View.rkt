@@ -1,7 +1,5 @@
-(define (new-maze-view owner canvas)
-  (let* ((floor-layer (canvas 'make-layer))
-         (wall-layer (canvas 'make-layer))
-         (height (owner 'get-height))
+(define (new-maze-view owner floor-layer walls-layer)
+  (let* ((height (owner 'get-height))
          (width (owner 'get-width))
          (wall-bitmap (string-append bitmap-dir "wall.png"))
          (floor-bitmap (string-append bitmap-dir "floor.png")))
@@ -30,11 +28,12 @@
              (pos_y (* row TILE-SIZE)))
         ((tile 'set-x!) pos_x)
         ((tile 'set-y!) pos_y)
-        ((wall-layer 'add-drawable) tile)))
+        ((walls-layer 'add-drawable) tile)))
 
     (define (dispatch cmd . args)
       (cond ((eq? cmd 'draw) (apply draw args))
             ((eq? cmd 'get-owner) (apply get-owner args))
             (else (error "Unknown command" cmd))))
 
+    (draw)
     dispatch))

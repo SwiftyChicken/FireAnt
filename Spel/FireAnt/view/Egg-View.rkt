@@ -1,6 +1,6 @@
-(define (new-player-view owner layer)
-  (let* ((bitmap (string-append bitmap-dir "ant.png"))
-         (mask (string-append mask-dir "ant.png"))
+(define (new-egg-view owner layer)
+  (let* ((bitmap (string-append bitmap-dir "egg.png"))
+         (mask (string-append mask-dir "egg.png"))
          (tile (make-bitmap-tile bitmap mask))
          (moving #f))
 
@@ -41,7 +41,6 @@
 
     (define (is-moving?)
       moving)
-
     (define (dispatch cmd . args)
       (cond ((eq? cmd 'draw) (apply draw args))
             ((eq? cmd 'get-owner) (apply get-owner args))

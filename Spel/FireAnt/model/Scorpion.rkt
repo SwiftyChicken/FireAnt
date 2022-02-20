@@ -1,12 +1,10 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Egg ADT is verantwoordelijk voor:
+;; Scorpion ADT is verantwoordelijk voor:
 ;; [ ] 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(define (new-egg pos)
-  (let ((type 'egg)
-        (position pos)
-        (taken #f))
+(define (new-scorpion position route)
+  (let ((type 'scorpion))
 ;;;;;;;;;;;;;;;;;;; GETTERS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (get-type)
       type)
@@ -14,20 +12,12 @@
     (define (get-position)
       position)
 
-    (define (is-taken?)
-      taken)
-
 ;;;;;;;;;;;;;;;;;;; SETTERS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    (define (take!)
-      (set! taken #t))
-
 ;;;;;;;;;;;;;;;;;;; OTHER FUNC ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;; DISPATCH ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (dispatch cmd . args)
       (cond ((eq? cmd 'get-type) (apply get-type args))
             ((eq? cmd 'get-position) (apply get-position args))
-            ((eq? cmd 'is-taken?) (apply is-taken? args))
-            ((eq? cmd 'take!) (apply take! args))
             (else (error "Unkown command" cmd))))
 
     dispatch))
