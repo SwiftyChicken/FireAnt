@@ -1,12 +1,22 @@
-In deze sectie zullen alle ADTs beschreven dat men verwacht te gebruiken, om de elementaire functionaliteiten in fase 1 van \texttt{Fire Ant} te implementeren.
+In deze sectie zullen alle ADTs en hun proceduren beschreven worden 
+die in het programma voorkomen.
+Deze ADTs zullen verdeelt worden in 3 categorieën:
+\nameref{controller},
+\nameref{model} en
+\nameref{view}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%% CONTROLLER %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Controller}
+\label{controller}
+De controller zal centraal zijn om de interacties tussen de modellen en views te beheren. 
 
-\section{Game ADT}
+\subsection{Game ADT}
 \label{section:game}
-
-Het \texttt{\nameref{section:game}} is het centrale ADT det het spel op te start.
-Deze is verantwoordelijk om het initialisatie en onthouden van het juiste level en deze te updaten of te herstarten wanneer nodig.
-De \texttt{\nameref{section:game}} is ook verantwoordelijk om naar de invoer te luisteren en deze door te geven aan de \texttt{\nameref{section:level}}.
-Het luisteren zal gebeuren aan de hand van een spellus. 
+Het \texttt{\nameref{section:game}} is het centrale ADT dat het spel opstart en beheert.
+Deze is verantwoordelijk voor
+het initialiseren van de \texttt{\nameref{section:player}},
+het initialiseren en starten van de juiste \texttt{\nameref{section:level}},
+het verwerken van de speler invoer
+en het behandelen van het spellus.
 
 \begin{table}[hbt]
 \centering
@@ -14,9 +24,11 @@ Het luisteren zal gebeuren aan de hand van een spellus.
 \hline
 \rowcolor[HTML]{000000} 
 {\color[HTML]{FFFFFF} \textbf{Naam}} & {\color[HTML]{FFFFFF} \textbf{Signatuur}} \\ \hline
-newGame                             & $(list \rightarrow Game)$                  \\ \hline
-start!                               & $(\varnothing \rightarrow \varnothing)$    \\ \hline
-<??>                                 & <??>                                       \\ \hline
+new-game    & $($list $\rightarrow$ Game$)$                  \\ \hline
+start       & $(\varnothing \rightarrow \varnothing)$        \\ \hline
+next-level! & $(\varnothing \rightarrow \varnothing)$     	 \\ \hline
+key-handler & $($symbol symbol $\rightarrow \varnothing)$    \\ \hline
+game-loop   & $($number $\rightarrow \varnothing)$           \\ \hline
 \end{tabular}
 \caption{Operaties van het \texttt{\nameref{section:game}}}
 \label{table:1}
@@ -25,20 +37,41 @@ start!                               & $(\varnothing \rightarrow \varnothing)$  
 Het \texttt{\nameref{section:game}} bevat de volgende operaties:
 
 \begin{itemize}
-	\item \textbf{newGame}: Dit is de aanmaak operatie van het \texttt{\nameref{section:game}}.
-		Voor objecten van \texttt{\nameref{section:game}} te maken, moet er een lijst meegegeven worden van strings. Deze strings zijn de namen van tekst bestanden die zullen gebruikt worden door het \texttt{\nameref{section:level}}.
-	\item \textbf{start!}: Deze operatie start het spel op. 
-		Wanneer deze operatie uitgevoerd wordt zal er een venster aangemaakt worden.
-		Ook de operatie om een nieuw ant en het corresponderende level worden aangeroepen in het spel lus van het spel.
-	\item \textbf{<??>}: <??>
+	\item \textbf{new-game}: Deze operatie maakt een object van het \texttt{\nameref{section:game}} aan.
+	\item \textbf{start}: Start een nieuw spel op.
+		Eerst slaagt het alle namen van de levels (dit zijn csv bestanden) uit de "level" map op, in een lijst.
+		Deze lijst gebruikt het om de eerste \texttt{\nameref{section:level}} object te maken.
+		Vervolgens maakt het een nieuwe object van het \texttt{\nameref{section:player}} en het \texttt{\nameref{section:view}}.
+		Tenslotte "start" het, de spellus en gebruikers invoer met behulp van de game-loop en key-handler procedures respectievelijk. 
+	\item \textbf{next-level!}: Veranderd de huidige level (current-level) naar de volgende level in de levels lijst.
+		De oude level wordt ook verwijderd uit de levels lijst.
+		Het update ook de huidige level van de \texttt{\nameref{section:view}}.
+	\item \textbf{key-handler}: Neemt twee argumenten op state en key.
+		State is de status van de toets (key) op het huidige moment.
+		Op dit moment ondersteunt de functie enkel de pijltjes toetsen ingedrukt.
+		Wanneer dit gebeurt, beweegt het respectievelijk de speler als deze niet tegen een muur aanloopt.
+	\item \textbf{game-loop}: Neemt een argument op ms (milliseconde voor vorige aanroep).
+		Als de huidige level niet uitgespeeld is dan
+		update het de huidige level en de view object.
+		Daarnaast als de speler sterft, herleeft de level, de speler opnieuw.
+		In het geval dat het huidige level uitgespeeld is voer het next-level procedure op.
 \end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% MODELLEN %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Modellen}
+\label{model}
+De Modellen zullen verantwoordelijk zijn voor het spellogica m.a.w. alle berekening achter de schermen.
 
 \section{Level ADT}
 \label{section:level}
-
-Het \texttt{\nameref{section:level}} is het ADT verantwoordelijk om het level te vormen aan de hand van een tekst bestand en alles op zijn juiste plaats te zetten.
-Deze is verantwoordelijk om het level, characters en items te initialiseren.
-<??>
+Het \texttt{\nameref{section:level}} is het ADT dat een level opbouwt aan de hand van csv tekst bestand.
+Deze is verantwoordelijk om
+een csv bestand te lezen en zijn elementen ervan te interpreteren,
+het onthouden en aanmaken van alle nodige objecten in de level (bv. schorpioenen, eiren, het doolhof, etc.),
+de speler te laten herstarten,
+het updaten van de elementen in de level,
+het onthouden van de startpositie (spawn)
+en te checken of het level is uitgespeeld.
 
 \begin{table}[hbt]
 \centering
@@ -46,26 +79,55 @@ Deze is verantwoordelijk om het level, characters en items te initialiseren.
 \hline
 \rowcolor[HTML]{000000} 
 {\color[HTML]{FFFFFF} \textbf{Naam}} & {\color[HTML]{FFFFFF} \textbf{Signatuur}} \\ \hline
-newLevel                            & (string Ant $\rightarrow$ Level)   \\ \hline
-update!                              & (Ant $\rightarrow$ $\varnothing)$    \\ \hline
-isFinished?                          & ($\varnothing$ $\rightarrow$ boolean) \\ \hline
- <??>                                & (<??> $\rightarrow$ <??>)             \\ \hline
+new-level      & (Player string $\rightarrow$ Level)   \\ \hline
+init           & (string $\rightarrow$ $\varnothing$)                      \\ \hline
+get-maze       & ($\varnothing$ $\rightarrow$ Maze)                        \\ \hline
+get-eggs       & ($\varnothing$ $\rightarrow$ list)                        \\ \hline
+get-scorpions  & ($\varnothing$ $\rightarrow$ list)                        \\ \hline
+get-updates    & ($\varnothing$ $\rightarrow$ list)                        \\ \hline
+is-finished?   & (Player $\rightarrow$ boolean)                            \\ \hline
+is-legal-move? & (Object\footnotemark{} symbol $\rightarrow$ boolean)      \\ \hline
+update!        & ($\varnothing$ $\rightarrow$ $\varnothing)$               \\ \hline
+respawn        & ($\varnothing$ $\rightarrow$ $\varnothing$)               \\ \hline
+on-collision   & ((Object\footnotemark[\value{footnote}] $\rightarrow$ $\varnothing$) $\rightarrow$ $\varnothing$) \\ \hline
+interpret!     & (string number number $\rightarrow$ $\varnothing$)        \\ \hline
 \end{tabular}
 \caption{Operaties van het \texttt{\nameref{section:level}}}
 \label{table:level}
 \end{table}
 
-Het \texttt{\nameref{section:level}} bevat de volgende operaties:
 
+Het \texttt{\nameref{section:level}} bevat de volgende operaties:
 \begin{itemize}
-	\item \textbf{newLevel}: Dit is het aanmaak operatie van het \texttt{\nameref{section:level}}. Voor een object van het \texttt{\nameref{section:level}} aan te maken moet er een string en een object van het \texttt{\nameref{section:ant}} meegegeven worden.
-		Het string geeft het naam van het bestand weer dat door het \texttt{\nameref{section:maze}}, die in het \texttt{\nameref{section:level}} zit, zal gebruikt worden.
-		Het object van het \texttt{\nameref{section:ant}} is belangrijk voor het positioneren van de speler in het maze.<??>
-	\item \textbf{update!}: Deze operatie is verantwoordelijk om alle objecten van het \texttt{\nameref{section:character}} en het \texttt{\nameref{section:item}}, die respectievelijk opgeslagen zijn in een lijst, te updaten.
-		Het updaten van elk object gebeurt door hun respectievelijke \textit{\textbf{update!}} operatie aan te roepen.
-	\item \textbf{isFinished}: Deze operatie checkt of het level gedaan is of niet.
-	\item \textbf{<??>}: <??>
+	\item \textbf{new-level}: Neemt een \texttt{\nameref{section:level}} en de naam van level csv bestand op als argument op.
+		Deze procedure geeft een object van het type level terug.
+		Deze level object bezit alle elementen die het level bezit.
+	\item \textbf{init}: Deze procedure initialiseert het level door de element van het csv bestaand een na een door te geven aan het interpret! procedure
+		met de x en y positie van de element in de csv bestand.
+	\item \textbf{get-maze}: Geeft de \texttt{\nameref{section:maze}} object terug opgeslagen in de \texttt{\nameref{section:level}}.
+	\item \textbf{get-eggs}: Geeft een lijst van \texttt{\nameref{section:egg}} objecten terug die opgeslagen zijn in de \texttt{\nameref{section:level}}.
+	\item \textbf{get-scorpions}: Geeft een lijst van \texttt{\nameref{section:scorpion}} objecten terug die opgeslagen zijn in de \texttt{\nameref{section:level}}.
+	\item \textbf{get-updates}: Geeft een lijst van objecten terug die in de huidige iteratie van de spellus geüpdatet zijn.
+	\item \textbf{is-finished?}: Geeft aan of het spel is uitgespeeld door te kijken of de \texttt{\nameref{section:player}} helemaal onderaan de doolhof is geraakt.
+	\item \textbf{is-legal-move?}: Neemt een Object (dat een \texttt{\nameref{section:positie}} bezit) en een direction ('up, 'down, 'left or 'right) als argument op.
+		Het zoekt met met behulp van de positie van het Object naar zijn buur positie gelegen op de ``direction''.
+		Tenslotte kijkt de functie of de gebuurt positie een muur is aan de hand van de \texttt{\nameref{section:maze}}.
+	\item \textbf{update!}: De procedure update de ``updates'' lijst
+		door eerst de nodige objecten te updaten (en dus ook toe te voegen aan de lijst).
+		Vervolgens checkt het of er objecten zijn die botsen met het Player object 
+		en zo ja, voeren ze hun eigen procedure uit 
+		(bv. schorpioenen vermoorden de speler en eiren worden genomen/verdwijnen).
+		Deze objecten worden dan ook toegevoegd aan de lijst.
+	\item \textbf{respawn}: Deze procedure plaatst de Player terug op zijn start positie en geeft hem terug ``leven''.
+	\item \textbf{on-collision}: Neemt een procedure (die wordt uitgevoerd als er een botsing met de Player gebeurt) 
+		en een lijst van objecten die gecheckt moeten worden voor botsingen met de Player.
+	\item \textbf{interpret!}: Deze procedure neemt een string
+		(dat een element uit de csv bestand is)
+		, een x en y positie (dat de positie van de string voorstelt in de csv bestand).
+		Deze warden worden gebruikt om Objecten of de Maze van het \texttt{\nameref{section:level}}
 \end{itemize}
+
+\footnotetext{Object is een object dat een Positie ADT bezit.}
 
 \section{Position ADT}
 \label{section:positie}
@@ -82,7 +144,7 @@ isFinished?
 newPositie                          & (number number Maze $\rightarrow$ $Positie\cup\{\#f\}$)                                       \\ \hline
 move!                                & (number number $\rightarrow$ $\varnothing\cup\{\#f\}$)                                       \\ \hline
  eqPosistie?                                & (Positie $\rightarrow$ boolean)                                       \\ \hline
- <??>                                & (<??> $\rightarrow$ <??>)                                       \\ \hline
+ <++>                                & (<++> $\rightarrow$ <++>)                                       \\ \hline
 \end{tabular}
 \caption{Operaties van het \texttt{\nameref{section:positie}}}
 \label{table:positie}
@@ -96,14 +158,14 @@ Het \texttt{\nameref{section:positie}} bevat de volgende operaties:
 	\item \textbf{move!}: Verandert het positie van het \texttt{\nameref{section:positie}} als dat een geldige positie is in het \texttt{\nameref{section:maze}}.
 	\item \textbf{eqPosistie?}: Controleert dat het meegegeven Positie een gelijkwaardige positie heeft.
 		Dat wil zeggen dat het x- en y-co\"ordinaat een aan een gelijk zijn van elkaar. 
-	\item \textbf{<??>}: <??>
+	\item \textbf{<++>}: <++>
 \end{itemize}
 
-\section{Item ADT}
-\label{section:item}
+\section{Egg ADT}
+\label{section:egg}
 
-Het \texttt{\nameref{section:item}} stelt elk voorwerp voor dat kan opgeraapt  worden door een \texttt{Ant} (speler).
-<??>
+Het \texttt{\nameref{section:egg}} stelt elk voorwerp voor dat kan opgeraapt  worden door een \texttt{Ant} (speler).
+<++>
 
 \begin{table}[hbt]
 \centering
@@ -114,19 +176,19 @@ Het \texttt{\nameref{section:item}} stelt elk voorwerp voor dat kan opgeraapt  w
 newItem                              & (Positie (any $rightarrow$ any) $\rightarrow$ Item) \\ \hline
 isCollected?                         & ($\varnothing$ $\rightarrow$ boolean)               \\ \hline
 update!                              & (Ant $\rightarrow$ $\varnothing$)                   \\ \hline
- <??>                                & (<??> $\rightarrow$ <??>)                           \\ \hline
+ <++>                                & (<++> $\rightarrow$ <++>)                           \\ \hline
 \end{tabular}
-\caption{Operaties van het \texttt{\nameref{section:item}}}
+\caption{Operaties van het \texttt{\nameref{section:egg}}}
 \label{table:item}
 \end{table}
 
-Het \texttt{\nameref{section:item}} bevat de volgende operaties:
+Het \texttt{\nameref{section:egg}} bevat de volgende operaties:
 
 \begin{itemize}
-	\item \textbf{newItem}: Maakt een nieuw object van het \texttt{\nameref{section:item}}.
+	\item \textbf{newItem}: Maakt een nieuw object van het \texttt{\nameref{section:egg}}.
 		Het eerste argument dat de operatie neemt is een \texttt{\nameref{section:positie}} dat een positie in het maze (doolhof) aangeeft.
-		Vervolgens het tweede argument, een functie dat wordt toegepast bij het oprapen van het \texttt{\nameref{section:item}}.
-	\item \textbf{isCollected?}: Check of het \texttt{\nameref{section:item}} is opgeraapt of niet.
+		Vervolgens het tweede argument, een functie dat wordt toegepast bij het oprapen van het \texttt{\nameref{section:egg}}.
+	\item \textbf{isCollected?}: Check of het \texttt{\nameref{section:egg}} is opgeraapt of niet.
 	\item \textbf{update!}: Deze operatie checkt of het Ant object op dezelfde positie heeft als het item.
 		Als dat het geval is wordt het te toepassen effect toegepast door het functie dat werd meegegeven aan \textbf{newItem}.
 		Anders doet het operatie niks.
@@ -154,7 +216,7 @@ Het \texttt{\nameref{section:character}} bevat de volgende operaties:
 
 \begin{itemize}
 	\item \textbf{newCharacter}: Deze operatie maakt een object van het \texttt{\nameref{section:character}} aan.
-	\item \textbf{<??>}: <??>
+	\item \textbf{<++>}: <++>
 \end{itemize}
 
 \section{Maze ADT}
@@ -170,7 +232,7 @@ Het \texttt{\nameref{section:maze}} is verantwoordelijk om het spellogica van he
 {\color[HTML]{FFFFFF} \textbf{Naam}} & {\color[HTML]{FFFFFF} \textbf{Signatuur}} \\ \hline
 newMaze                              & (string $\rightarrow$ Maze)               \\ \hline
 isValidPosition?                      & (Positie $\rightarrow$ boolean)           \\ \hline
- <??>                                & (<??> $\rightarrow$ <??>)                 \\ \hline
+ <++>                                & (<++> $\rightarrow$ <++>)                 \\ \hline
 \end{tabular}
 \caption{Operaties van het \texttt{\nameref{section:maze}}}
 \label{table:maze}
@@ -181,9 +243,13 @@ Het \texttt{\nameref{section:maze}} bevat de volgende operaties:
 \begin{itemize}
 	\item \textbf{newMaze}: Deze operatie maakt een object van het \texttt{\nameref{section:maze}} aan.
 	\item \textbf{isValidPosition?}: Checkt als deze positie niet bezet is door een muur en dat het een bestaande positie is in het \texttt{\nameref{section:maze}}.
-	\item \textbf{<??>}: <??>
+	\item \textbf{<++>}: <++>
 \end{itemize}
 
+\section{Views}
+\label{view}
+\section{View ADT}
+\label{section:view}
 \section{View\textunderscore Maze ADT}
 \label{section:view_maze}
 
@@ -196,7 +262,7 @@ Het \texttt{\nameref{section:view_maze}} is verantwoordelijk om het \texttt{\nam
 \rowcolor[HTML]{000000} 
 {\color[HTML]{FFFFFF} \textbf{Naam}} & {\color[HTML]{FFFFFF} \textbf{Signatuur}} \\ \hline
 newView\textunderscore Maze                                 & (Maze $\rightarrow$ View\textunderscore Maze)                                       \\ \hline
- <??>                                & (<??> $\rightarrow$ <??>)                 \\ \hline
+ <++>                                & (<++> $\rightarrow$ <++>)                 \\ \hline
 \end{tabular}
 \caption{Operaties van het \texttt{\nameref{section:view_maze}}}
 \label{table:view_maze}
@@ -257,8 +323,8 @@ Het \texttt{\nameref{section:view_scorpion}} bevat de volgende operaties:
 	\item \textbf{<++>}: <++>
 \end{itemize}
 
-\section{Ant ADT}
-\label{section:ant}
+\section{Player ADT}
+\label{section:player}
 
 <++>
 
@@ -270,18 +336,18 @@ Het \texttt{\nameref{section:view_scorpion}} bevat de volgende operaties:
 {\color[HTML]{FFFFFF} \textbf{Naam}} & {\color[HTML]{FFFFFF} \textbf{Signatuur}} \\ \hline
 <++>                                 & (<++> $\rightarrow$ <++>)                                       \\ \hline
 \end{tabular}
-\caption{Operaties van het \texttt{\nameref{section:ant}}}
+\caption{Operaties van het \texttt{\nameref{section:player}}}
 \label{table:ant}
 \end{table}
 
-Het \texttt{\nameref{section:ant}} bevat de volgende operaties:
+Het \texttt{\nameref{section:player}} bevat de volgende operaties:
 
 \begin{itemize}
 	\item \textbf{<++>}: <++>
 	\item \textbf{<++>}: <++>
 \end{itemize}
 
-\section{View\textunderscore Ant ADT}
+\section{View\textunderscore Player ADT}
 \label{section:view_ant}
 
 <++>

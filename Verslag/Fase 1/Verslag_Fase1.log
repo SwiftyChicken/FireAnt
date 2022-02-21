@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021/Arch Linux) (preloaded format=pdflatex 2021.12.31)  21 FEB 2022 17:01
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021/Arch Linux) (preloaded format=pdflatex 2021.12.31)  21 FEB 2022 21:43
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -515,27 +515,27 @@ l.59 \newpage
 Hoofdstuk 1.
 (./chapters/1_Introductie.tex)
 Hoofdstuk 2.
-(./chapters/2_ADTs.tex [2] [3] [4] [5] [6] [7] [8])
+(./chapters/2_ADTs.tex [2] [3] [4] [5] [6] [7] [8] [9])
 Hoofdstuk 3.
-(./chapters/3_Afhankelijkheidsdiagram.tex)
+(./chapters/3_Afhankelijkheidsdiagram.tex [10])
 Hoofdstuk 4.
-(./chapters/4_Planning.tex) [9] (./Verslag_Fase1.aux)
+(./chapters/4_Planning.tex) [11] (./Verslag_Fase1.aux)
 Package rerunfilecheck Info: File `Verslag_Fase1.out' has not changed.
-(rerunfilecheck)             Checksum: 1281C644C3798F27A45BC2B44925F9B1;2122.
+(rerunfilecheck)             Checksum: 9B062B1C5C90FE29D8FEF0419076840F;2535.
  ) 
 Here is how much of TeX's memory you used:
- 22225 strings out of 478353
- 425428 string characters out of 5854634
- 716963 words of memory out of 5000000
- 39931 multiletter control sequences out of 15000+600000
- 412356 words of font info for 60 fonts, out of 8000000 for 9000
+ 22261 strings out of 478353
+ 425841 string characters out of 5854634
+ 718121 words of memory out of 5000000
+ 39955 multiletter control sequences out of 15000+600000
+ 414494 words of font info for 69 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 84i,10n,80p,1202b,842s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}</usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmbxti10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb>
-Output written on Verslag_Fase1.pdf (10 pages, 169661 bytes).
+ 84i,14n,80p,1202b,842s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}</usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb>
+Output written on Verslag_Fase1.pdf (12 pages, 193299 bytes).
 PDF statistics:
- 297 PDF objects out of 1000 (max. 8388607)
- 258 compressed objects within 3 object streams
- 43 named destinations out of 1000 (max. 500000)
- 165 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 347 PDF objects out of 1000 (max. 8388607)
+ 301 compressed objects within 4 object streams
+ 50 named destinations out of 1000 (max. 500000)
+ 197 words of extra memory for PDF output out of 10000 (max. 10000000)
 

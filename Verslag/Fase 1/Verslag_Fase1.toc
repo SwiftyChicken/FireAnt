@@ -3,19 +3,23 @@
 \contentsline {chapter}{\numberline {1}Intorductie}{2}{chapter.1}%
 \contentsline {section}{\numberline {1.1}Spelbeschrijving}{2}{section.1.1}%
 \contentsline {section}{\numberline {1.2}Implementatie}{2}{section.1.2}%
-\contentsline {chapter}{\numberline {2}ADTs}{2}{chapter.2}%
-\contentsline {section}{\numberline {2.1}Game ADT}{3}{section.2.1}%
-\contentsline {section}{\numberline {2.2}Level ADT}{3}{section.2.2}%
-\contentsline {section}{\numberline {2.3}Position ADT}{4}{section.2.3}%
-\contentsline {section}{\numberline {2.4}Item ADT}{5}{section.2.4}%
-\contentsline {section}{\numberline {2.5}Character ADT}{5}{section.2.5}%
-\contentsline {section}{\numberline {2.6}Maze ADT}{6}{section.2.6}%
-\contentsline {section}{\numberline {2.7}View\textunderscore Maze ADT}{6}{section.2.7}%
-\contentsline {section}{\numberline {2.8}Scorpion ADT}{7}{section.2.8}%
-\contentsline {section}{\numberline {2.9}View\textunderscore Scorpion ADT}{7}{section.2.9}%
-\contentsline {section}{\numberline {2.10}Ant ADT}{7}{section.2.10}%
-\contentsline {section}{\numberline {2.11}View\textunderscore Ant ADT}{8}{section.2.11}%
-\contentsline {section}{\numberline {2.12}Eggs ADT}{8}{section.2.12}%
-\contentsline {section}{\numberline {2.13}View\textunderscore Eggs ADT}{8}{section.2.13}%
-\contentsline {chapter}{\numberline {3}Afhankelijkheidsdiagram}{9}{chapter.3}%
-\contentsline {chapter}{\numberline {4}Planning}{9}{chapter.4}%
+\contentsline {chapter}{\numberline {2}ADTs}{3}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Controller}{3}{section.2.1}%
+\contentsline {subsection}{\numberline {2.1.1}Game ADT}{3}{subsection.2.1.1}%
+\contentsline {section}{\numberline {2.2}Modellen}{4}{section.2.2}%
+\contentsline {section}{\numberline {2.3}Level ADT}{4}{section.2.3}%
+\contentsline {section}{\numberline {2.4}Position ADT}{6}{section.2.4}%
+\contentsline {section}{\numberline {2.5}Egg ADT}{6}{section.2.5}%
+\contentsline {section}{\numberline {2.6}Character ADT}{7}{section.2.6}%
+\contentsline {section}{\numberline {2.7}Maze ADT}{8}{section.2.7}%
+\contentsline {section}{\numberline {2.8}Views}{8}{section.2.8}%
+\contentsline {section}{\numberline {2.9}View ADT}{8}{section.2.9}%
+\contentsline {section}{\numberline {2.10}View\textunderscore Maze ADT}{8}{section.2.10}%
+\contentsline {section}{\numberline {2.11}Scorpion ADT}{9}{section.2.11}%
+\contentsline {section}{\numberline {2.12}View\textunderscore Scorpion ADT}{9}{section.2.12}%
+\contentsline {section}{\numberline {2.13}Player ADT}{9}{section.2.13}%
+\contentsline {section}{\numberline {2.14}View\textunderscore Player ADT}{10}{section.2.14}%
+\contentsline {section}{\numberline {2.15}Eggs ADT}{10}{section.2.15}%
+\contentsline {section}{\numberline {2.16}View\textunderscore Eggs ADT}{10}{section.2.16}%
+\contentsline {chapter}{\numberline {3}Afhankelijkheidsdiagram}{11}{chapter.3}%
+\contentsline {chapter}{\numberline {4}Planning}{11}{chapter.4}%
