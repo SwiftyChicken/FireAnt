@@ -1,0 +1,355 @@
+In deze sectie zullen alle ADTs beschreven dat men verwacht te gebruiken, om de elementaire functionaliteiten in fase 1 van \texttt{Fire Ant} te implementeren.
+
+\section{Game ADT}
+\label{section:game}
+
+Het \texttt{\nameref{section:game}} is het centrale ADT det het spel op te start.
+Deze is verantwoordelijk om het initialisatie en onthouden van het juiste level en deze te updaten of te herstarten wanneer nodig.
+De \texttt{\nameref{section:game}} is ook verantwoordelijk om naar de invoer te luisteren en deze door te geven aan de \texttt{\nameref{section:level}}.
+Het luisteren zal gebeuren aan de hand van een spellus. 
+
+\begin{table}[hbt]
+\centering
+\begin{tabular}{|ll|}
+\hline
+\rowcolor[HTML]{000000} 
+{\color[HTML]{FFFFFF} \textbf{Naam}} & {\color[HTML]{FFFFFF} \textbf{Signatuur}} \\ \hline
+newGame                             & $(list \rightarrow Game)$                  \\ \hline
+start!                               & $(\varnothing \rightarrow \varnothing)$    \\ \hline
+<??>                                 & <??>                                       \\ \hline
+\end{tabular}
+\caption{Operaties van het \texttt{\nameref{section:game}}}
+\label{table:1}
+\end{table}
+
+Het \texttt{\nameref{section:game}} bevat de volgende operaties:
+
+\begin{itemize}
+	\item \textbf{newGame}: Dit is de aanmaak operatie van het \texttt{\nameref{section:game}}.
+		Voor objecten van \texttt{\nameref{section:game}} te maken, moet er een lijst meegegeven worden van strings. Deze strings zijn de namen van tekst bestanden die zullen gebruikt worden door het \texttt{\nameref{section:level}}.
+	\item \textbf{start!}: Deze operatie start het spel op. 
+		Wanneer deze operatie uitgevoerd wordt zal er een venster aangemaakt worden.
+		Ook de operatie om een nieuw ant en het corresponderende level worden aangeroepen in het spel lus van het spel.
+	\item \textbf{<??>}: <??>
+\end{itemize}
+
+\section{Level ADT}
+\label{section:level}
+
+Het \texttt{\nameref{section:level}} is het ADT verantwoordelijk om het level te vormen aan de hand van een tekst bestand en alles op zijn juiste plaats te zetten.
+Deze is verantwoordelijk om het level, characters en items te initialiseren.
+<??>
+
+\begin{table}[hbt]
+\centering
+\begin{tabular}{|ll|}
+\hline
+\rowcolor[HTML]{000000} 
+{\color[HTML]{FFFFFF} \textbf{Naam}} & {\color[HTML]{FFFFFF} \textbf{Signatuur}} \\ \hline
+newLevel                            & (string Ant $\rightarrow$ Level)   \\ \hline
+update!                              & (Ant $\rightarrow$ $\varnothing)$    \\ \hline
+isFinished?                          & ($\varnothing$ $\rightarrow$ boolean) \\ \hline
+ <??>                                & (<??> $\rightarrow$ <??>)             \\ \hline
+\end{tabular}
+\caption{Operaties van het \texttt{\nameref{section:level}}}
+\label{table:level}
+\end{table}
+
+Het \texttt{\nameref{section:level}} bevat de volgende operaties:
+
+\begin{itemize}
+	\item \textbf{newLevel}: Dit is het aanmaak operatie van het \texttt{\nameref{section:level}}. Voor een object van het \texttt{\nameref{section:level}} aan te maken moet er een string en een object van het \texttt{\nameref{section:ant}} meegegeven worden.
+		Het string geeft het naam van het bestand weer dat door het \texttt{\nameref{section:maze}}, die in het \texttt{\nameref{section:level}} zit, zal gebruikt worden.
+		Het object van het \texttt{\nameref{section:ant}} is belangrijk voor het positioneren van de speler in het maze.<??>
+	\item \textbf{update!}: Deze operatie is verantwoordelijk om alle objecten van het \texttt{\nameref{section:character}} en het \texttt{\nameref{section:item}}, die respectievelijk opgeslagen zijn in een lijst, te updaten.
+		Het updaten van elk object gebeurt door hun respectievelijke \textit{\textbf{update!}} operatie aan te roepen.
+	\item \textbf{isFinished}: Deze operatie checkt of het level gedaan is of niet.
+	\item \textbf{<??>}: <??>
+\end{itemize}
+
+\section{Position ADT}
+\label{section:positie}
+
+De \texttt{\nameref{section:positie}} dit is een simpel ADT dat de positie in een level voorstelt.
+isFinished?
+
+\begin{table}[hbt]
+\centering
+\begin{tabular}{|ll|}
+\hline
+\rowcolor[HTML]{000000} 
+{\color[HTML]{FFFFFF} \textbf{Naam}} & {\color[HTML]{FFFFFF} \textbf{Signatuur}} \\ \hline
+newPositie                          & (number number Maze $\rightarrow$ $Positie\cup\{\#f\}$)                                       \\ \hline
+move!                                & (number number $\rightarrow$ $\varnothing\cup\{\#f\}$)                                       \\ \hline
+ eqPosistie?                                & (Positie $\rightarrow$ boolean)                                       \\ \hline
+ <??>                                & (<??> $\rightarrow$ <??>)                                       \\ \hline
+\end{tabular}
+\caption{Operaties van het \texttt{\nameref{section:positie}}}
+\label{table:positie}
+\end{table}
+
+Het \texttt{\nameref{section:positie}} bevat de volgende operaties:
+
+\begin{itemize}
+	\item \textbf{newPositie}: Deze operatie maakt een nieuw object van het \texttt{\nameref{section:positie}} aan. 
+		Die twee numbers opneemt dat respectievelijk de x- en y-co\"ordinaat zijn in het meegegeven \texttt{\nameref{section:maze}}.
+	\item \textbf{move!}: Verandert het positie van het \texttt{\nameref{section:positie}} als dat een geldige positie is in het \texttt{\nameref{section:maze}}.
+	\item \textbf{eqPosistie?}: Controleert dat het meegegeven Positie een gelijkwaardige positie heeft.
+		Dat wil zeggen dat het x- en y-co\"ordinaat een aan een gelijk zijn van elkaar. 
+	\item \textbf{<??>}: <??>
+\end{itemize}
+
+\section{Item ADT}
+\label{section:item}
+
+Het \texttt{\nameref{section:item}} stelt elk voorwerp voor dat kan opgeraapt  worden door een \texttt{Ant} (speler).
+<??>
+
+\begin{table}[hbt]
+\centering
+\begin{tabular}{|ll|}
+\hline
+\rowcolor[HTML]{000000} 
+{\color[HTML]{FFFFFF} \textbf{Naam}} & {\color[HTML]{FFFFFF} \textbf{Signatuur}} \\ \hline
+newItem                              & (Positie (any $rightarrow$ any) $\rightarrow$ Item) \\ \hline
+isCollected?                         & ($\varnothing$ $\rightarrow$ boolean)               \\ \hline
+update!                              & (Ant $\rightarrow$ $\varnothing$)                   \\ \hline
+ <??>                                & (<??> $\rightarrow$ <??>)                           \\ \hline
+\end{tabular}
+\caption{Operaties van het \texttt{\nameref{section:item}}}
+\label{table:item}
+\end{table}
+
+Het \texttt{\nameref{section:item}} bevat de volgende operaties:
+
+\begin{itemize}
+	\item \textbf{newItem}: Maakt een nieuw object van het \texttt{\nameref{section:item}}.
+		Het eerste argument dat de operatie neemt is een \texttt{\nameref{section:positie}} dat een positie in het maze (doolhof) aangeeft.
+		Vervolgens het tweede argument, een functie dat wordt toegepast bij het oprapen van het \texttt{\nameref{section:item}}.
+	\item \textbf{isCollected?}: Check of het \texttt{\nameref{section:item}} is opgeraapt of niet.
+	\item \textbf{update!}: Deze operatie checkt of het Ant object op dezelfde positie heeft als het item.
+		Als dat het geval is wordt het te toepassen effect toegepast door het functie dat werd meegegeven aan \textbf{newItem}.
+		Anders doet het operatie niks.
+\end{itemize}
+
+\section{Character ADT}
+\label{section:character}
+
+Het \texttt{\nameref{section:character}} moet een elke beweegbare character voorstellen in het spel.
+Deze is verantwoordelijk voor alle algemeen functies die een object van deze \texttt{ADT} bezit.
+
+\begin{table}[hbt]
+\centering
+\begin{tabular}{|ll|}
+\hline
+\rowcolor[HTML]{000000} 
+{\color[HTML]{FFFFFF} \textbf{Naam}} & {\color[HTML]{FFFFFF} \textbf{Signatuur}} \\ \hline
+newCharacter                                 & (Positie $\rightarrow$ Character)                                       \\ \hline
+\end{tabular}
+\caption{Operaties van het \texttt{\nameref{section:character}}}
+\label{table:character}
+\end{table}
+
+Het \texttt{\nameref{section:character}} bevat de volgende operaties:
+
+\begin{itemize}
+	\item \textbf{newCharacter}: Deze operatie maakt een object van het \texttt{\nameref{section:character}} aan.
+	\item \textbf{<??>}: <??>
+\end{itemize}
+
+\section{Maze ADT}
+\label{section:maze}
+
+Het \texttt{\nameref{section:maze}} is verantwoordelijk om het spellogica van het doolhof te construeren.
+
+\begin{table}[hbt]
+\centering
+\begin{tabular}{|ll|}
+\hline
+\rowcolor[HTML]{000000} 
+{\color[HTML]{FFFFFF} \textbf{Naam}} & {\color[HTML]{FFFFFF} \textbf{Signatuur}} \\ \hline
+newMaze                              & (string $\rightarrow$ Maze)               \\ \hline
+isValidPosition?                      & (Positie $\rightarrow$ boolean)           \\ \hline
+ <??>                                & (<??> $\rightarrow$ <??>)                 \\ \hline
+\end{tabular}
+\caption{Operaties van het \texttt{\nameref{section:maze}}}
+\label{table:maze}
+\end{table}
+
+Het \texttt{\nameref{section:maze}} bevat de volgende operaties:
+
+\begin{itemize}
+	\item \textbf{newMaze}: Deze operatie maakt een object van het \texttt{\nameref{section:maze}} aan.
+	\item \textbf{isValidPosition?}: Checkt als deze positie niet bezet is door een muur en dat het een bestaande positie is in het \texttt{\nameref{section:maze}}.
+	\item \textbf{<??>}: <??>
+\end{itemize}
+
+\section{View\textunderscore Maze ADT}
+\label{section:view_maze}
+
+Het \texttt{\nameref{section:view_maze}} is verantwoordelijk om het \texttt{\nameref{section:maze}} voor te stellen in teken logica gedeelte van het spel.
+
+\begin{table}[hbt]
+\centering
+\begin{tabular}{|ll|}
+\hline
+\rowcolor[HTML]{000000} 
+{\color[HTML]{FFFFFF} \textbf{Naam}} & {\color[HTML]{FFFFFF} \textbf{Signatuur}} \\ \hline
+newView\textunderscore Maze                                 & (Maze $\rightarrow$ View\textunderscore Maze)                                       \\ \hline
+ <??>                                & (<??> $\rightarrow$ <??>)                 \\ \hline
+\end{tabular}
+\caption{Operaties van het \texttt{\nameref{section:view_maze}}}
+\label{table:view_maze}
+\end{table}
+
+Het \texttt{\nameref{section:view_maze}} bevat de volgende operaties:
+
+\begin{itemize}
+	\item \textbf{++}: <++>
+	\item \textbf{<++>}: <++>
+\end{itemize}
+
+\section{Scorpion ADT}
+\label{section:scorpion}
+
+<++>
+
+\begin{table}[hbt]
+\centering
+\begin{tabular}{|ll|}
+\hline
+\rowcolor[HTML]{000000} 
+{\color[HTML]{FFFFFF} \textbf{Naam}} & {\color[HTML]{FFFFFF} \textbf{Signatuur}} \\ \hline
+<++>                                 & (<++> $\rightarrow$ <++>)                                       \\ \hline
+\end{tabular}
+\caption{Operaties van het \texttt{\nameref{section:scorpion}}}
+\label{table:scorpion}
+\end{table}
+
+Het \texttt{\nameref{section:scorpion}} bevat de volgende operaties:
+
+\begin{itemize}
+	\item \textbf{<++>}: <++>
+	\item \textbf{<++>}: <++>
+\end{itemize}
+
+\section{View\textunderscore Scorpion ADT}
+\label{section:view_scorpion}
+
+<++>
+
+\begin{table}[hbt]
+\centering
+\begin{tabular}{|ll|}
+\hline
+\rowcolor[HTML]{000000} 
+{\color[HTML]{FFFFFF} \textbf{Naam}} & {\color[HTML]{FFFFFF} \textbf{Signatuur}} \\ \hline
+<++>                                 & (<++> $\rightarrow$ <++>)                                       \\ \hline
+\end{tabular}
+\caption{Operaties van het \texttt{\nameref{section:view_scorpion}}}
+\label{table:view_scorpion}
+\end{table}
+
+Het \texttt{\nameref{section:view_scorpion}} bevat de volgende operaties:
+
+\begin{itemize}
+	\item \textbf{<++>}: <++>
+	\item \textbf{<++>}: <++>
+\end{itemize}
+
+\section{Ant ADT}
+\label{section:ant}
+
+<++>
+
+\begin{table}[hbt]
+\centering
+\begin{tabular}{|ll|}
+\hline
+\rowcolor[HTML]{000000} 
+{\color[HTML]{FFFFFF} \textbf{Naam}} & {\color[HTML]{FFFFFF} \textbf{Signatuur}} \\ \hline
+<++>                                 & (<++> $\rightarrow$ <++>)                                       \\ \hline
+\end{tabular}
+\caption{Operaties van het \texttt{\nameref{section:ant}}}
+\label{table:ant}
+\end{table}
+
+Het \texttt{\nameref{section:ant}} bevat de volgende operaties:
+
+\begin{itemize}
+	\item \textbf{<++>}: <++>
+	\item \textbf{<++>}: <++>
+\end{itemize}
+
+\section{View\textunderscore Ant ADT}
+\label{section:view_ant}
+
+<++>
+
+\begin{table}[hbt]
+\centering
+\begin{tabular}{|ll|}
+\hline
+\rowcolor[HTML]{000000} 
+{\color[HTML]{FFFFFF} \textbf{Naam}} & {\color[HTML]{FFFFFF} \textbf{Signatuur}} \\ \hline
+<++>                                 & (<++> $\rightarrow$ <++>)                                       \\ \hline
+\end{tabular}
+\caption{Operaties van het \texttt{\nameref{section:view_ant}}}
+\label{table:view_ant}
+\end{table}
+
+Het \texttt{\nameref{section:view_ant}} bevat de volgende operaties:
+
+\begin{itemize}
+	\item \textbf{<++>}: <++>
+	\item \textbf{<++>}: <++>
+\end{itemize}
+
+\section{Eggs ADT}
+\label{section:eggs}
+
+<++>
+
+\begin{table}[hbt]
+\centering
+\begin{tabular}{|ll|}
+\hline
+\rowcolor[HTML]{000000} 
+{\color[HTML]{FFFFFF} \textbf{Naam}} & {\color[HTML]{FFFFFF} \textbf{Signatuur}} \\ \hline
+<++>                                 & (<++> $\rightarrow$ <++>)                                       \\ \hline
+\end{tabular}
+\caption{Operaties van het \texttt{\nameref{section:eggs}}}
+\label{table:eggs}
+\end{table}
+
+Het \texttt{\nameref{section:eggs}} bevat de volgende operaties:
+
+\begin{itemize}
+	\item \textbf{<++>}: <++>
+	\item \textbf{<++>}: <++>
+\end{itemize}
+
+\section{View\textunderscore Eggs ADT}
+\label{section:view_eggs}
+
+<++>
+
+\begin{table}[hbt]
+\centering
+\begin{tabular}{|ll|}
+\hline
+\rowcolor[HTML]{000000} 
+{\color[HTML]{FFFFFF} \textbf{Naam}} & {\color[HTML]{FFFFFF} \textbf{Signatuur}} \\ \hline
+<++>                                 & (<++> $\rightarrow$ <++>)                                       \\ \hline
+\end{tabular}
+\caption{Operaties van het \texttt{\nameref{section:view_eggs}}}
+\label{table:view_eggs}
+\end{table}
+
+Het \texttt{\nameref{section:view_eggs}} bevat de volgende operaties:
+
+\begin{itemize}
+	\item \textbf{<++>}: <++>
+	\item \textbf{<++>}: <++>
+\end{itemize}
+

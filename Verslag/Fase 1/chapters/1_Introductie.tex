@@ -1,0 +1,32 @@
+Dit document beschrijft het implementatie van het spelletjes \texttt{Fire Ant} in scheme \textbf{r5rs}.
+Het maakt deel uit van het opleidingsonderdeel "Programmeerproject 1".
+
+\section{Spelbeschrijving}
+
+In dit spel is het de bedoeling dat een speler een \textit{vuurmier} bestuurt, die tracht zijn mierenkoningin te redden van schorpioenenleger.
+Om dit te voltooien moet de speler een serie van levels, die toenemen in moeilijkheidsgraad, oplossen zodat hij tot bij de koningin kan geraken.
+Zo een level is een doolhof dat gevuld is met (verschillende soorten) puzzels en schorpioenen die de doorgangen bewaken.
+Enkel door deze puzzels op te lossen en de schorpioenen te vermijden, kan de speler het level oplossen.
+Het spel eindigt dan tot dat alle levels opgelost zijn of tot dat de speler al zijn levens kwijt is geraakt.
+
+\section{Implementatie}
+
+Voor het spel te implementeren zal er gewerkt worden in twee fases.
+In deze document zal enkel de implementatie van het eerste fase besporken worden.
+Het doel van deze fase zal het implementeren van de elementaire componenten en handelingen zijn.
+
+Om het spel te implementeren zal er gebruikt gemaakt worden van een spellus.
+Deze spellus moet de invoer van de speler behandelen, de spellogica en de elementen in het spel updaten bij elke iteratie/frame.\\
+Omdat dit enkel het eerste fase is zullen er enkel de volgende elementaire functionaliteiten ge\"implementeerd worden:
+
+\begin{itemize}
+	\item Een spelwereld dat een verzameling zal moeten bevatten van doolhoven (levels).
+	\item Een doolhof dat de plaatsing van de muren, in- en uitgang bepaalt.
+	\item Een vuurmier dat kan bestuurt worden op basis van de gebruikersinvoer.
+	\item Een schorpioen die een vaste pad bezit en kan zien of hij de vuurmier (speler) aanraakt.
+	\item Eitjes die een vast positie hebben in het doolhof en kunnen check of ze door de vuurmier (speler) zijn opgeraapt.
+\end{itemize}
+
+Het tekenlogica voor elk van deze elementen zal respectievelijk zelf door het element bijgehouden en geupdate worden.
+Met andere woorden, elke element dat op het spel weergegeven moet worden zal, naast het spellogica, ook nog een andere element bijhouden dat het grafische visalisatie zal tekenen.
+
