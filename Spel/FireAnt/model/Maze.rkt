@@ -14,9 +14,6 @@
     (define (get-type)
       type)
 
-    (define (get-maze)
-      maze)
-
     (define (get-height)
       height)
 
@@ -38,7 +35,6 @@
     (define (dispatch cmd . args)
       (cond ((eq? cmd 'get-type) (apply get-type args))
             ((eq? cmd 'set-wall!) (apply set-wall! args))
-            ((eq? cmd 'get-maze) (apply get-maze args))
             ((eq? cmd 'is-wall?) (apply is-wall? args))
             ((eq? cmd 'get-height) (apply get-height args))
             ((eq? cmd 'get-width) (apply get-width args))
