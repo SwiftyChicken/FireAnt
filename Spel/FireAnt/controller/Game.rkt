@@ -35,22 +35,25 @@
           (display "GAME COMPLETED")))
 
 ;;;;;;;;;;;;;;;;;;; KEY HANDLER ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-      ((view 'key-handler) 
-       (lambda (state key)
-         (cond ((eq? state 'pressed)
-                (case key
-                  ((up down left right) (if (current-level 'is-legal-move? player key)
-                                          ((player 'get-position) 'move! key))))))))
+      (define (key-handler state key)
+        (cond ((eq? state 'pressed)
+               (case key
+                 ((up down left right) (if (current-level 'is-legal-move? player key)
+                                         ((player 'get-position) 'move! key)))))))
 
 ;;;;;;;;;;;;;;;;;;; GAME LOOP ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-      ((view 'game-loop) 
-       (lambda (ms)
-         (if (not (current-level 'is-finished? player))
-           (begin (current-level 'update!)
-                  (view 'update ms)
-                  (if (player 'is-dead?)
-                    (current-level 'respawn)))
-           (next-level!))))))
+      (define (game-loop ms)
+        (if (not (current-level 'is-finished? player))
+          (begin (current-level 'update!)
+                 (view 'update ms)
+                 (if (player 'is-dead?)
+                   (current-level 'respawn)))
+          (next-level!)))
+
+;;;;;;;;;;;;;;;;;;; START LOOP ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      ((view 'key-handler) key-handler)
+      ((view 'game-loop) game-loop)))
+       
 
 ;;;;;;;;;;;;;;;;;;; DISPATCH ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       (define (dispatch cmd . args)
