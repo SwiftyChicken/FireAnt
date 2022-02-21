@@ -37,6 +37,9 @@
     (define (set-y! new-y)
       (set-cdr! position new-y))
 
+    (define (set-orientation! direction)
+      (set! orientation direction))
+
     (define (set-moving! bool)
       (set! moving bool))
 
@@ -90,6 +93,7 @@
             ((eq? cmd 'set-x) (apply set-x! args))
             ((eq? cmd 'set-y) (apply set-y! args))
             ((eq? cmd 'set-moving!) (apply set-moving! args))
+            ((eq? cmd 'set-orientation!) (apply set-orientation! args))
             ((eq? cmd 'is-moving?) (apply is-moving? args))
             ((eq? cmd 'is-colliding?) (apply is-colliding? args))
             ((eq? cmd 'move!)(apply move! args))

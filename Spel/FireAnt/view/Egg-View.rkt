@@ -1,9 +1,17 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Egg View ADT is verantwoordelijk voor:
+;; [x] Maken, initialiseren en onthouden van de tile
+;; [x] Verwijder tile als wanneer nodig
+;; [x] Checken of een object de eigenaar is
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (define (new-egg-view owner layer)
   (let* ((bitmap (string-append bitmap-dir "egg.png"))
          (mask (string-append mask-dir "egg.png"))
          (tile (make-bitmap-tile bitmap mask))
          (removed #f))
 
+;;;;;;;;;;;;;;;;;;; INITIALIZATION ;;;;;;;;;;;;;;;;;;;;;;;;
     (define (init)
       (let ((x (* ((owner 'get-position) 'get-x)
                   TILE-SIZE))
@@ -13,30 +21,25 @@
         ((tile 'set-y!) y)
         ((layer 'add-drawable) tile)))
 
+;;;;;;;;;;;;;;;;;;; GETTERS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (get-owner)
       owner)
 
-    (define (get-tile)
-      tile)
+;;;;;;;;;;;;;;;;;;; PREDICATES ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    (define (is-owner? object)
+      (eq? object owner))
 
+;;;;;;;;;;;;;;;;;;; DESTRUCTIVE ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (remove!)
       (if (not removed)
         (begin ((layer 'remove-drawable) tile)
                (set! removed #t))))
 
-    (define (is-owner? object)
-      (eq? object owner))
-
-    (define (is-removed?)
-      removed)
-
+;;;;;;;;;;;;;;;;;;; DISPATCH ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (dispatch cmd . args)
-      (cond ((eq? cmd 'draw) (apply draw args))
-            ((eq? cmd 'get-owner) (apply get-owner args))
-            ((eq? cmd 'get-tile) (apply get-tile args))
-            ((eq? cmd 'remove!) (apply remove! args))
+      (cond ((eq? cmd 'get-owner) (apply get-owner args))
             ((eq? cmd 'is-owner?) (apply is-owner? args))
-            ((eq? cmd 'is-removed?) (apply is-removed? args))
+            ((eq? cmd 'remove!) (apply remove! args))
             (else (error "Unknown command" cmd))))
 
     (init)

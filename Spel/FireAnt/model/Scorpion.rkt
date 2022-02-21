@@ -49,7 +49,7 @@
           (begin (position 'move! direction)
                  (set! iterate (- iterate 1)))
           (begin (next-command!)
-                 (update)))))
+                 (update!)))))
 
 ;;;;;;;;;;;;;;;;;;; AUXILIARY ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (next-command!)

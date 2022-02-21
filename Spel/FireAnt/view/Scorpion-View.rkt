@@ -1,9 +1,20 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Schorpioen View ADT is verantwoordelijk voor:
+;; [x] Maken, initialiseren en onthouden van de tile
+;; [x] Onthouden van tile direction en off het verwijderd is van de laag
+;; [x] Onthouden van eigenaar object en de laag waar hij in zit
+;; [x] Checken of een object de eigenaar is
+;; [x] Updaten van de tiles positie en direction
+;; [x] Maken van positie verandering "animatie/transitie"
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (define (new-scorpion-view owner layer)
   (let* ((bitmap (string-append bitmap-dir "scorpion.png"))
          (mask (string-append mask-dir "scorpion.png"))
          (tile (make-bitmap-tile bitmap mask))
          (direction 0))
 
+;;;;;;;;;;;;;;;;;;; INITIALIZATION ;;;;;;;;;;;;;;;;;;;;;;;;
     (define (init)
       (let ((x (* ((owner 'get-position) 'get-x)
                   TILE-SIZE))
@@ -13,16 +24,22 @@
         ((tile 'set-y!) y)
         ((layer 'add-drawable) tile)))
 
+;;;;;;;;;;;;;;;;;;; GETTERS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (get-owner)
       owner)
 
     (define (get-tile)
       tile)
 
+;;;;;;;;;;;;;;;;;;; PREDICATES ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (is-owner? object)
       (eq? object owner))
 
-    (define (draw ms)
+    (define (is-moving?)
+      moving)
+
+;;;;;;;;;;;;;;;;;;; DESTRUCTIVE ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    (define (update! ms)
       (update-direction)
       (let* ((position (owner 'get-position))
              (step (* ms (position 'get-speed)))
@@ -35,7 +52,8 @@
         (position 'set-moving! (or (transition (tile 'set-x!) old-x x step)
                          (transition (tile 'set-y!) old-y y step)))))
 
-    (define (transition setter old new step)
+;;;;;;;;;;;;;;;;;;; AUXILIARY ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    (define (transition setter old new step) ;; Create transitioning effect for tiles going from old to new position
       (if (< (abs (- new old)) step)
           (begin (setter new)
                  #f)
@@ -58,11 +76,9 @@
                  (tile 'rotate-clockwise)
                  (iter new-direction)))))
 
-    (define (is-moving?)
-      moving)
-
+;;;;;;;;;;;;;;;;;;; DISPATCH ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (dispatch cmd . args)
-      (cond ((eq? cmd 'draw) (apply draw args))
+      (cond ((eq? cmd 'update!) (apply update! args))
             ((eq? cmd 'get-owner) (apply get-owner args))
             ((eq? cmd 'get-tile) (apply get-tile args))
             ((eq? cmd 'is-owner?) (apply is-owner? args))

@@ -21,7 +21,7 @@
         (updates '())
         (finished #f))
 
-;;;;;;;;;;;;;;;;;;; INIT FUNC ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;; INITIALIZATION ;;;;;;;;;;;;;;;;;;;;;;;;
     ;; Initialize by reading the csv file and parsing every element with their position to the interpret function
     (define (init file) 
       (call-with-input-file file

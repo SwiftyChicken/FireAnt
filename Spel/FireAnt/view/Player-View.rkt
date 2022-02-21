@@ -1,11 +1,22 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Player View ADT is verantwoordelijk voor:
+;; [x] Maken, initialiseren en onthouden van de tile
+;; [x] Onthouden van tile direction en off het verwijderd is van de laag
+;; [x] Onthouden van eigenaar object en de laag waar hij in zit
+;; [x] Het reseten en verwijderen van de tile
+;; [x] Updaten van de tiles positie en direction
+;; [x] Maken van positie verandering "animatie/transitie"
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (define (new-player-view owner layer)
   (let* ((bitmap (string-append bitmap-dir "ant.png"))
          (mask (string-append mask-dir "ant.png"))
          (tile (make-bitmap-tile bitmap mask))
-         (direction 0)
-         (removed #f))
+         (direction 0) ;; Tile direction
+         (removed #f)) ;; Removed from layer
 
-    (define (init)
+;;;;;;;;;;;;;;;;;;; INITIALIZATION ;;;;;;;;;;;;;;;;;;;;;;;;
+    (define (init) ;; Add tile to layer and give the correct start position
       (let ((x (* ((owner 'get-position) 'get-x)
                   TILE-SIZE))
             (y (* ((owner 'get-position) 'get-y)
@@ -14,14 +25,23 @@
         ((tile 'set-y!) y)
         ((layer 'add-drawable) tile)))
 
+;;;;;;;;;;;;;;;;;;; GETTERS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (get-owner)
       owner)
 
     (define (get-tile)
       tile)
 
-    (define (draw ms)
-      (update-direction)
+;;;;;;;;;;;;;;;;;;; PREDICATES ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    (define (is-moving?)
+      moving)
+
+    (define (is-removed?)
+      removed)
+
+;;;;;;;;;;;;;;;;;;; DESTRUCTIVE ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    (define (update! ms) ;; Update position and direction
+      (update-direction!)
       (let* ((position (owner 'get-position))
              (step (* ms (position 'get-speed)))
              (old-x (tile 'get-x))
@@ -33,7 +53,17 @@
         (position 'set-moving! (or (transition (tile 'set-x!) old-x x step)
                          (transition (tile 'set-y!) old-y y step)))))
 
-    (define (transition setter old new step)
+    (define (remove!)
+      (if (not removed)
+        (begin (layer 'empty)
+               (set! removed #t))))
+
+    (define (reset!)
+      (set! removed #f)
+      (init))
+
+;;;;;;;;;;;;;;;;;;; AUXILIARY ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    (define (transition setter old new step) ;; Create transitioning effect for tiles going from old to new position
       (if (< (abs (- new old)) step)
           (begin (setter new)
                  #f)
@@ -42,7 +72,7 @@
                    (setter (+ old step)))
                  #t)))
 
-    (define (update-direction)
+    (define (update-direction!)
       (define (get-new-direction)
         (case ((owner 'get-position) 'get-orientation)
           ((down) 0)
@@ -56,24 +86,15 @@
                  (tile 'rotate-clockwise)
                  (iter new-direction)))))
     
-    (define (is-moving?)
-      moving)
-
-    (define (remove!)
-      (if (not removed)
-        (begin (layer 'empty)
-               (set! removed #t))))
-
-    (define (is-removed?)
-      removed)
-
+;;;;;;;;;;;;;;;;;;; DISPATCH ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (dispatch cmd . args)
-      (cond ((eq? cmd 'draw) (apply draw args))
-            ((eq? cmd 'get-owner) (apply get-owner args))
+      (cond ((eq? cmd 'get-owner) (apply get-owner args))
             ((eq? cmd 'get-tile) (apply get-tile args))
-            ((eq? cmd 'remove!) (apply remove! args))
             ((eq? cmd 'is-moving?) (apply is-moving? args))
             ((eq? cmd 'is-removed?) (apply is-removed? args))
+            ((eq? cmd 'update!) (apply update! args))
+            ((eq? cmd 'remove!) (apply remove! args))
+            ((eq? cmd 'reset!) (apply reset! args))
             (else (error "Unknown command" cmd))))
 
     (init)

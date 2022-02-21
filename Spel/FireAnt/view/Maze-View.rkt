@@ -1,13 +1,18 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Maze View ADT is verantwoordelijk voor:
+;; [x] Onthoud zijn eigenaar en lagen
+;; [x] Teken een muur op geschikte posities en voeg toe aan de laag
+;; [x] Teken de vloer
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (define (new-maze-view owner floor-layer walls-layer)
   (let* ((height (owner 'get-height))
          (width (owner 'get-width))
          (wall-bitmap (string-append bitmap-dir "wall.png"))
          (floor-bitmap (string-append bitmap-dir "floor.png")))
 
-    (define (get-owner)
-      owner)
-
-    (define (draw)
+;;;;;;;;;;;;;;;;;;; INITIALIZATION ;;;;;;;;;;;;;;;;;;;;;;;;
+    (define (init)
       (draw-floor)
       (let outer-loop ((row 0))
         (if (< row height)
@@ -18,6 +23,11 @@
                             (inner-loop (+ column 1)))))
                  (outer-loop (+ row 1))))))
 
+;;;;;;;;;;;;;;;;;;; GETTERS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    (define (get-owner)
+      owner)
+
+;;;;;;;;;;;;;;;;;;; AUXILIARY ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (draw-floor)
       (let ((tile (make-bitmap-tile floor-bitmap)))
         ((floor-layer 'add-drawable) tile)))
@@ -30,10 +40,10 @@
         ((tile 'set-y!) pos_y)
         ((walls-layer 'add-drawable) tile)))
 
+;;;;;;;;;;;;;;;;;;; DISPATCH ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (dispatch cmd . args)
-      (cond ((eq? cmd 'draw) (apply draw args))
-            ((eq? cmd 'get-owner) (apply get-owner args))
+      (cond ((eq? cmd 'get-owner) (apply get-owner args))
             (else (error "Unknown command" cmd))))
 
-    (draw)
+    (init)
     dispatch))

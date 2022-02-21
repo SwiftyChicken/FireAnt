@@ -33,7 +33,8 @@
 
     (define (revive!)
       (if (not (zero? lives))
-        (set! alive #t)))
+        (begin (position 'set-orientation! 'down)
+               (set! alive #t))))
 
 ;;;;;;;;;;;;;;;;;;; DISPATCH ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (dispatch cmd . args)
