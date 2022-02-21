@@ -1,11 +1,23 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Position ADT is verantwoordelijk voor:
+;; [x] Heeft een type die opgevraagd kan worden
+;; [x] Onthoudt zijn x en y positie, oriëntatie, snelheid en of hij beweegt van positie
+;; [x] Checken van collisies met een andere positie
+;; [x] Zijn buur posities kunnen terug geven 
+;; [x] Verplaatsen van een positie wanneer mogelijk
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (define (new-position pos-x pos-y)
   (let ((type 'position)
         (position (cons pos-x pos-y))
         (orientation #f)
-        (speed 0.17)
-        (moving #f))
+        (speed 0.17) ;; The speed at which the corresponding view should move the tile
+        (moving #f)) ;; Checked if the corresponding view is still moving the tile
 
 ;;;;;;;;;;;;;;;;;;; GETTERS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    (define (get-type)
+      type)
+
     (define (get-x)
       (car position))
 
@@ -18,9 +30,6 @@
     (define (get-speed)
       speed)
 
-    (define (is-moving?)
-      moving)
-
 ;;;;;;;;;;;;;;;;;;; SETTERS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (set-x! new-x)
       (set-car! position new-x))
@@ -31,18 +40,21 @@
     (define (set-moving! bool)
       (set! moving bool))
 
-;;;;;;;;;;;;;;;;;;; OTHER FUNC ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    (define (peek direction)
-      (let ((x (get-x))
-            (y (get-y)))
-        (case direction
-          ((up) (set! y (- y 1)))
-          ((down) (set! y (+ y 1)))
-          ((left) (set! x (- x 1)))
-          ((right) (set! x (+ x 1))))
-        (new-position x y)))
+;;;;;;;;;;;;;;;;;;; PREDICATES ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    (define (is-moving?)
+      moving)
 
-    (define (move direction)
+    (define (is-colliding? compared)
+      (define compared-type (compared 'get-type))
+      (if (eq? compared-type 'position)
+        (let ((com-x (compared 'get-x))
+              (com-y (compared 'get-y)))
+          (and (eq? (get-x) com-x)
+               (eq? (get-y) com-y)))
+        (error "Expected a position type but got" compared-type)))
+
+;;;;;;;;;;;;;;;;;;; DESTRUCTIVE ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    (define (move! direction) ;; Update position and orientation
       (if (not moving)
         (let ((x (get-x))
               (y (get-y)))
@@ -57,25 +69,31 @@
                      (set! orientation 'right)))
           (set-moving! #t))))
 
-    (define (is-collision? position)
-      (let ((x-to-compare (position 'get-x))
-            (y-to-compare (position 'get-y)))
-        (and (eq? (get-x) x-to-compare)
-             (eq? (get-y) y-to-compare))))
+;;;;;;;;;;;;;;;;;;; NON-DESTRUCTIVE ;;;;;;;;;;;;;;;;;;;;;;;;
+    (define (peek direction) ;; Give neighbouring position
+      (let ((x (get-x))
+            (y (get-y)))
+        (case direction
+          ((up) (set! y (- y 1)))
+          ((down) (set! y (+ y 1)))
+          ((left) (set! x (- x 1)))
+          ((right) (set! x (+ x 1))))
+        (new-position x y)))
 
 ;;;;;;;;;;;;;;;;;;; DISPATCH ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (dispatch cmd . args)
-      (cond ((eq? cmd 'get-x) (apply get-x args))
-            ((eq? cmd 'set-x) (apply set-x! args))
+      (cond ((eq? cmd 'get-type) (apply get-type args))
+            ((eq? cmd 'get-x) (apply get-x args))
             ((eq? cmd 'get-y) (apply get-y args))
-            ((eq? cmd 'set-y) (apply set-y! args))
-            ((eq? cmd 'get-speed) (apply get-speed args))
             ((eq? cmd 'get-orientation) (apply get-orientation args))
-            ((eq? cmd 'is-moving?) (apply is-moving? args))
+            ((eq? cmd 'get-speed) (apply get-speed args))
+            ((eq? cmd 'set-x) (apply set-x! args))
+            ((eq? cmd 'set-y) (apply set-y! args))
             ((eq? cmd 'set-moving!) (apply set-moving! args))
+            ((eq? cmd 'is-moving?) (apply is-moving? args))
+            ((eq? cmd 'is-colliding?) (apply is-colliding? args))
+            ((eq? cmd 'move!)(apply move! args))
             ((eq? cmd 'peek)(apply peek args))
-            ((eq? cmd 'is-collision?) (apply is-collision? args))
-            ((eq? cmd 'move)(apply move args))
             (else (error "Unknown command" cmd))))
 
     dispatch))

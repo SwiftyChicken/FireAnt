@@ -1,8 +1,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Player ADT is verantwoordelijk voor:
-;; [x] Positie van speler onthouden
-;; [x] Conditie van speler onthouden (dood/levend)
-;; [x] Aantal levens van speler onthouden
+;; [x] Heeft een type die opgevraagd kan worden
+;; [x] Onthoudt zijn positie, levens en conditie (levend/doood)
+;; [x] Kan sterven en terug tot leven komen
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (define (new-player)
@@ -17,23 +17,24 @@
     (define (get-position)
       position)
 
-    (define (is-dead?)
-      (not alive))
-
 ;;;;;;;;;;;;;;;;;;; SETTERS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (set-position! pos)
       (set! position pos))
 
-    (define (revive!)
-      (if (not (zero? lives))
-        (set! alive #t)))
+;;;;;;;;;;;;;;;;;;; PREDICATES ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    (define (is-dead?)
+      (not alive))
 
+;;;;;;;;;;;;;;;;;;; DESTRUCTIVE ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (die!)
       (if alive
         (begin (set! alive #f)
                (set! lives (- lives 1)))))
 
-;;;;;;;;;;;;;;;;;;; OTHER FUNC ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    (define (revive!)
+      (if (not (zero? lives))
+        (set! alive #t)))
+
 ;;;;;;;;;;;;;;;;;;; DISPATCH ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (dispatch cmd . args)
       (cond ((eq? cmd 'get-type) (apply get-type args))

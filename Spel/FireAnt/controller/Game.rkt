@@ -1,9 +1,12 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Game ADT is verantwoordelijk voor:
 ;; [x] Starten van juiste level
+;; [x] Laden van het volgende level
 ;; [x] Initialisatie van de Player ADT en View ADT
 ;; [x] Verantwoordelijk voor Spel lus en Speler invoer
+;; [x] Laat de speler de mier bewegen
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (#%require compatibility/mlist (only racket
                                      directory-list
                                      path->string))
@@ -21,7 +24,8 @@
            (current-level (new-level player 
                                      (car levels)))
            (view (new-view player current-level)))
-;;;;;;;;;;;;;;;;;;; AUXILIARY FUNC ;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;;;;;;;;;;;;;;;;;; DESTRUCTIVE ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       (define (next-level!) ;; Update variables and return next level
         (if (not (null? (cdr levels)))
           (begin (set! levels (cdr levels))
@@ -35,13 +39,14 @@
        (lambda (state key)
          (cond ((eq? state 'pressed)
                 (case key
-                  ((up down left right) (current-level 'move-player key)))))))
+                  ((up down left right) (if (current-level 'is-legal-move? player key)
+                                          ((player 'get-position) 'move! key))))))))
 
 ;;;;;;;;;;;;;;;;;;; GAME LOOP ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ((view 'game-loop) 
        (lambda (ms)
-         (if (not (current-level 'is-finished player))
-           (begin (current-level 'update)
+         (if (not (current-level 'is-finished? player))
+           (begin (current-level 'update!)
                   (view 'update ms)
                   (if (player 'is-dead?)
                     (current-level 'respawn)))

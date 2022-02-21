@@ -1,7 +1,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Maze ADT is verantwoordelijk voor:
-;; [ ] Positie van de muren onthouden
-;; [ ] Beweegbare plaatsen in maze aangeven
+;; [x] Heeft een type die opgevraagd kan worden
+;; [x] Onthouden van de positie van de muren
+;; [x] Kan zeggen of een positie een muur is
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (define (new-maze)
@@ -23,13 +24,10 @@
       width)
 
 ;;;;;;;;;;;;;;;;;;; SETTERS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    (define (add-wall row column)
-      (set-cell! maze row column #t))
+    (define (set-wall! row column bool)
+      (set-cell! maze row column bool))
 
-    (define (del-wall row column)
-      (set-cell! maze row column #f))
-
-;;;;;;;;;;;;;;;;;;; OTHER FUNC ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;; PREDICATES ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (is-wall? row column)
       (if (and (<= 0 row (- height 1))
                (<= 0 column (- width 1)))
@@ -39,8 +37,7 @@
 ;;;;;;;;;;;;;;;;;;; DISPATCH ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (dispatch cmd . args)
       (cond ((eq? cmd 'get-type) (apply get-type args))
-            ((eq? cmd 'del-wall!) (apply del-wall args))
-            ((eq? cmd 'add-wall!) (apply add-wall args))
+            ((eq? cmd 'set-wall!) (apply set-wall! args))
             ((eq? cmd 'get-maze) (apply get-maze args))
             ((eq? cmd 'is-wall?) (apply is-wall? args))
             ((eq? cmd 'get-height) (apply get-height args))
