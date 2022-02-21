@@ -1,5 +1,5 @@
 # Fdb version 3
-["pdflatex"] 1645481927 "Verslag_Fase1.tex" "Verslag_Fase1.pdf" "Verslag_Fase1" 1645481928
+["pdflatex"] 1645483410 "Verslag_Fase1.tex" "Verslag_Fase1.pdf" "Verslag_Fase1" 1645483410
   "/usr/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1640600964 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/share/texmf-dist/fonts/map/fontname/texfonts.map" 1640600964 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texmf-dist/fonts/tfm/jknappen/ec/tcrm1095.tfm" 1640600964 1536 02c06700a42be0f5a28664c7273f82e7 ""
@@ -176,14 +176,12 @@
   "/usr/share/texmf-dist/web2c/texmf.cnf" 1640600964 39911 2da6c67557ec033436fe5418a70a8a61 ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1640960487 357936 09f08ee18eee769f278b144e28524592 ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1640960483 2920106 9075823edc8f9d6acee0c0673cfe4899 ""
-  "Verslag_Fase1.aux" 1645481928 8009 5d2945441a04db23104ea5275451d79f "pdflatex"
-  "Verslag_Fase1.out" 1645481928 2411 8e9bb370c0ef7f32776ec5df73b0f9c3 "pdflatex"
-  "Verslag_Fase1.tex" 1645459416 1351 3235e5c3f815dec059a56d7f39c83e62 ""
-  "Verslag_Fase1.toc" 1645481928 1690 c53dd2e9e0cdcdbbd3600d81f4f28a31 "pdflatex"
+  "Verslag_Fase1.aux" 1645483410 5154 608140fca2aef43905031fad20c4a8a6 "pdflatex"
+  "Verslag_Fase1.out" 1645483410 1531 8d6cde2cd0a6476ee041117871500914 "pdflatex"
+  "Verslag_Fase1.tex" 1645482904 1225 74bd54e03562cef8388f0a6a9956cf0c ""
+  "Verslag_Fase1.toc" 1645483410 1104 33ef7d08d271307c86ab4f7d5665e264 "pdflatex"
   "chapters/1_Introductie.tex" 1645459365 1561 1c1392796437fce4aa25b11d5e2f7ddf ""
-  "chapters/2_ADTs.tex" 1645481926 21290 f917402109790d4a7e7e39c451d3762f ""
-  "chapters/3_Afhankelijkheidsdiagram.tex" 1645433490 882 9d54fdd0537bfabb5e58f60afead3d0c ""
-  "chapters/4_Planning.tex" 1645433490 4 ed20d984b757ad5291963389fc209864 ""
+  "chapters/2_ADTs.tex" 1645483408 19540 69f70b3d6395ac74ba2b3b5842dbbdf3 ""
   (generated)
   "Verslag_Fase1.aux"
   "Verslag_Fase1.log"

@@ -285,7 +285,7 @@ De \texttt{\nameref{section:player}} bevat de volgende operaties:
 \begin{itemize}
 	\item \textbf{new-player}: Maakt een object van \texttt{\nameref{section:player}} aan.
 	\item \textbf{get-type}: Geeft het type van de ADT terug in dit geval 'player.
-	\item \textbf{get-position}: Geeft de \texttt{\nameref{section:player}} object terug die het player object bezit.
+	\item \textbf{get-position}: Geeft de \texttt{\nameref{section:positie}} object terug die het player object bezit.
 	\item \textbf{set-position!}: Geeft de \texttt{\nameref{section:player}} een nieuw \texttt{\nameref{section:positie}} object.
 	\item \textbf{is-dead?}: Checkt of de \texttt{\nameref{section:player}} dood is of niet.
 	\item \textbf{die!}: Veranderd de alive waarden naar \#f
@@ -309,7 +309,10 @@ Deze ADT is verantwoordelijk om het onthouden van de positie, route en volgende 
 new-scorpion    & (Positie list $\rightarrow$ Scorpion) \\ \hline
 get-type      & ($\varnothing$ $\rightarrow$ symbol)                        \\ \hline
 get-position  & ($\varnothing$ $\rightarrow$ Position)                        \\ \hline
-<++>                                 & (<++> $\rightarrow$ <++>)                                       \\ \hline
+update!                                 & ($\varnothing$ $\rightarrow$ $\varnothing$)                                       \\ \hline
+next-command!                                 & ($\varnothing$ $\rightarrow$ $\varnothing$)                                       \\ \hline
+interpret                                & (character $\rightarrow$ symbol)                 \\ \hline
+code-$>$path                                & (list $\rightarrow$ list)                 \\ \hline
 \end{tabular}
 \caption{Operaties van het \texttt{\nameref{section:scorpion}}}
 \label{table:scorpion}
@@ -318,132 +321,26 @@ get-position  & ($\varnothing$ $\rightarrow$ Position)                        \\
 Het \texttt{\nameref{section:scorpion}} bevat de volgende operaties:
 
 \begin{itemize}
-	\item \textbf{<++>}: <++>
-	\item \textbf{<++>}: <++>
+	\item \textbf{new-scorpion}: Maakt een nieuwe object aan van het \texttt{\nameref{section:scorpion}}.
+		Deze object neemt als argument een Positie (die bewaard wordt)
+		en list van characters dat 3*n lang is.
+	\item \textbf{get-type}: Geeft het type van de ADT terug in dit geval 'scorpion.
+	\item \textbf{get-position}: Geeft de \texttt{\nameref{section:positie}} object terug die het schorpioen object bezit.
+	\item \textbf{update!}: Als de schorpioen klaar is met bewegen dan laat hem de volgende stap doen in zijn route.
+	\item \textbf{next-command!}: Ga naar de volgende element (stap) in de pathing (route plan) lijst.
+	\item \textbf{interpret}: Vertaalt een gegeven character naar de correcte richting.
+	\item \textbf{code-$>$path}: Veranderd een lijst van cijfers en characters naar een lijst dat een route plan voorstelt.
+		Elke element is een cons cell 
+		waarvan het eerste element een nummer is het hoeveelheid iteraties weergeeft
+		en het tweede element de richting waarnaar de schorpioen moet gaan.
 \end{itemize}
 
 \section{Views}
 \label{view}
+De Views zijn de ADTs verantwoordelijk voor het teken van het spel en het weergeven van de modellen op een visuele manier.
+
 \section{View ADT}
 \label{section:view}
-\section{View\textunderscore Maze ADT}
-\label{section:view_maze}
-
-Het \texttt{\nameref{section:view_maze}} is verantwoordelijk om het \texttt{\nameref{section:maze}} voor te stellen in teken logica gedeelte van het spel.
-
-\begin{table}[hbt]
-\centering
-\begin{tabular}{|ll|}
-\hline
-\rowcolor[HTML]{000000} 
-{\color[HTML]{FFFFFF} \textbf{Naam}} & {\color[HTML]{FFFFFF} \textbf{Signatuur}} \\ \hline
-newView\textunderscore Maze                                 & (Maze $\rightarrow$ View\textunderscore Maze)                                       \\ \hline
- <++>                                & (<++> $\rightarrow$ <++>)                 \\ \hline
-\end{tabular}
-\caption{Operaties van het \texttt{\nameref{section:view_maze}}}
-\label{table:view_maze}
-\end{table}
-
-Het \texttt{\nameref{section:view_maze}} bevat de volgende operaties:
-
-\begin{itemize}
-	\item \textbf{++}: <++>
-	\item \textbf{<++>}: <++>
-\end{itemize}
-
-\section{View\textunderscore Scorpion ADT}
-\label{section:view_scorpion}
-
-<++>
-
-\begin{table}[hbt]
-\centering
-\begin{tabular}{|ll|}
-\hline
-\rowcolor[HTML]{000000} 
-{\color[HTML]{FFFFFF} \textbf{Naam}} & {\color[HTML]{FFFFFF} \textbf{Signatuur}} \\ \hline
-<++>                                 & (<++> $\rightarrow$ <++>)                                       \\ \hline
-\end{tabular}
-\caption{Operaties van het \texttt{\nameref{section:view_scorpion}}}
-\label{table:view_scorpion}
-\end{table}
-
-Het \texttt{\nameref{section:view_scorpion}} bevat de volgende operaties:
-
-\begin{itemize}
-	\item \textbf{<++>}: <++>
-	\item \textbf{<++>}: <++>
-\end{itemize}
-
-\section{View\textunderscore Player ADT}
-\label{section:view_ant}
-
-<++>
-
-\begin{table}[hbt]
-\centering
-\begin{tabular}{|ll|}
-\hline
-\rowcolor[HTML]{000000} 
-{\color[HTML]{FFFFFF} \textbf{Naam}} & {\color[HTML]{FFFFFF} \textbf{Signatuur}} \\ \hline
-<++>                                 & (<++> $\rightarrow$ <++>)                                       \\ \hline
-\end{tabular}
-\caption{Operaties van het \texttt{\nameref{section:view_ant}}}
-\label{table:view_ant}
-\end{table}
-
-Het \texttt{\nameref{section:view_ant}} bevat de volgende operaties:
-
-\begin{itemize}
-	\item \textbf{<++>}: <++>
-	\item \textbf{<++>}: <++>
-\end{itemize}
-
-\section{Eggs ADT}
-\label{section:eggs}
-
-<++>
-
-\begin{table}[hbt]
-\centering
-\begin{tabular}{|ll|}
-\hline
-\rowcolor[HTML]{000000} 
-{\color[HTML]{FFFFFF} \textbf{Naam}} & {\color[HTML]{FFFFFF} \textbf{Signatuur}} \\ \hline
-<++>                                 & (<++> $\rightarrow$ <++>)                                       \\ \hline
-\end{tabular}
-\caption{Operaties van het \texttt{\nameref{section:eggs}}}
-\label{table:eggs}
-\end{table}
-
-Het \texttt{\nameref{section:eggs}} bevat de volgende operaties:
-
-\begin{itemize}
-	\item \textbf{<++>}: <++>
-	\item \textbf{<++>}: <++>
-\end{itemize}
-
-\section{View\textunderscore Eggs ADT}
-\label{section:view_eggs}
-
-<++>
-
-\begin{table}[hbt]
-\centering
-\begin{tabular}{|ll|}
-\hline
-\rowcolor[HTML]{000000} 
-{\color[HTML]{FFFFFF} \textbf{Naam}} & {\color[HTML]{FFFFFF} \textbf{Signatuur}} \\ \hline
-<++>                                 & (<++> $\rightarrow$ <++>)                                       \\ \hline
-\end{tabular}
-\caption{Operaties van het \texttt{\nameref{section:view_eggs}}}
-\label{table:view_eggs}
-\end{table}
-
-Het \texttt{\nameref{section:view_eggs}} bevat de volgende operaties:
-
-\begin{itemize}
-	\item \textbf{<++>}: <++>
-	\item \textbf{<++>}: <++>
-\end{itemize}
+De \texttt{\nameref{section:view}} is het centrale ADT voor het tekenlogica.
+Deze ADT is verantwoordelijk voor het aanmaken van de canvas, lagen en nodige Views die de Player en de andere objecten in een level voorstellen.
 
