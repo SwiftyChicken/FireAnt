@@ -33,12 +33,12 @@
                                 (if (eof-object? next)
                                   (display cell)
                                   (case next 
-                                    ((#\,) (interpret cell x y)
+                                    ((#\,) (interpret! cell x y)
                                            (read-char input-port)
                                            (iter (string (read-char input-port))
                                                  (peek-char input-port)
                                                  (+ x 1) y))
-                                    ((#\newline) (interpret cell x y)
+                                    ((#\newline) (interpret! cell x y)
                                                  (read-char input-port)
                                                  (if (not (eof-object? (peek-char input-port)))
                                                    (iter (string (read-char input-port))
@@ -47,21 +47,6 @@
                                     (else (iter (string-append cell (string (read-char input-port)))
                                                 (peek-char input-port) 
                                                 x y))))))))
-
-    ;; Interpret needs a text of at least length 2
-    (define (interpret text x y)
-      (let ((code (string (string-ref text 0) ;; First 2 characters represent the object type
-                          (string-ref text 1)))
-            (arg (list-tail (string->list text) 2))) ;; The other characters are used as arguments for object creation
-        (cond ((string=? code "[]") (maze 'set-wall! y x #t))
-            ((string=? code "  ") (maze 'set-wall! y x #f))
-            ((string=? code "SP") (set! spawn (new-position x y))
-                                     (respawn))
-            ((string=? code "EG") (set! eggs (cons (new-egg (new-position x y))
-                                                   eggs)))
-            ((string=? code "SY") (set! scorpions (cons (new-scorpion (new-position x y) arg)
-                                                        scorpions)))
-            (else (error "Unkown code in level file" code)))))
 
 ;;;;;;;;;;;;;;;;;;; GETTERS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (get-maze)
@@ -122,6 +107,21 @@
             (if (obj-pos 'is-colliding? player-pos)
               (to-do object))
             (on-collision to-do rest))))
+
+    ;; Interpret needs a text of at least length 2
+    (define (interpret! text x y)
+      (let ((code (string (string-ref text 0) ;; First 2 characters represent the object type
+                          (string-ref text 1)))
+            (arg (list-tail (string->list text) 2))) ;; The other characters are used as arguments for object creation
+        (cond ((string=? code "[]") (maze 'set-wall! y x #t))
+            ((string=? code "  ") (maze 'set-wall! y x #f))
+            ((string=? code "SP") (set! spawn (new-position x y))
+                                     (respawn))
+            ((string=? code "EG") (set! eggs (cons (new-egg (new-position x y))
+                                                   eggs)))
+            ((string=? code "SY") (set! scorpions (cons (new-scorpion (new-position x y) arg)
+                                                        scorpions)))
+            (else (error "Unkown code in level file" code)))))
 
 ;;;;;;;;;;;;;;;;;;; DISPATCH ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (dispatch cmd . args)
