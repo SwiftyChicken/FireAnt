@@ -94,7 +94,7 @@
     (define (respawn)
       (let ((x (spawn 'get-x))
             (y (spawn 'get-y)))
-        (player 'set-position (new-position x y))
+        (player 'set-position! (new-position x y))
         (player 'revive!)))
 
 ;;;;;;;;;;;;;;;;;;; AUXILIARY ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

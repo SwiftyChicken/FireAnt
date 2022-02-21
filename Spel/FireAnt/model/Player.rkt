@@ -40,7 +40,7 @@
     (define (dispatch cmd . args)
       (cond ((eq? cmd 'get-type) (apply get-type args))
             ((eq? cmd 'get-position) (apply get-position args))
-            ((eq? cmd 'set-position) (apply set-position! args))
+            ((eq? cmd 'set-position!) (apply set-position! args))
             ((eq? cmd 'is-dead?) (apply is-dead? args))
             ((eq? cmd 'die!) (apply die! args))
             ((eq? cmd 'revive!) (apply revive! args))
