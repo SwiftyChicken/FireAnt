@@ -124,104 +124,14 @@ Het \texttt{\nameref{section:level}} bevat de volgende operaties:
 	\item \textbf{interpret!}: Deze procedure neemt een string
 		(dat een element uit de csv bestand is)
 		, een x en y positie (dat de positie van de string voorstelt in de csv bestand).
-		Deze warden worden gebruikt om Objecten of de Maze van het \texttt{\nameref{section:level}}
+		Deze warden worden gebruikt om Objecten (zoals een Egg, Scorpion of Start Positie) maken 
+		of de \texttt{\nameref{section:maze}} aan te vullen in het \texttt{\nameref{section:level}}.
 \end{itemize}
 
 \footnotetext{Object is een object dat een Positie ADT bezit.}
 
-\section{Position ADT}
-\label{section:positie}
-
-De \texttt{\nameref{section:positie}} dit is een simpel ADT dat de positie in een level voorstelt.
-isFinished?
-
-\begin{table}[hbt]
-\centering
-\begin{tabular}{|ll|}
-\hline
-\rowcolor[HTML]{000000} 
-{\color[HTML]{FFFFFF} \textbf{Naam}} & {\color[HTML]{FFFFFF} \textbf{Signatuur}} \\ \hline
-newPositie                          & (number number Maze $\rightarrow$ $Positie\cup\{\#f\}$)                                       \\ \hline
-move!                                & (number number $\rightarrow$ $\varnothing\cup\{\#f\}$)                                       \\ \hline
- eqPosistie?                                & (Positie $\rightarrow$ boolean)                                       \\ \hline
- <++>                                & (<++> $\rightarrow$ <++>)                                       \\ \hline
-\end{tabular}
-\caption{Operaties van het \texttt{\nameref{section:positie}}}
-\label{table:positie}
-\end{table}
-
-Het \texttt{\nameref{section:positie}} bevat de volgende operaties:
-
-\begin{itemize}
-	\item \textbf{newPositie}: Deze operatie maakt een nieuw object van het \texttt{\nameref{section:positie}} aan. 
-		Die twee numbers opneemt dat respectievelijk de x- en y-co\"ordinaat zijn in het meegegeven \texttt{\nameref{section:maze}}.
-	\item \textbf{move!}: Verandert het positie van het \texttt{\nameref{section:positie}} als dat een geldige positie is in het \texttt{\nameref{section:maze}}.
-	\item \textbf{eqPosistie?}: Controleert dat het meegegeven Positie een gelijkwaardige positie heeft.
-		Dat wil zeggen dat het x- en y-co\"ordinaat een aan een gelijk zijn van elkaar. 
-	\item \textbf{<++>}: <++>
-\end{itemize}
-
-\section{Egg ADT}
-\label{section:egg}
-
-Het \texttt{\nameref{section:egg}} stelt elk voorwerp voor dat kan opgeraapt  worden door een \texttt{Ant} (speler).
-<++>
-
-\begin{table}[hbt]
-\centering
-\begin{tabular}{|ll|}
-\hline
-\rowcolor[HTML]{000000} 
-{\color[HTML]{FFFFFF} \textbf{Naam}} & {\color[HTML]{FFFFFF} \textbf{Signatuur}} \\ \hline
-newItem                              & (Positie (any $rightarrow$ any) $\rightarrow$ Item) \\ \hline
-isCollected?                         & ($\varnothing$ $\rightarrow$ boolean)               \\ \hline
-update!                              & (Ant $\rightarrow$ $\varnothing$)                   \\ \hline
- <++>                                & (<++> $\rightarrow$ <++>)                           \\ \hline
-\end{tabular}
-\caption{Operaties van het \texttt{\nameref{section:egg}}}
-\label{table:item}
-\end{table}
-
-Het \texttt{\nameref{section:egg}} bevat de volgende operaties:
-
-\begin{itemize}
-	\item \textbf{newItem}: Maakt een nieuw object van het \texttt{\nameref{section:egg}}.
-		Het eerste argument dat de operatie neemt is een \texttt{\nameref{section:positie}} dat een positie in het maze (doolhof) aangeeft.
-		Vervolgens het tweede argument, een functie dat wordt toegepast bij het oprapen van het \texttt{\nameref{section:egg}}.
-	\item \textbf{isCollected?}: Check of het \texttt{\nameref{section:egg}} is opgeraapt of niet.
-	\item \textbf{update!}: Deze operatie checkt of het Ant object op dezelfde positie heeft als het item.
-		Als dat het geval is wordt het te toepassen effect toegepast door het functie dat werd meegegeven aan \textbf{newItem}.
-		Anders doet het operatie niks.
-\end{itemize}
-
-\section{Character ADT}
-\label{section:character}
-
-Het \texttt{\nameref{section:character}} moet een elke beweegbare character voorstellen in het spel.
-Deze is verantwoordelijk voor alle algemeen functies die een object van deze \texttt{ADT} bezit.
-
-\begin{table}[hbt]
-\centering
-\begin{tabular}{|ll|}
-\hline
-\rowcolor[HTML]{000000} 
-{\color[HTML]{FFFFFF} \textbf{Naam}} & {\color[HTML]{FFFFFF} \textbf{Signatuur}} \\ \hline
-newCharacter                                 & (Positie $\rightarrow$ Character)                                       \\ \hline
-\end{tabular}
-\caption{Operaties van het \texttt{\nameref{section:character}}}
-\label{table:character}
-\end{table}
-
-Het \texttt{\nameref{section:character}} bevat de volgende operaties:
-
-\begin{itemize}
-	\item \textbf{newCharacter}: Deze operatie maakt een object van het \texttt{\nameref{section:character}} aan.
-	\item \textbf{<++>}: <++>
-\end{itemize}
-
 \section{Maze ADT}
 \label{section:maze}
-
 Het \texttt{\nameref{section:maze}} is verantwoordelijk om het spellogica van het doolhof te construeren.
 
 \begin{table}[hbt]
@@ -230,9 +140,12 @@ Het \texttt{\nameref{section:maze}} is verantwoordelijk om het spellogica van he
 \hline
 \rowcolor[HTML]{000000} 
 {\color[HTML]{FFFFFF} \textbf{Naam}} & {\color[HTML]{FFFFFF} \textbf{Signatuur}} \\ \hline
-newMaze                              & (string $\rightarrow$ Maze)               \\ \hline
-isValidPosition?                      & (Positie $\rightarrow$ boolean)           \\ \hline
- <++>                                & (<++> $\rightarrow$ <++>)                 \\ \hline
+new-maze   & ($\varnothing$ $\rightarrow$ Maze)                          \\ \hline
+get-type   & ($\varnothing$ $\rightarrow$ symbol)                        \\ \hline
+get-height & ($\varnothing$ $\rightarrow$ number)                        \\ \hline
+get-width  & ($\varnothing$ $\rightarrow$ number)                        \\ \hline
+is-wall?   & (number number $\rightarrow$ boolean)                       \\ \hline
+set-wall!  & (number number boolean $\rightarrow$ $\varnothing$)         \\ \hline
 \end{tabular}
 \caption{Operaties van het \texttt{\nameref{section:maze}}}
 \label{table:maze}
@@ -241,8 +154,171 @@ isValidPosition?                      & (Positie $\rightarrow$ boolean)         
 Het \texttt{\nameref{section:maze}} bevat de volgende operaties:
 
 \begin{itemize}
-	\item \textbf{newMaze}: Deze operatie maakt een object van het \texttt{\nameref{section:maze}} aan.
-	\item \textbf{isValidPosition?}: Checkt als deze positie niet bezet is door een muur en dat het een bestaande positie is in het \texttt{\nameref{section:maze}}.
+	\item \textbf{new-maze}: Deze operatie maakt een object van het \texttt{\nameref{section:maze}} aan.
+	\item \textbf{get-type}: Geeft het type van de ADT terug in dit geval 'maze.
+	\item \textbf{get-height}: Geeft het hoogte van de doolhof terug.
+		Deze is gedefinieerd door het GRID-HEIGHT constante in het ``etc/constante.rkt'' bestand.
+	\item \textbf{get-width}: Geeft het hoogte van de doolhof terug.
+		Deze is gedefinieerd door het GRID-WIDTH constante in het ``etc/constante.rkt'' bestand.
+	\item \textbf{is-wall?}: Checkt of de gegeven rij en kolom een muur is en of de positie bestaat in het \texttt{\nameref{section:maze}}.
+	\item \textbf{set-wall!}: Zet of verwijderd een muur 
+		(op basis van de gegeven
+
+		boolean warden) in het \texttt{\nameref{section:maze}} op de gegeven rij en kolom.
+\end{itemize}
+
+\section{Position ADT}
+\label{section:positie}
+
+De \texttt{\nameref{section:positie}} is verantwoordelijk voor het bijhouden en aanpassen van de positie, oriëntatie en snelheid van een object.
+
+\begin{table}[hbt]
+\centering
+\begin{tabular}{|ll|}
+\hline
+\rowcolor[HTML]{000000} 
+{\color[HTML]{FFFFFF} \textbf{Naam}} & {\color[HTML]{FFFFFF} \textbf{Signatuur}} \\ \hline
+new-position     & (number number $\rightarrow$ Positie)                       \\ \hline
+get-type         & ($\varnothing$ $\rightarrow$ symbol)                        \\ \hline
+get-x            & ($\varnothing$ $\rightarrow$ number)                        \\ \hline
+get-y            & ($\varnothing$ $\rightarrow$ number)                        \\ \hline
+get-orientation  & ($\varnothing$ $\rightarrow$ symbol $\cup\{\#f\}$)          \\ \hline
+get-speed        & ($\varnothing$ $\rightarrow$ number)                        \\ \hline
+set-x!           & (number $\rightarrow$ $\varnothing$)                        \\ \hline
+set-y!           & (number $\rightarrow$ $\varnothing$)                        \\ \hline
+set-orientation! & (symbol $\rightarrow$ $\varnothing$)                        \\ \hline
+set-moving!      & (bool $\rightarrow$ $\varnothing$)                          \\ \hline
+is-moving?       & ($\varnothing$ $\rightarrow$ boolean)                       \\ \hline
+is-colliding?    & (Position $\rightarrow$ boolean)                            \\ \hline
+move!            & (symbol $\rightarrow$ $\varnothing$)                        \\ \hline
+peek             & (symbol $\rightarrow$ Position)                             \\ \hline
+\end{tabular}
+\caption{Operaties van het \texttt{\nameref{section:positie}}}
+\label{table:positie}
+\end{table}
+
+Het \texttt{\nameref{section:positie}} bevat de volgende operaties:
+
+\begin{itemize}
+	\item \textbf{new-positie}: Deze operatie maakt een nieuw object van het \texttt{\nameref{section:positie}} aan. 
+		Deze neemt 2 nummers op als argument
+		dat respectievelijk de x- en y-co\"ordinaat representeren in het \texttt{\nameref{section:maze}}.
+	\item \textbf{get-type}: Geeft het type van de ADT terug in dit geval 'position.
+	\item \textbf{get-x}: Geeft x positie terug.
+	\item \textbf{get-y}: Geeft y positie terug.
+	\item \textbf{get-orientation}: Geeft de oriëntatie van het object terug.
+		Het is standaard \#f.
+	\item \textbf{get-speed}: Geeft de snelheid van het object terug.
+		De snelheid in dit context is 
+		de snelheid waarmee het spel een tile van 1 positie naar een ander tekent.
+		Deze is standaard 0,17.
+	\item \textbf{set-x}: Veranderd de x positie door de gegeven nummer.
+	\item \textbf{set-y}: Veranderd de y positie door de gegeven nummer.
+	\item \textbf{set-orientation}: Veranderd de oriëntatie positie door de gegeven richting.
+	\item \textbf{set-moving}: Veranderd boolean waarde van het moving variabel.
+		De variabel geeft aan of het object nog steeds aan het bewegen is van zijn vorige positie naar zijn nieuwe positie.
+	\item \textbf{is-moving?}: Geeft aan of het object zich nog steeds aan het verplaatsen is naar zijn nieuwe positie.
+	\item \textbf{is-colliding?}: Checkt of het meegegeven Positie de zelfde positie heeft in de Maze.
+	\item \textbf{move!}: Verandert het positie en oriëntatie van het \texttt{\nameref{section:positie}} in de gegeven richting.
+		Zolang deze positie nog niet aan het bewegen is naar een nieuw positie.
+	\item \textbf{peek}: Geef de positie terug van buur positie gelegen op de meegegeven richting.
+\end{itemize}
+
+\section{Egg ADT}
+\label{section:egg}
+
+Het \texttt{\nameref{section:egg}} stelt een voorwerp voor dat kan opgeraapt  worden door een \texttt{Player}.
+
+\begin{table}[hbt]
+\centering
+\begin{tabular}{|ll|}
+\hline
+\rowcolor[HTML]{000000} 
+{\color[HTML]{FFFFFF} \textbf{Naam}} & {\color[HTML]{FFFFFF} \textbf{Signatuur}} \\ \hline
+new-egg                              & (Positie $\rightarrow$ Egg) \\ \hline
+get-type         & ($\varnothing$ $\rightarrow$ symbol)                        \\ \hline
+get-position         & ($\varnothing$ $\rightarrow$ Position)                        \\ \hline
+take!                              & ($\varnothing$ $\rightarrow$ $\varnothing$)                   \\ \hline
+is-taken?                         & ($\varnothing$ $\rightarrow$ boolean)               \\ \hline
+\end{tabular}
+\caption{Operaties van het \texttt{\nameref{section:egg}}}
+\label{table:item}
+\end{table}
+
+Het \texttt{\nameref{section:egg}} bevat de volgende operaties:
+
+\begin{itemize}
+	\item \textbf{new-egg}: Maakt een nieuw object van het \texttt{\nameref{section:egg}}.
+	\item \textbf{get-type}: Geeft het type van de ADT terug in dit geval 'egg.
+	\item \textbf{get-position}: Geeft het \texttt{\nameref{section:positie}} object terug die het egg object bezit.
+	\item \textbf{take!}: Veranderd taken waarden naar \#t.
+		Met andere worden het egg is opgerapen.
+	\item \textbf{is-taken?}: Check of het \texttt{\nameref{section:egg}} is opgeraapt of niet.
+\end{itemize}
+
+\section{Player ADT}
+\label{section:player}
+De \texttt{\nameref{section:player}} stelt het speler voor.
+Deze ADT is verantwoordelijk om de conditie van de speler bij te houden.
+Met andere woorden zijn aantal levens, zijn positie en de huidige leven conditie van de speler.
+
+\begin{table}[hbt]
+\centering
+\begin{tabular}{|ll|}
+\hline
+\rowcolor[HTML]{000000} 
+{\color[HTML]{FFFFFF} \textbf{Naam}} & {\color[HTML]{FFFFFF} \textbf{Signatuur}} \\ \hline
+new-player    & ($\varnothing$ $\rightarrow$ Player) \\ \hline
+get-type      & ($\varnothing$ $\rightarrow$ symbol)                        \\ \hline
+get-position  & ($\varnothing$ $\rightarrow$ Position $\cup\{\#f\}$)                        \\ \hline
+set-position! & (Position $\rightarrow$ $\varnothing$)                        \\ \hline
+is-dead?      & ($\varnothing$ $\rightarrow$ boolean)               \\ \hline
+die!          & ($\varnothing$ $\rightarrow$ $\varnothing$)                   \\ \hline
+revive!       & ($\varnothing$ $\rightarrow$ $\varnothing$)                   \\ \hline
+\end{tabular}
+\caption{Operaties van het \texttt{\nameref{section:player}}}
+\label{table:ant}
+\end{table}
+
+De \texttt{\nameref{section:player}} bevat de volgende operaties:
+
+\begin{itemize}
+	\item \textbf{new-player}: Maakt een object van \texttt{\nameref{section:player}} aan.
+	\item \textbf{get-type}: Geeft het type van de ADT terug in dit geval 'player.
+	\item \textbf{get-position}: Geeft de \texttt{\nameref{section:player}} object terug die het player object bezit.
+	\item \textbf{set-position!}: Geeft de \texttt{\nameref{section:player}} een nieuw \texttt{\nameref{section:positie}} object.
+	\item \textbf{is-dead?}: Checkt of de \texttt{\nameref{section:player}} dood is of niet.
+	\item \textbf{die!}: Veranderd de alive waarden naar \#f
+		en trekt 1 leven van lives af.
+		Met andere woorden speler is gestorven.
+	\item \textbf{revive!}: Veranderd de alive waarden naar \#t als de speler nog lives heeft.
+		De oriëntatie wordt ook gezet naar 'down omdat dit de standaard start oriëntatie is.
+\end{itemize}
+
+\section{Scorpion ADT}
+\label{section:scorpion}
+De \texttt{\nameref{section:scorpion}} is de ADT verantwoordelijk voor het spellogica van de schorpioen. 
+Deze ADT is verantwoordelijk om het onthouden van de positie, route en volgende beweging van de schorpioen.
+
+\begin{table}[hbt]
+\centering
+\begin{tabular}{|ll|}
+\hline
+\rowcolor[HTML]{000000} 
+{\color[HTML]{FFFFFF} \textbf{Naam}} & {\color[HTML]{FFFFFF} \textbf{Signatuur}} \\ \hline
+new-scorpion    & (Positie list $\rightarrow$ Scorpion) \\ \hline
+get-type      & ($\varnothing$ $\rightarrow$ symbol)                        \\ \hline
+get-position  & ($\varnothing$ $\rightarrow$ Position)                        \\ \hline
+<++>                                 & (<++> $\rightarrow$ <++>)                                       \\ \hline
+\end{tabular}
+\caption{Operaties van het \texttt{\nameref{section:scorpion}}}
+\label{table:scorpion}
+\end{table}
+
+Het \texttt{\nameref{section:scorpion}} bevat de volgende operaties:
+
+\begin{itemize}
+	\item \textbf{<++>}: <++>
 	\item \textbf{<++>}: <++>
 \end{itemize}
 
@@ -275,30 +351,6 @@ Het \texttt{\nameref{section:view_maze}} bevat de volgende operaties:
 	\item \textbf{<++>}: <++>
 \end{itemize}
 
-\section{Scorpion ADT}
-\label{section:scorpion}
-
-<++>
-
-\begin{table}[hbt]
-\centering
-\begin{tabular}{|ll|}
-\hline
-\rowcolor[HTML]{000000} 
-{\color[HTML]{FFFFFF} \textbf{Naam}} & {\color[HTML]{FFFFFF} \textbf{Signatuur}} \\ \hline
-<++>                                 & (<++> $\rightarrow$ <++>)                                       \\ \hline
-\end{tabular}
-\caption{Operaties van het \texttt{\nameref{section:scorpion}}}
-\label{table:scorpion}
-\end{table}
-
-Het \texttt{\nameref{section:scorpion}} bevat de volgende operaties:
-
-\begin{itemize}
-	\item \textbf{<++>}: <++>
-	\item \textbf{<++>}: <++>
-\end{itemize}
-
 \section{View\textunderscore Scorpion ADT}
 \label{section:view_scorpion}
 
@@ -317,30 +369,6 @@ Het \texttt{\nameref{section:scorpion}} bevat de volgende operaties:
 \end{table}
 
 Het \texttt{\nameref{section:view_scorpion}} bevat de volgende operaties:
-
-\begin{itemize}
-	\item \textbf{<++>}: <++>
-	\item \textbf{<++>}: <++>
-\end{itemize}
-
-\section{Player ADT}
-\label{section:player}
-
-<++>
-
-\begin{table}[hbt]
-\centering
-\begin{tabular}{|ll|}
-\hline
-\rowcolor[HTML]{000000} 
-{\color[HTML]{FFFFFF} \textbf{Naam}} & {\color[HTML]{FFFFFF} \textbf{Signatuur}} \\ \hline
-<++>                                 & (<++> $\rightarrow$ <++>)                                       \\ \hline
-\end{tabular}
-\caption{Operaties van het \texttt{\nameref{section:player}}}
-\label{table:ant}
-\end{table}
-
-Het \texttt{\nameref{section:player}} bevat de volgende operaties:
 
 \begin{itemize}
 	\item \textbf{<++>}: <++>
