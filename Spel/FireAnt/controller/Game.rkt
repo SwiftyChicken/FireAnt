@@ -52,6 +52,7 @@
                     (current-level 'respawn)))
            (next-level!))))))
 
+;;;;;;;;;;;;;;;;;;; DISPATCH ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       (define (dispatch cmd . args)
         (cond ((eq? cmd 'start) (apply start args))
               (else (error "Unknown command" cmd))))
