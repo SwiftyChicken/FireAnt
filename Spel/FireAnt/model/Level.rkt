@@ -10,7 +10,6 @@
 (load "model/Maze.rkt")
 (load "model/Egg.rkt")
 (load "model/Scorpion.rkt")
-(load "model/Scorpion_Green.rkt")
 (load "model/Position.rkt")
 
 (define (new-level player map-file)
@@ -31,8 +30,7 @@
                                          (next (peek-char input-port))
                                          (x 0)
                                          (y 0))
-                                (if (eof-object? next)
-                                  (display cell)
+                                (if (not (eof-object? next))
                                   (case next 
                                     ((#\,) (interpret! cell x y)
                                            (read-char input-port)
@@ -81,6 +79,9 @@
       (set! updates (list player))
       ; Move Scorpions
       (for-each (lambda (scorpion)
+                  (case (scorpion 'get-color)
+                    ((green) (if (not (is-legal-move? scorpion (scorpion 'get-direction)))
+                               (scorpion 'turn-back!))))
                   (scorpion 'update!)
                   (set! updates (cons scorpion updates)))
                 scorpions)
@@ -100,7 +101,7 @@
 
 ;;;;;;;;;;;;;;;;;;; AUXILIARY ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (on-collision to-do objects) ;; Check collisions for a list of objects and apply a function
-      (if (not (null? objects))
+      (if (pair? objects)
           (let* ((object (car objects))
                  (obj-pos (object 'get-position))
                  (player-pos (player 'get-position))
@@ -121,7 +122,7 @@
                                                    eggs)))
             ((string=? code "SY") (set! scorpions (cons (new-scorpion 'yellow (new-position x y) arg)
                                                         scorpions)))
-            ((string=? code "SG") (set! scorpions (cons (new-scorpion 'green (new-position x y) arg)
+            ((string=? code "SG") (set! scorpions (cons (new-scorpion 'green (new-position x y) (get-random-direction))
                                                         scorpions)))
             (else (error "Unkown code in level file" code)))))
 
