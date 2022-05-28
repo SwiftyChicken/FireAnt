@@ -8,10 +8,12 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (define (new-position pos-x pos-y)
+  (define normal-speed 0.17)
+  (define high-speed 0.25)
   (let ((type 'position)
         (position (cons pos-x pos-y))
         (orientation #f)
-        (speed 0.17) ;; The speed at which the corresponding view should move the tile
+        (speed normal-speed) ;; The speed at which the corresponding view should move the tile
         (moving #f)) ;; Checked if the corresponding view is still moving the tile
 
 ;;;;;;;;;;;;;;;;;;; GETTERS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -42,6 +44,12 @@
 
     (define (set-moving! bool)
       (set! moving bool))
+
+    (define (increase-speed!)
+      (set! speed high-speed))
+
+    (define (reset-speed!)
+      (set! speed normal-speed))
 
 ;;;;;;;;;;;;;;;;;;; PREDICATES ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (is-moving?)
@@ -94,6 +102,8 @@
             ((eq? cmd 'set-y) (apply set-y! args))
             ((eq? cmd 'set-moving!) (apply set-moving! args))
             ((eq? cmd 'set-orientation!) (apply set-orientation! args))
+            ((eq? cmd 'increase-speed!) (apply increase-speed! args))
+            ((eq? cmd 'reset-speed!) (apply reset-speed! args))
             ((eq? cmd 'is-moving?) (apply is-moving? args))
             ((eq? cmd 'is-colliding?) (apply is-colliding? args))
             ((eq? cmd 'move!)(apply move! args))

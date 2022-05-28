@@ -73,6 +73,13 @@
              (new-y (peek-pos 'get-y)))
         (not (maze 'is-wall? new-y new-x))))
 
+    (define (is-intersection? object direction)
+      (if (member direction (list 'up 'down))
+        (or (is-legal-move? object 'left)
+            (is-legal-move? object 'right))
+        (or (is-legal-move? object 'up)
+            (is-legal-move? object 'down))))
+
 ;;;;;;;;;;;;;;;;;;; DESTRUCTIVE ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (update!)
       ; Clear old updates
@@ -80,8 +87,13 @@
       ; Move Scorpions
       (for-each (lambda (scorpion)
                   (case (scorpion 'get-color)
-                    ((green) (if (not (is-legal-move? scorpion (scorpion 'get-direction)))
-                               (scorpion 'turn-back!))))
+                    ((green)
+                     ; Change direction in intersection
+                     (if (is-intersection? scorpion (scorpion 'get-direction))
+                               (scorpion 'set-direction! (get-random-direction)))
+                     ; Turn back if it hits a wall
+                     (if (not (is-legal-move? scorpion (scorpion 'get-direction)))
+                       (scorpion 'turn-back!))))
                   (scorpion 'update!)
                   (set! updates (cons scorpion updates)))
                 scorpions)

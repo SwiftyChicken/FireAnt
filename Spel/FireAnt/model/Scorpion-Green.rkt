@@ -23,10 +23,13 @@
         ((right) (set! direction 'left))
         ((left) (set! direction 'right))))
 
+    (define (set-direction! new-direction)
+            (set! direction new-direction))
 ;;;;;;;;;;;;;;;;;;; DISPATCH ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (dispatch cmd . args)
       (cond ((eq? cmd 'get-direction) (apply get-direction args))
             ((eq? cmd 'turn-back!) (apply turn-back! args))
+            ((eq? cmd 'set-direction!) (apply set-direction! args))
             ((eq? cmd 'update!) (apply update! args))
             (else (error "Unkown command" cmd))))
     dispatch)

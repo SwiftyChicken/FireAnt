@@ -10,8 +10,8 @@
 
 (define (new-scorpion-view owner layer)
   (let* ((bitmap (string-append bitmap-dir (case (owner 'get-color)
-                                             ((yellow) "scorpion_y.png")
-                                             ((green) "scorpion_g.png"))))
+                                             ((yellow) "scorpion_yellow.png")
+                                             ((green) "scorpion_green.png"))))
          (mask (string-append mask-dir "scorpion.png")))
 
 ;;;;;;;;;;;;;;;;;;; GETTERS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
