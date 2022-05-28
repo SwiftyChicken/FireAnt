@@ -1,0 +1,13 @@
+\babel@toc {dutch}{}\relax 
+\babel@toc {dutch}{}\relax 
+\contentsline {chapter}{\numberline {1}Intorductie}{2}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Spelbeschrijving}{2}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Implementatie}{2}{section.1.2}%
+\contentsline {chapter}{\numberline {2}ADTs}{3}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Controller}{3}{section.2.1}%
+\contentsline {subsection}{\numberline {2.1.1}Game ADT}{3}{subsection.2.1.1}%
+\contentsline {section}{\numberline {2.2}Modellen}{4}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}Position ADT}{4}{subsection.2.2.1}%
+\contentsline {subsection}{\numberline {2.2.2}Item ADT}{4}{subsection.2.2.2}%
+\contentsline {subsection}{\numberline {2.2.3}Player ADT}{5}{subsection.2.2.3}%
+\contentsline {subsection}{\numberline {2.2.4}Scorpion ADT}{5}{subsection.2.2.4}%

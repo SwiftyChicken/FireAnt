@@ -1,0 +1,155 @@
+In deze sectie zullen de verwachte nieuwe ADT's 
+en nieuwe procedures besproken worden die toegevoegd zullen worden.
+
+\section{Controller}
+\label{controller}
+\subsection{Game ADT}
+\label{section:game}
+Het \texttt{\nameref{section:game}} dat het spel opstart en de loop van het spel beheert,
+zal er nu ook voorzorgen dat het spel herstart,
+de volgende level laad 
+of de level herstart.
+
+Deze nieuwe functionaliteiten zullen vooral aan de hand van privé functies 
+die in de het \texttt{\nameref{section:game}} zullen geïmplementeerd worden.
+Dit is omdat enkel het \texttt{\nameref{section:game}} verantwoordelijk is voor het beheren van het spel verloop 
+en dus deze functionaliteiten daar buiten niet worden gebruikt.
+Deze functionaliteiten zullen toegevoegd worden aan de hand van de volgende procedures:
+
+\begin{table}[hbt]
+\centering
+\begin{tabular}{|ll|}
+\hline
+\rowcolor[HTML]{000000} 
+{\color[HTML]{FFFFFF} \textbf{Naam}} & {\color[HTML]{FFFFFF} \textbf{Signatuur}} \\ \hline
+next-level!    & $(\varnothing \rightarrow \varnothing)$     	 \\ \hline
+restart-level! & $(\varnothing \rightarrow \varnothing)$     	 \\ \hline
+\end{tabular}
+\caption{Operaties van het \texttt{\nameref{section:game}}}
+\label{table:1}
+\end{table}
+
+\begin{itemize}
+	\item \textbf{next-level!}: Veranderd de huidige level (current-level) naar de volgende level in de levels lijst.
+		Deze lijst zal door de Game onthouden worden.
+		De oude level wordt ook verwijderd uit de levels lijst.
+	\item \textbf{restart-level!}: Vernieuwt de current-level variabelen
+		door het Level ADT opnieuw te maken.
+\end{itemize}
+
+\section{Modellen}
+\label{model}
+
+\subsection{Position ADT}
+\label{section:positie}
+De \texttt{\nameref{section:positie}} zal nu ook verantwoordelijk zijn voor het snelheid van een object.
+Hiermee bedoelen we de snelheid waarmee een object van een positie naar het volgende verplaatst.
+Dit gaan we implementeren met locale variable van de \texttt{\nameref{section:positie}}, ``speed''.
+De volgende procedures zullen ook gebruikt worden om deze locale variabel te behandelen:
+
+
+\begin{table}[hbt]
+\centering
+\begin{tabular}{|ll|}
+\hline
+\rowcolor[HTML]{000000} 
+{\color[HTML]{FFFFFF} \textbf{Naam}} & {\color[HTML]{FFFFFF} \textbf{Signatuur}} \\ \hline
+get-speed        & ($\varnothing$ $\rightarrow$ number)                        \\ \hline
+set-speed!        & (number $\rightarrow$ $\varnothing$)                        \\ \hline
+\end{tabular}
+\caption{Operaties van het \texttt{\nameref{section:positie}}}
+\label{table:positie}
+\end{table}
+
+\begin{itemize}
+	\item \textbf{get-speed}: Geeft de snelheid van het object terug.
+		Deze is standaard 0,17.
+	\item \textbf{set-speed!}: Verandert de snelheid door de meegegeven snelheid.
+\end{itemize}
+
+\subsection{Item ADT}
+\label{section:item}
+Het \texttt{Egg ADT} zal nu veranderd worden in het \texttt{\nameref{section:item}}.
+Deze ADT zal bovenop de functionaliteiten van het \texttt{Egg ADT} ook nog zijn score waarde en item soort kunnen onthouden.
+
+\begin{table}[hbt]
+\centering
+\begin{tabular}{|ll|}
+\hline
+\rowcolor[HTML]{000000} 
+{\color[HTML]{FFFFFF} \textbf{Naam}} & {\color[HTML]{FFFFFF} \textbf{Signatuur}} \\ \hline
+new-egg                              & (number Positie $\rightarrow$ Egg) \\ \hline
+get-item-type         & ($\varnothing$ $\rightarrow$ Position)                        \\ \hline
+take!                              & (Player $\rightarrow$ $\varnothing$)                   \\ \hline
+\end{tabular}
+\caption{Operaties van het \texttt{\nameref{section:item}}}
+\label{table:item}
+\end{table}
+
+\begin{itemize}
+	\item \textbf{new-egg}: De new-egg porcedure neemt nu ook een nummer op.
+		Deze nummer bepaal welke soort item wordt gecreëerd
+		welke score waarde deze heeft.
+	\item \textbf{get-item-type}: Geeft het soort van het item terug.
+		Deze soort zal belangrijk zijn voor het tekenlogica.
+	\item \textbf{take!}: Veranderd taken waarden naar \#t.
+		en zal de Player de gepaste scoren bijgeven.
+		Deze functie zou ook gebruikt kunnen worden voor de Player een power-up te geven.
+\end{itemize}
+
+\subsection{Player ADT}
+\label{section:player}
+De \texttt{\nameref{section:player}} zal nu ook een score moeten bewaren
+en deze kunnen aanpassen wanneer nodig.
+Dit kunnen we doen met lokale score variabel die van 0 begint.
+De volgende procedures zullen ook nog toegevoegd moeten worden:
+
+\begin{table}[hbt]
+\centering
+\begin{tabular}{|ll|}
+\hline
+\rowcolor[HTML]{000000} 
+{\color[HTML]{FFFFFF} \textbf{Naam}} & {\color[HTML]{FFFFFF} \textbf{Signatuur}} \\ \hline
+get-score  & ($\varnothing$ $\rightarrow$ number)                        \\ \hline
+add-score! & (number $\rightarrow$ $\varnothing$)                        \\ \hline
+die!          & ($\varnothing$ $\rightarrow$ $\varnothing$)                   \\ \hline
+\end{tabular}
+\caption{Operaties van het \texttt{\nameref{section:player}}}
+\label{table:ant}
+\end{table}
+
+\begin{itemize}
+	\item \textbf{get-score}: Geeft huidige score terug.
+	\item \textbf{add-score!}: Voegt punten toe aan de score aan de hand van de meegegeven waarde.
+	\item \textbf{die!}: Deze procedure zal de score waarden ook terug naar 0 zetten als de speler geen levens meer heeft.
+\end{itemize}
+
+\subsection{Scorpion ADT}
+\label{section:scorpion}
+De \texttt{\nameref{section:scorpion}} zal nu een nieuwe type schorpioen moet ondersteunen (een schorpioen zonder vaste pad).
+Dit zou kunnen geïmplementeerd worden door een lege lijst mee te geven als pad.
+Het schorpioen moet nu ook nog op een willekeurige moment versnellen.
+Dit zou geïmplementeerd kunnen worden door de volgende procedures.
+
+\begin{table}[hbt]
+\centering
+\begin{tabular}{|ll|}
+\hline
+\rowcolor[HTML]{000000} 
+{\color[HTML]{FFFFFF} \textbf{Naam}} & {\color[HTML]{FFFFFF} \textbf{Signatuur}} \\ \hline
+update!                                 & ($\varnothing$ $\rightarrow$ $\varnothing$)                                       \\ \hline
+try-boost!                                 & ($\varnothing$ $\rightarrow$ $\varnothing$)                                       \\ \hline
+is-boosted?  & ($\varnothing$ $\rightarrow$ boolean)                        \\ \hline
+is-random?  & ($\varnothing$ $\rightarrow$ boolean)                        \\ \hline
+\end{tabular}
+\caption{Operaties van het \texttt{\nameref{section:scorpion}}}
+\label{table:scorpion}
+\end{table}
+
+\begin{itemize}
+	\item \textbf{update!}: Update zal nu een willekeurige richting toepassen als de ``path'' lijst leeg is.
+	\item \textbf{try-boost!}: De procedure heeft een bepaalde kans om de boost variabel te veranderen naar (not boost),
+		alleen als de schorpioen niet meer beweegt naar een nieuwe richting.
+	\item \textbf{is-boosted?}: Geeft aan of de schorpioen versneld is of niet.
+	\item \textbf{is-random?}: Geeft aan of de schorpioen een willekeurige ``path'' volgt.
+\end{itemize}

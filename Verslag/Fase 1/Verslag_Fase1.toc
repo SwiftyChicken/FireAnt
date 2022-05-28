@@ -7,11 +7,11 @@
 \contentsline {section}{\numberline {2.1}Controller}{3}{section.2.1}%
 \contentsline {subsection}{\numberline {2.1.1}Game ADT}{3}{subsection.2.1.1}%
 \contentsline {section}{\numberline {2.2}Modellen}{4}{section.2.2}%
-\contentsline {section}{\numberline {2.3}Level ADT}{4}{section.2.3}%
-\contentsline {section}{\numberline {2.4}Maze ADT}{6}{section.2.4}%
-\contentsline {section}{\numberline {2.5}Position ADT}{7}{section.2.5}%
-\contentsline {section}{\numberline {2.6}Egg ADT}{8}{section.2.6}%
-\contentsline {section}{\numberline {2.7}Player ADT}{9}{section.2.7}%
-\contentsline {section}{\numberline {2.8}Scorpion ADT}{10}{section.2.8}%
-\contentsline {section}{\numberline {2.9}Views}{11}{section.2.9}%
-\contentsline {section}{\numberline {2.10}View ADT}{11}{section.2.10}%
+\contentsline {subsection}{\numberline {2.2.1}Level ADT}{4}{subsection.2.2.1}%
+\contentsline {subsection}{\numberline {2.2.2}Maze ADT}{6}{subsection.2.2.2}%
+\contentsline {subsection}{\numberline {2.2.3}Position ADT}{7}{subsection.2.2.3}%
+\contentsline {subsection}{\numberline {2.2.4}Egg ADT}{8}{subsection.2.2.4}%
+\contentsline {subsection}{\numberline {2.2.5}Player ADT}{9}{subsection.2.2.5}%
+\contentsline {subsection}{\numberline {2.2.6}Scorpion ADT}{10}{subsection.2.2.6}%
+\contentsline {section}{\numberline {2.3}Views}{11}{section.2.3}%
+\contentsline {subsection}{\numberline {2.3.1}View ADT}{11}{subsection.2.3.1}%

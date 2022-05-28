@@ -10,6 +10,7 @@
 (load "model/Maze.rkt")
 (load "model/Egg.rkt")
 (load "model/Scorpion.rkt")
+(load "model/Scorpion_Green.rkt")
 (load "model/Position.rkt")
 
 (define (new-level player map-file)
@@ -110,8 +111,7 @@
 
     ;; Interpret needs a text of at least length 2
     (define (interpret! text x y)
-      (let ((code (string (string-ref text 0) ;; First 2 characters represent the object type
-                          (string-ref text 1)))
+      (let ((code (substring text 0 2)) ;; First 2 characters represent the object type
             (arg (list-tail (string->list text) 2))) ;; The other characters are used as arguments for object creation
         (cond ((string=? code "[]") (maze 'set-wall! y x #t))
             ((string=? code "  ") (maze 'set-wall! y x #f))
@@ -119,7 +119,9 @@
                                      (respawn))
             ((string=? code "EG") (set! eggs (cons (new-egg (new-position x y))
                                                    eggs)))
-            ((string=? code "SY") (set! scorpions (cons (new-scorpion (new-position x y) arg)
+            ((string=? code "SY") (set! scorpions (cons (new-scorpion 'yellow (new-position x y) arg)
+                                                        scorpions)))
+            ((string=? code "SG") (set! scorpions (cons (new-scorpion 'green (new-position x y) arg)
                                                         scorpions)))
             (else (error "Unkown code in level file" code)))))
 

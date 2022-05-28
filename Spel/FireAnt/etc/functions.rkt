@@ -24,3 +24,13 @@
 (define (set-cell! matrix row column new-value)
 	(vector-set! (vector-ref matrix row) column new-value))
 
+;;;;;;;;;;;;;;;;;;; DIRECTION FUNC ;;;;;;;;;;;;;;;;;;;;;;;;;
+(define (get-random-direction)
+	(vector-ref DIRECTIONS (random (vector-length DIRECTIONS))))
+
+(define (get-opposite direction)
+	(case direction
+		((up) 'down)
+		((down) 'up)
+		((left) 'right)
+		((right) 'left)))

@@ -62,7 +62,7 @@ Het \texttt{\nameref{section:game}} bevat de volgende operaties:
 \label{model}
 De Modellen zullen verantwoordelijk zijn voor het spellogica m.a.w. alle berekening achter de schermen.
 
-\section{Level ADT}
+\subsection{Level ADT}
 \label{section:level}
 Het \texttt{\nameref{section:level}} is het ADT dat een level opbouwt aan de hand van csv tekst bestand.
 Deze is verantwoordelijk om
@@ -130,7 +130,7 @@ Het \texttt{\nameref{section:level}} bevat de volgende operaties:
 
 \footnotetext{Object is een object dat een Positie ADT bezit.}
 
-\section{Maze ADT}
+\subsection{Maze ADT}
 \label{section:maze}
 Het \texttt{\nameref{section:maze}} is verantwoordelijk om het spellogica van het doolhof te construeren.
 
@@ -167,7 +167,7 @@ Het \texttt{\nameref{section:maze}} bevat de volgende operaties:
 		boolean warden) in het \texttt{\nameref{section:maze}} op de gegeven rij en kolom.
 \end{itemize}
 
-\section{Position ADT}
+\subsection{Position ADT}
 \label{section:positie}
 
 De \texttt{\nameref{section:positie}} is verantwoordelijk voor het bijhouden en aanpassen van de positie, oriëntatie en snelheid van een object.
@@ -224,7 +224,7 @@ Het \texttt{\nameref{section:positie}} bevat de volgende operaties:
 	\item \textbf{peek}: Geef de positie terug van buur positie gelegen op de meegegeven richting.
 \end{itemize}
 
-\section{Egg ADT}
+\subsection{Egg ADT}
 \label{section:egg}
 
 Het \texttt{\nameref{section:egg}} stelt een voorwerp voor dat kan opgeraapt  worden door een \texttt{Player}.
@@ -256,7 +256,7 @@ Het \texttt{\nameref{section:egg}} bevat de volgende operaties:
 	\item \textbf{is-taken?}: Check of het \texttt{\nameref{section:egg}} is opgeraapt of niet.
 \end{itemize}
 
-\section{Player ADT}
+\subsection{Player ADT}
 \label{section:player}
 De \texttt{\nameref{section:player}} stelt het speler voor.
 Deze ADT is verantwoordelijk om de conditie van de speler bij te houden.
@@ -295,7 +295,7 @@ De \texttt{\nameref{section:player}} bevat de volgende operaties:
 		De oriëntatie wordt ook gezet naar 'down omdat dit de standaard start oriëntatie is.
 \end{itemize}
 
-\section{Scorpion ADT}
+\subsection{Scorpion ADT}
 \label{section:scorpion}
 De \texttt{\nameref{section:scorpion}} is de ADT verantwoordelijk voor het spellogica van de schorpioen. 
 Deze ADT is verantwoordelijk om het onthouden van de positie, route en volgende beweging van de schorpioen.
@@ -335,11 +335,12 @@ Het \texttt{\nameref{section:scorpion}} bevat de volgende operaties:
 		en het tweede element de richting waarnaar de schorpioen moet gaan.
 \end{itemize}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% VIEW %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Views}
 \label{view}
 De Views zijn de ADTs verantwoordelijk voor het teken van het spel en het weergeven van de modellen op een visuele manier.
 
-\section{View ADT}
+\subsection{View ADT}
 \label{section:view}
 De \texttt{\nameref{section:view}} is het centrale ADT voor het tekenlogica.
 Deze ADT is verantwoordelijk voor het aanmaken van de canvas, lagen en nodige Views die de Player en de andere objecten in een level voorstellen.

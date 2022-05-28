@@ -1,0 +1,67 @@
+\documentclass[12pt]{report}
+
+\usepackage[utf8]{inputenc}
+\usepackage[dutch]{babel}
+\usepackage{graphicx}
+\usepackage{titlesec}
+\usepackage{etoolbox}
+\usepackage{parskip}
+\usepackage{hyperref}
+\usepackage{amssymb}
+\usepackage[table,xcdraw]{xcolor}
+\usepackage{tikz}
+
+\usetikzlibrary{arrows,automata}
+\usetikzlibrary{positioning}
+
+\selectlanguage{dutch}
+
+\graphicspath{{images/}}
+
+\titleformat
+{\chapter}
+[hang]
+{\bfseries\huge}
+{\thechapter\quad}
+{0.2ex}{}[]
+
+\titlespacing{\chapter}{1pc}{1ex minus 5ex}{1pc}
+
+\makeatletter
+\patchcmd{\chapter}{\if@openright\cleardoublepage\else\clearpage\fi}{}{}{}
+\makeatother
+
+
+\tikzset{
+    state/.style={
+           rectangle,
+           rounded corners,
+           draw=black, very thick,
+           minimum height=2em,
+           inner sep=3pt,
+           text centered,
+           },
+}
+
+\title{{Programmeerproject 1:}\\
+				{FireAnt}\\
+				{\large Fase 2}}
+\author{{Erneste Richard Rwema Rugema}\\
+    {(erneste.richard.rwema.rugema@vub.be)}\\
+			{\leftmark rolnummer: 0580198}}
+\date{Academiejaar 2021-2022}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+\chapter{Intorductie}
+\input{chapters/1_Introductie}
+
+\chapter{ADTs}
+\input{chapters/2_ADTs}
+
+\end{document}

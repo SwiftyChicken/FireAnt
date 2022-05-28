@@ -9,7 +9,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (define (new-scorpion-view owner layer)
-  (let* ((bitmap (string-append bitmap-dir "scorpion.png"))
+  (let* ((bitmap (string-append bitmap-dir "scorpion_y.png"))
          (mask (string-append mask-dir "scorpion.png"))
          (tile (make-bitmap-tile bitmap mask))
          (direction 0))

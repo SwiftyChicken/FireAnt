@@ -6,7 +6,7 @@
 ;; [x] Updaten van zijn beweging volgens de route plan
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(define (new-scorpion position pathing-code)
+(define (new-scorpion color position pathing-code)
 ;;;;;;;;;;;;;;;;;;; AUXILIARY ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   (define (interpret char)
     (case char
@@ -32,8 +32,12 @@
   (let* ((type 'scorpion)
          (pathing (list->circular 
                     (code->path pathing-code)))
-         (iterate (caar pathing))
-         (direction (cdar pathing)))
+         (iterate (if (eq? color 'yellow)
+                    (caar pathing)
+                    #f))
+         (direction (if (eq? color 'yellow)
+                      (cdar pathing)
+                      (get-random-direction))))
 
 ;;;;;;;;;;;;;;;;;;; GETTERS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (get-type)
@@ -42,6 +46,8 @@
     (define (get-position)
       position)
 
+    (define (get-color)
+      color)
 ;;;;;;;;;;;;;;;;;;; DESTRUCTIVE ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (update!)
       (if (not (position 'is-moving?))
