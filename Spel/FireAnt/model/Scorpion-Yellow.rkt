@@ -29,10 +29,15 @@
           (cons (cons num (interpret char)) (code->path (cdddr code))))))
 
 ;;;;;;;;;;;;;;;;;;; DISPATCH LET ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  (let* ((pathing (list->circular 
+  (let* ((race 'yellow)
+         (pathing (list->circular 
                         (code->path pathing-code)))
          (iterate (caar pathing))
          (direction (cdar pathing)))
+
+;;;;;;;;;;;;;;;;;;; GETTERS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    (define (get-race)
+      race)
 
 ;;;;;;;;;;;;;;;;;;; DESTRUCTIVE ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (update!)
@@ -51,6 +56,7 @@
 
 ;;;;;;;;;;;;;;;;;;; DISPATCH ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (dispatch cmd . args)
-      (cond ((eq? cmd 'update!) (apply update! args))
+      (cond ((eq? cmd 'get-race) (apply get-race args))
+            ((eq? cmd 'update!) (apply update! args))
             (else (error "Unkown command" cmd))))
     dispatch))

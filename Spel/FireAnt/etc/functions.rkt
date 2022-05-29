@@ -24,13 +24,18 @@
 (define (set-cell! matrix row column new-value)
 	(vector-set! (vector-ref matrix row) column new-value))
 
-;;;;;;;;;;;;;;;;;;; DIRECTION FUNC ;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;; RNG FUNC ;;;;;;;;;;;;;;;;;;;;;;;;;
 (define (get-random-direction)
 	(vector-ref DIRECTIONS (random (vector-length DIRECTIONS))))
 
+(define (coin-flip succes-rate)
+	(< (random 100) succes-rate))
+
+;;;;;;;;;;;;;;;;;;; DIRECTION FUNC ;;;;;;;;;;;;;;;;;;;;;;;;;
 (define (get-opposite direction)
 	(case direction
 		((up) 'down)
 		((down) 'up)
 		((left) 'right)
 		((right) 'left)))
+

@@ -8,15 +8,10 @@
 ;; [x] Maken van positie verandering "animatie/transitie"
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(load "view/Player-View.rkt")
-(load "view/Scorpion-View.rkt")
-
-(define (new-character-view owner layer)
-  (let* ((character (case (owner 'get-type)
-                      ((player) (new-player-view owner layer))
-                      ((scorpion) (new-scorpion-view owner layer))))
-         (direction 0) ;; Tile direction
-         (tile (make-bitmap-tile (character 'get-bitmap) (character 'get-mask)))
+(define (new-character-view owner layer bitmap mask)
+  (let* ((direction 0) ;; Tile direction
+         (tile (make-bitmap-tile bitmap mask))
+         (moving #f)
          (removed #f)) ;; Removed from layer
 
 ;;;;;;;;;;;;;;;;;;; INITIALIZATION ;;;;;;;;;;;;;;;;;;;;;;;;
@@ -40,9 +35,6 @@
     (define (is-moving?)
       moving)
 
-    (define (is-removed?)
-      removed)
-
 ;;;;;;;;;;;;;;;;;;; DESTRUCTIVE ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (update! ms) ;; Update position and direction
       (update-direction!)
@@ -54,18 +46,10 @@
                    TILE-SIZE))
              (y (* (position 'get-y)
                    TILE-SIZE)))
-        (position 'set-moving! (or (transition (tile 'set-x!) old-x x step)
-                         (transition (tile 'set-y!) old-y y step)))))
+        (set! moving (or (transition (tile 'set-x!) old-x x step)
+                         (transition (tile 'set-y!) old-y y step)))
+        (position 'set-moving! moving)))
     
-    (define (remove!)
-      (if (not removed)
-        (begin (layer 'empty)
-               (set! removed #t))))
-
-    (define (reset!)
-      (set! removed #f)
-      (init))
-
 ;;;;;;;;;;;;;;;;;;; AUXILIARY ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (transition setter old new step) ;; Create transitioning effect for tiles going from old to new position
       (if (< (abs (- new old)) step)
@@ -95,11 +79,8 @@
       (cond ((eq? cmd 'get-owner) (apply get-owner args))
             ((eq? cmd 'get-tile) (apply get-tile args))
             ((eq? cmd 'is-moving?) (apply is-moving? args))
-            ((eq? cmd 'is-removed?) (apply is-removed? args))
-            ((eq? cmd 'remove!) (apply remove! args))
-            ((eq? cmd 'reset!) (apply reset! args))
             ((eq? cmd 'update!) (apply update! args))
-            (else (apply character (cons cmd args)))))
+            (else (error "Unkown command" cmd))))
 
     (init)
     dispatch))

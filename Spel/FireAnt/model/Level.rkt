@@ -81,22 +81,28 @@
             (is-legal-move? object 'down))))
 
 ;;;;;;;;;;;;;;;;;;; DESTRUCTIVE ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    (define (update!)
+    (define (update! ms)
       ; Clear old updates
       (set! updates (list player))
       ; Move Scorpions
       (for-each (lambda (scorpion)
-                  (case (scorpion 'get-color)
+                  (scorpion 'try-boosting! ms)
+                  (case (scorpion 'get-race)
                     ((green)
                      ; Change direction in intersection
                      (if (is-intersection? scorpion (scorpion 'get-direction))
                                (scorpion 'set-direction! (get-random-direction)))
-                     ; Turn back if it hits a wall
-                     (if (not (is-legal-move? scorpion (scorpion 'get-direction)))
+                     
+                     (if (or (not (is-legal-move? scorpion (scorpion 'get-direction))) ; Turn back if it hits a wall
+                             (spawn 'is-colliding?                                     ; Prevent Spawn kill
+                                    ((scorpion 'get-position)
+                                     'peek (scorpion 'get-direction))))
                        (scorpion 'turn-back!))))
+
                   (scorpion 'update!)
                   (set! updates (cons scorpion updates)))
                 scorpions)
+
       ; Check for collisions
       (on-collision (lambda (egg)
                       (egg 'take!)

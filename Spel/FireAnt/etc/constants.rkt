@@ -10,4 +10,6 @@
 (define GRID-HEIGHT 20)
 (define GRID-WIDTH 35)
 (define TILE-SIZE 40)
+(define NORMAL-SPEED 0.15)
+(define FAST-SPEED 0.22)
 (define DIRECTIONS (vector 'up 'right 'down 'left))

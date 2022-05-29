@@ -44,7 +44,7 @@
 ;;;;;;;;;;;;;;;;;;; GAME LOOP ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       (define (game-loop ms)
         (if (not (current-level 'is-finished? player))
-          (begin (current-level 'update!)
+          (begin (current-level 'update! ms)
                  (view 'update ms)
                  (if (player 'is-dead?)
                    (current-level 'respawn)))
