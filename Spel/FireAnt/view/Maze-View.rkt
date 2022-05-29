@@ -18,7 +18,7 @@
         (if (< row height)
           (begin (let inner-loop ((column 0))
                    (if (< column width)
-                     (begin (if (owner 'is-wall? row column)
+                     (begin (if (eq? 'wall (owner 'get-unit row column))
                               (draw-wall row column))
                             (inner-loop (+ column 1)))))
                  (outer-loop (+ row 1))))))

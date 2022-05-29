@@ -71,7 +71,7 @@
              (peek-pos (pos 'peek direction))
              (new-x (peek-pos 'get-x))
              (new-y (peek-pos 'get-y)))
-        (not (maze 'is-wall? new-y new-x))))
+        (maze 'is-accessible? new-y new-x)))
 
     (define (is-intersection? object direction)
       (if (member direction (list 'up 'down))
@@ -132,17 +132,18 @@
     (define (interpret! text x y)
       (let ((code (substring text 0 2)) ;; First 2 characters represent the object type
             (arg (list-tail (string->list text) 2))) ;; The other characters are used as arguments for object creation
-        (cond ((string=? code "[]") (maze 'set-wall! y x #t))
-            ((string=? code "  ") (maze 'set-wall! y x #f))
-            ((string=? code "SP") (set! spawn (new-position x y))
+        (cond ((string=? code "  ") (maze 'clear-path! y x))
+              ((string=? code "[]") (maze 'add-wall! y x))
+              ((string=? code "{}") (maze 'add-door! y x))
+              ((string=? code "SP") (set! spawn (new-position x y))
                                      (respawn))
-            ((string=? code "EG") (set! eggs (cons (new-egg (new-position x y))
-                                                   eggs)))
-            ((string=? code "SY") (set! scorpions (cons (new-scorpion 'yellow (new-position x y) arg)
-                                                        scorpions)))
-            ((string=? code "SG") (set! scorpions (cons (new-scorpion 'green (new-position x y) (get-random-direction))
-                                                        scorpions)))
-            (else (error "Unkown code in level file" code)))))
+              ((string=? code "EG") (set! eggs (cons (new-egg (new-position x y))
+                                                     eggs)))
+              ((string=? code "SY") (set! scorpions (cons (new-scorpion 'yellow (new-position x y) arg)
+                                                          scorpions)))
+              ((string=? code "SG") (set! scorpions (cons (new-scorpion 'green (new-position x y) (get-random-direction))
+                                                          scorpions)))
+              (else (error "Unkown code in level file" code)))))
 
 ;;;;;;;;;;;;;;;;;;; DISPATCH ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (dispatch cmd . args)
