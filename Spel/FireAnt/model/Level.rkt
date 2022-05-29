@@ -110,6 +110,11 @@
       (on-collision (lambda (scorpion)
                       (player 'die!)) scorpions))
 
+    (define (try-opening! player direction)
+      (if (not (zero? (player 'get-keys)))
+        (let ((door-pos ((player 'get-position) 'peek direction)))
+          (player 'use-key!)
+          (maze 'clear-path! (door-pos 'get-y) (door-pos 'get-x)))))
 ;;;;;;;;;;;;;;;;;;; NON-DESTRUCTIVE ;;;;;;;;;;;;;;;;;;;;;;;;
     (define (respawn)
       (let ((x (spawn 'get-x))
@@ -154,6 +159,7 @@
             ((eq? cmd 'is-finished?) (apply is-finished? args))
             ((eq? cmd 'is-legal-move?) (apply is-legal-move? args))
             ((eq? cmd 'update!) (apply update! args))
+            ((eq? cmd 'try-opening!) (apply try-opening! args))
             ((eq? cmd 'respawn) (apply respawn args))
             (else error "Unknown command" cmd)))
 

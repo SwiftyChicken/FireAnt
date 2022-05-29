@@ -9,6 +9,7 @@
   (let ((type 'player)
         (position #f)
         (lives 3)
+        (keys 0)
         (alive #t))
 ;;;;;;;;;;;;;;;;;;; GETTERS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (get-type)
@@ -16,6 +17,12 @@
 
     (define (get-position)
       position)
+
+    (define (get-lives)
+      lives)
+
+    (define (get-keys)
+      keys)
 
 ;;;;;;;;;;;;;;;;;;; SETTERS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (set-position! pos)
@@ -26,6 +33,12 @@
       (not alive))
 
 ;;;;;;;;;;;;;;;;;;; DESTRUCTIVE ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    (define (take-key!)
+      (set! keys (+ keys 1)))
+
+    (define (use-key!)
+      (set! keys (- keys 1)))
+
     (define (die!)
       (if alive
         (begin (set! alive #f)
@@ -40,8 +53,12 @@
     (define (dispatch cmd . args)
       (cond ((eq? cmd 'get-type) (apply get-type args))
             ((eq? cmd 'get-position) (apply get-position args))
+            ((eq? cmd 'get-lives) (apply get-lives args))
+            ((eq? cmd 'get-keys) (apply get-keys args))
             ((eq? cmd 'set-position!) (apply set-position! args))
             ((eq? cmd 'is-dead?) (apply is-dead? args))
+            ((eq? cmd 'take-key!) (apply take-key! args))
+            ((eq? cmd 'use-key!) (apply use-key! args))
             ((eq? cmd 'die!) (apply die! args))
             ((eq? cmd 'revive!) (apply revive! args))
             (else (error "Unkown command" cmd))))
