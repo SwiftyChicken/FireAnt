@@ -21,6 +21,7 @@
          (egg-layer (canvas 'make-layer))
          (player-layer (canvas 'make-layer))
          (scorpion-layer (canvas 'make-layer))
+         (info-layer (canvas 'make-layer))
 ;================== VIEWS ================================;
          (player-view (new-player-view player player-layer))
          (maze-view (new-maze-view (level 'get-maze) floor-layer walls-layer))
