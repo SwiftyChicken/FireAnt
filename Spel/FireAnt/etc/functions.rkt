@@ -2,12 +2,13 @@
 ;; Enkele hulp functies die globaal worden gebruikt
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(define (list->circular lst) ; transform list in circular list
-	(let link ((current lst))
-		(if (null? (cdr current))
-			(begin (set-cdr! current lst)
-						 (cdr current))
-			(link (cdr current)))))
+
+		(define (list->circular lst) ; transform list in circular list
+			(let link ((current lst))
+				(if (null? (cdr current))
+					(begin (set-cdr! current lst)
+								 (cdr current))
+					(link (cdr current)))))
 
     (define (find-object to-find objects comparator) ; find object in list of objects
       (if (pair? objects)

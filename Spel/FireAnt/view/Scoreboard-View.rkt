@@ -11,33 +11,26 @@
 
 ;;;;;;;;;;;;;;;;;;; INITIALIZATION ;;;;;;;;;;;;;;;;;;;;;;;;
     (define (init)
-      (let ((x (* ((owner 'get-position) 'get-x)
-                  TILE-SIZE))
-            (y (* ((owner 'get-position) 'get-y)
+      (let ((x 0)
+            (y (* GRID-HEIGHT
                   TILE-SIZE)))
         ((tile 'set-x!) x)
         ((tile 'set-y!) y)
-        ((layer 'add-drawable) tile)))
+        ((layer 'add-drawable) tile))
+      (update!))
 
-;;;;;;;;;;;;;;;;;;; GETTERS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    (define (get-owner)
-      owner)
-
-;;;;;;;;;;;;;;;;;;; PREDICATES ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    (define (is-owner? object)
-      (eq? object owner))
-
-;;;;;;;;;;;;;;;;;;; DESTRUCTIVE ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    (define (remove!)
-      (if (not removed)
-        (begin ((layer 'remove-drawable) tile)
-               (set! removed #t))))
+    (define (update!)
+      (tile 'clear)
+      ((tile 'draw-text) (owner 'print-score) 20 20 5 "white")
+      ((tile 'draw-text) (owner 'print-high-score) 20 20 35 "white")
+      ((tile 'draw-text) (owner 'print-lives) 20 470 5 "white")
+      ((tile 'draw-text) (owner 'print-level) 20 470 35 "white")
+      ((tile 'draw-text) (owner 'print-keys) 20 920 5 "white")
+      (owner 'update!))
 
 ;;;;;;;;;;;;;;;;;;; DISPATCH ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (dispatch cmd . args)
-      (cond ((eq? cmd 'get-owner) (apply get-owner args))
-            ((eq? cmd 'is-owner?) (apply is-owner? args))
-            ((eq? cmd 'remove!) (apply remove! args))
+      (cond ((eq? cmd 'update!) (apply update! args))
             (else (error "Unknown command" cmd))))
 
     (init)

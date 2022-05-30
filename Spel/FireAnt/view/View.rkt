@@ -34,7 +34,7 @@
 ;================== VIEWS ================================;
          (player-view #f)
          (maze-view #f)
-         ;(scoreboard-view #f)
+         (scoreboard-view #f)
          (item-views #f)
          (door-views #f)
          (scorpion-views #f))
@@ -58,6 +58,8 @@
 
 ;;;;;;;;;;;;;;;;;;; DESTRUCTIVE ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (update! ms)
+      (if (scoreboard 'is-changed?)
+        (scoreboard-view 'update!))
       (let iter ((lst (level 'get-updates)))
         (if (not (null? lst))
           (begin (let* ((object (car lst))
@@ -93,7 +95,7 @@
           (new-view owner layer)))
 
       (set! player-view (new-player-view player player-layer))
-      ;(set! scoreboard-view (new-scoreboard-view scoreboard scoreboard-layer))
+      (set! scoreboard-view (new-scoreboard-view scoreboard scoreboard-layer))
       (set! maze-view (new-maze-view (level 'get-maze) floor-layer walls-layer))
       (set! item-views (make-views! get-new-item-view item-layer (level 'get-items)))
       (set! door-views (make-views! new-door-view door-layer (level 'get-doors)))
