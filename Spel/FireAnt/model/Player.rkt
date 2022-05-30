@@ -55,6 +55,10 @@
       (set! points 0)
       (set! alive #t))
 
+    (define (add-life!)
+      (set! changed #t)
+      (set! lives (+ lives 1)))
+
     (define (die!)
       (if alive
         (begin (set! alive #f)
@@ -83,6 +87,7 @@
             ((eq? cmd 'use-key!) (apply use-key! args))
             ((eq? cmd 'add-points!) (apply add-points! args))
             ((eq? cmd 'reset!) (apply reset! args))
+            ((eq? cmd 'add-life!) (apply add-life! args))
             ((eq? cmd 'die!) (apply die! args))
             ((eq? cmd 'revive!) (apply revive! args))
             ((eq? cmd 'update!) (apply update! args))

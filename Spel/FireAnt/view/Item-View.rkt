@@ -1,5 +1,9 @@
-(define (new-item-view owner layer bitmap . mask)
-  (let* ((tile (apply make-bitmap-tile (cons bitmap mask)))
+(define (new-item-view owner layer bitmap-pic . mask-pic)
+  (let* ((bitmap (string-append bitmap-dir bitmap-pic))
+         (mask (if (pair? mask-pic)
+                 (list (string-append mask-dir (car mask-pic)))
+                 '()))
+         (tile (apply make-bitmap-tile (cons bitmap mask)))
          (removed #f))
 
 ;;;;;;;;;;;;;;;;;;; INITIALIZATION ;;;;;;;;;;;;;;;;;;;;;;;;
