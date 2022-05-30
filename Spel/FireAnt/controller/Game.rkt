@@ -17,11 +17,14 @@
 (load "view/View.rkt")
 
 (define (new-game)
+  (define (init-levels)
+    ;; List all levels in level-dir
+    (map (lambda (path) (string-append level-dir (path->string path)))
+         (list->mlist (directory-list level-dir))))
+
   (define (start)
     (let* ((player (new-player))
-           (levels (map (lambda (path) ;; List all levels in level-dir
-                          (string-append level-dir (path->string path)))
-                        (list->mlist (directory-list level-dir))))
+           (levels (init-levels))
            (current-level (new-level player 
                                      (car levels)))
            (scoreboard (new-scoreboard player (string-append score-dir "high-score.txt")))
@@ -29,13 +32,13 @@
 
 ;;;;;;;;;;;;;;;;;;; DESTRUCTIVE ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       (define (next-level!) ;; Update variables and return next level
-        (scoreboard 'save-high-score)
+        
         (if (not (null? (cdr levels)))
           (begin (set! levels (cdr levels))
                  (set! current-level (new-level player 
                                                 (car levels)))
                  (view 'set-level! current-level))
-          (display "GAME COMPLETED")))
+          (begin (scoreboard 'save-high-score))))
 
 ;;;;;;;;;;;;;;;;;;; KEY HANDLER ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       (define (key-handler state key)
