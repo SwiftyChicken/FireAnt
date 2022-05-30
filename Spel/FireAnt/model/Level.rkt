@@ -121,11 +121,12 @@
                (door (find-object door-pos doors 
                                (lambda (door to-find)
                                  ((door 'get-position) 'is-colliding? to-find)))))
-          (player 'use-key!)
-          (door 'open!)
-          (maze 'clear-path! (door-pos 'get-y) (door-pos 'get-x))
-          ((player 'get-position) 'move! direction) ; Player can walk through the door
-          (add-update! door))))
+          (if door ; If the peeked position is a door
+            (begin (player 'use-key!)
+                   (door 'open!)
+                   (maze 'clear-path! (door-pos 'get-y) (door-pos 'get-x))
+                   ((player 'get-position) 'move! direction) ; Player can walk through the door
+                   (add-update! door))))))
 
     (define (add-update! object)
       (set! updates (cons object updates)))

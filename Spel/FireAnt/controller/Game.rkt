@@ -40,8 +40,7 @@
                (case key
                  ((up down left right) (if (current-level 'is-legal-move? player key)
                                          ((player 'get-position) 'move! key)
-                                         (if (current-level 'is-door? player key)
-                                           (current-level 'try-opening! player key))))))))
+                                         (current-level 'try-opening! player key)))))))
 
 ;;;;;;;;;;;;;;;;;;; GAME LOOP ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       (define (game-loop ms)
