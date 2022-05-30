@@ -36,6 +36,7 @@
       (let ((current-score (player 'get-points)))
         (if (> current-score high-score)
         (begin (set! changed #t)
+               (set! high-score current-score)
                (call-with-output-file file
                                       #:exists 'truncate
                                       (lambda (output-port)

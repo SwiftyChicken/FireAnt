@@ -14,27 +14,35 @@
          (list->mlist (directory-list level-dir))))
 
   (define (start)
-    (let* ((player (new-player))
+    (let* ((game-running #t) ; Check if game is over or not
+           (player (new-player))
            (levels (init-levels))
            (current-level (new-level player 
                                      (car levels)))
-           (scoreboard (new-scoreboard player (string-append score-dir "high-score.txt")))
+           (scoreboard (new-scoreboard player HIGH-SCORE-FILE))
            (view (new-view player current-level scoreboard)))
 
 ;;;;;;;;;;;;;;;;;;; DESTRUCTIVE ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       (define (next-level!) ;; Update variables and return next level
-        (if (not (null? (cdr levels)))
+        (if (pair? (cdr levels))
           (begin (scoreboard 'next-level!)
                  (set! levels (cdr levels))
                  (set! current-level (new-level player 
                                                 (car levels)))
                  (view 'set-level! current-level))
-          (begin (scoreboard 'save-high-score))))
+          (begin (scoreboard 'save-high-score)
+                 (game-running #f))))
 
-      (define (reset-levels!)
+      (define (reset-game!)
         (scoreboard 'save-high-score)
+        (player 'reset!)
         (set! levels (init-levels))
-        (scoreboard 'reset-level!))
+        (set! current-level (new-level player 
+                                       (car levels)))
+        (view 'set-level! current-level)
+        (scoreboard 'reset-level!)
+        (set! game-running #t))
+
 ;;;;;;;;;;;;;;;;;;; KEY HANDLER ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       (define (key-handler state key)
         (cond ((eq? state 'pressed)
@@ -45,19 +53,22 @@
 
 ;;;;;;;;;;;;;;;;;;; GAME LOOP ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       (define (game-loop ms)
-        (if (current-level 'is-finished? player)
-          (next-level!)
-          (begin (current-level 'update! ms) ; Update all the models
-                 (view 'update! ms) ; Update all the views
-                 (current-level 'clear-updates!) ; Clean up updates list after updating
-                 (if (player 'is-dead?)
-                   (current-level 'respawn)))))
+        (if game-running
+          (if (current-level 'is-finished? player)
+            (next-level!)
+            (begin (current-level 'update! ms) ; Update all the models
+                   (view 'update! ms) ; Update all the views
+                   (current-level 'clear-updates!) ; Clean up updates list after updating
+                   (if (player 'is-dead?)
+                     (if (> (player 'get-lives) 0)
+                       (current-level 'respawn)
+                       (set! game-running #f))))) ; GAME OVER
+          (reset-game!)))
 
 ;;;;;;;;;;;;;;;;;;; START LOOP ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ((view 'key-handler) key-handler)
       ((view 'game-loop) game-loop)))
        
-
 ;;;;;;;;;;;;;;;;;;; DISPATCH ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       (define (dispatch cmd . args)
         (cond ((eq? cmd 'start) (apply start args))

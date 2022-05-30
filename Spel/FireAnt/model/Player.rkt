@@ -47,6 +47,14 @@
       (set! changed #t)
       (set! points (+ points p)))
 
+    (define (reset!)
+      (set! changed #t)
+      (set! position #f)
+      (set! lives STARTING-LIVES)
+      (set! keys 0)
+      (set! points 0)
+      (set! alive #t))
+
     (define (die!)
       (if alive
         (begin (set! alive #f)
@@ -74,6 +82,7 @@
             ((eq? cmd 'take-key!) (apply take-key! args))
             ((eq? cmd 'use-key!) (apply use-key! args))
             ((eq? cmd 'add-points!) (apply add-points! args))
+            ((eq? cmd 'reset!) (apply reset! args))
             ((eq? cmd 'die!) (apply die! args))
             ((eq? cmd 'revive!) (apply revive! args))
             ((eq? cmd 'update!) (apply update! args))
