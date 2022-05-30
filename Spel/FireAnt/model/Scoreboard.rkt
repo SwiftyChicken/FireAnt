@@ -17,24 +17,19 @@
 
 ;;;;;;;;;;;;;;;;;;; PRINT TEXT FUNC ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (print-score)
-      (let ((score (number->string (player 'get-points))))
-        (string-append "Score: \t \t" score)))
+      (print-number "Score: \t \t" (player 'get-points)))
 
     (define (print-high-score)
-      (let ((score (number->string high-score)))
-        (string-append "High Score: \t" score)))
+      (print-number "High Score: \t" high-score))
 
     (define (print-lives)
-      (let ((lives (number->string (player 'get-lives))))
-        (string-append "Extra Lives:\t# " lives)))
+      (print-number "Extra Lives:\t# " (player 'get-lives)))
 
     (define (print-keys)
-      (let ((keys (number->string (player 'get-keys))))
-        (string-append "Collected Keys:\t# " keys)))
+      (print-number "Collected Keys:\t# "(player 'get-keys)))
 
     (define (print-level)
-      (let ((lvl (number->string level)))
-        (string-append "Chamber:   \t# " lvl)))
+      (print-number "Chamber:   \t# " level))
 
 ;;;;;;;;;;;;;;;;;;; I/O FILE FUNC ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (save-high-score) ; Overwrite file with new score if higher than old high score [etc/high-score.txt]
@@ -55,9 +50,18 @@
       (set! changed #t)
       (set! level (+ level 1)))
 
+    (define (reset-level!)
+      (set! changed #t)
+      (set! level 1))
+
     (define (update!)  ; After redrawing scoreboard
       (set! changed #f)
       (player 'update!))
+
+;;;;;;;;;;;;;;;;;;; AUXILIARY ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    (define (print-number text number)
+      (let ((number (number->string number)))
+        (string-append text number)))
 
 ;;;;;;;;;;;;;;;;;;; DISPATCH ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (dispatch cmd . args)
@@ -69,6 +73,7 @@
             ((eq? cmd 'save-high-score) (apply save-high-score args))
             ((eq? cmd 'is-changed?) (apply is-changed? args))
             ((eq? cmd 'next-level!) (apply next-level! args))
+            ((eq? cmd 'reset-level!) (apply reset-level! args))
             ((eq? cmd 'update!) (apply update! args))
             (else (error "Unkown command" cmd))))
 

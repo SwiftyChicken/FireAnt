@@ -31,6 +31,10 @@
                  (view 'set-level! current-level))
           (begin (scoreboard 'save-high-score))))
 
+      (define (reset-levels!)
+        (scoreboard 'save-high-score)
+        (set! levels (init-levels))
+        (scoreboard 'reset-level!))
 ;;;;;;;;;;;;;;;;;;; KEY HANDLER ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       (define (key-handler state key)
         (cond ((eq? state 'pressed)
