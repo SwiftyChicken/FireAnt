@@ -9,6 +9,7 @@
 
 (load "model/Maze.rkt")
 (load "model/Egg.rkt")
+(load "model/Door.rkt")
 (load "model/Scorpion.rkt")
 (load "model/Position.rkt")
 
