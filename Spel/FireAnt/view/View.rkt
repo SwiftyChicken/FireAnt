@@ -10,6 +10,7 @@
 
 (load "view/Maze-View.rkt")
 (load "view/Egg-View.rkt")
+(load "view/Key-View.rkt")
 (load "view/Door-View.rkt")
 (load "view/Player-View.rkt")
 (load "view/Scorpion-View.rkt")
@@ -25,14 +26,14 @@
          (floor-layer (make-layer!))
          (walls-layer (make-layer!))
          (door-layer (make-layer!))
-         (egg-layer (make-layer!))
+         (item-layer (make-layer!))
          (player-layer (make-layer!))
          (scorpion-layer (make-layer!))
          (info-layer (make-layer!))
 ;================== VIEWS ================================;
          (player-view #f)
          (maze-view #f)
-         (egg-views #f)
+         (item-views #f)
          (door-views #f)
          (scorpion-views #f))
 
@@ -68,7 +69,7 @@
                      ((scorpion) (let* ((view (find-object object scorpion-views find-view)))
                                    (view 'update! ms)
                                    (view 'update-color!)))
-                     ((egg) (let* ((view (find-object object egg-views find-view)))
+                     ((egg key) (let* ((view (find-object object item-views find-view)))
                               (if (object 'is-taken?)
                                 (view 'remove!))))
                      ((door) (let* ((view (find-object object door-views find-view)))
@@ -82,9 +83,16 @@
       (define (make-views! new-view layer owners)
         (map (lambda (owner) (new-view owner layer)) owners))
 
+      (define (get-new-item-view owner layer)
+        (let ((new-view (case (owner 'get-type)
+                          ((egg) new-egg-view)
+                          ((key) new-key-view)
+                          (else (error "Unkown item type" (owner 'get-type))))))
+          (new-view owner layer)))
+
       (set! player-view (new-player-view player player-layer))
       (set! maze-view (new-maze-view (level 'get-maze) floor-layer walls-layer))
-      (set! egg-views (make-views! new-egg-view egg-layer (level 'get-eggs)))
+      (set! item-views (make-views! get-new-item-view item-layer (level 'get-items)))
       (set! door-views (make-views! new-door-view door-layer (level 'get-doors)))
       (set! scorpion-views (make-views! new-scorpion-view scorpion-layer (level 'get-scorpions))))
 

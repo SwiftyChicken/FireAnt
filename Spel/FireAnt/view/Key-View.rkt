@@ -7,12 +7,9 @@
 
 (load "view/Item-View.rkt")
 
-(define (new-egg-view owner layer)
-  (let* ((bitmap (string-append bitmap-dir (case (owner 'get-color)
-                                             ((bronze) "egg-bronze.png")
-                                             ((silver) "egg-silver.png")
-                                             ((gold) "egg-gold.png"))))
-         (mask (string-append mask-dir "egg.png"))
+(define (new-key-view owner layer)
+  (let* ((bitmap (string-append bitmap-dir "key.png"))
+         (mask (string-append mask-dir "key.png"))
          (item-view (new-item-view owner layer bitmap mask)))
 
 ;;;;;;;;;;;;;;;;;;; DISPATCH ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

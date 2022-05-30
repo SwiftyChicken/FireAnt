@@ -9,6 +9,7 @@
 
 (load "model/Maze.rkt")
 (load "model/Egg.rkt")
+(load "model/Key.rkt")
 (load "model/Door.rkt")
 (load "model/Scorpion.rkt")
 (load "model/Position.rkt")
@@ -17,7 +18,7 @@
 
   (let ((spawn (new-position 0 0))
         (scorpions '())
-        (eggs '())
+        (items '())
         (doors '())
         (maze (new-maze))
         (updates '())
@@ -53,8 +54,8 @@
     (define (get-maze)
       maze)
 
-    (define (get-eggs)
-      eggs)
+    (define (get-items)
+      items)
 
     (define (get-doors)
       doors)
@@ -108,9 +109,9 @@
                 scorpions)
 
       ; Check for collisions
-      (on-collision (lambda (egg)
-                      (egg 'take! player)
-                      (add-update! egg)) eggs)
+      (on-collision (lambda (item)
+                      (item 'take! player)
+                      (add-update! item)) items)
       (on-collision (lambda (scorpion)
                       (player 'die!)) scorpions))
 
@@ -160,12 +161,14 @@
                                                       doors)))
               ((string=? code "SP") (set! spawn (new-position x y))
                                      (respawn))
-              ((string=? code "EB") (set! eggs (cons (new-egg (new-position x y) 'bronze)
-                                                     eggs)))
-              ((string=? code "ES") (set! eggs (cons (new-egg (new-position x y) 'silver)
-                                                     eggs)))
-              ((string=? code "EG") (set! eggs (cons (new-egg (new-position x y) 'gold)
-                                                     eggs)))
+              ((string=? code "EB") (set! items (cons (new-egg (new-position x y) 'bronze)
+                                                     items)))
+              ((string=? code "ES") (set! items (cons (new-egg (new-position x y) 'silver)
+                                                     items)))
+              ((string=? code "EG") (set! items (cons (new-egg (new-position x y) 'gold)
+                                                     items)))
+              ((string=? code "KY") (set! items (cons (new-key (new-position x y))
+                                                     items)))
               ((string=? code "SY") (set! scorpions (cons (new-scorpion 'yellow (new-position x y) arg)
                                                           scorpions)))
               ((string=? code "SG") (set! scorpions (cons (new-scorpion 'green (new-position x y) (get-random-direction))
@@ -175,7 +178,7 @@
 ;;;;;;;;;;;;;;;;;;; DISPATCH ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (dispatch cmd . args)
       (cond ((eq? cmd 'get-maze) (apply get-maze args))
-            ((eq? cmd 'get-eggs) (apply get-eggs args))
+            ((eq? cmd 'get-items) (apply get-items args))
             ((eq? cmd 'get-doors) (apply get-doors args))
             ((eq? cmd 'get-scorpions) (apply get-scorpions args))
             ((eq? cmd 'get-updates) (apply get-updates args))
