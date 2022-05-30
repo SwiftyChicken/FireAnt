@@ -14,7 +14,7 @@
         (let ((object (car objects)))
           (if (comparator object to-find)
             view
-            (find-object to-find (cdr views) comparator)))
+            (find-object to-find (cdr objects) comparator)))
         #f))
 
 ;;;;;;;;;;;;;;;;;;; MATRIX FUNC ;;;;;;;;;;;;;;;;;;;;;;;;;
