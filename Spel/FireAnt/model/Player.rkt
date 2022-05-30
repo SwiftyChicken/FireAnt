@@ -10,7 +10,9 @@
         (position #f)
         (lives 3)
         (keys 0)
+        (points 0)
         (alive #t))
+
 ;;;;;;;;;;;;;;;;;;; GETTERS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (get-type)
       type)
@@ -23,6 +25,9 @@
 
     (define (get-keys)
       keys)
+
+    (define (get-points)
+      points)
 
 ;;;;;;;;;;;;;;;;;;; SETTERS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (set-position! pos)
@@ -38,6 +43,9 @@
 
     (define (use-key!)
       (set! keys (- keys 1)))
+
+    (define (add-points! p)
+      (set! points (+ points p)))
 
     (define (die!)
       (if alive
@@ -55,10 +63,12 @@
             ((eq? cmd 'get-position) (apply get-position args))
             ((eq? cmd 'get-lives) (apply get-lives args))
             ((eq? cmd 'get-keys) (apply get-keys args))
+            ((eq? cmd 'get-points) (apply get-points args))
             ((eq? cmd 'set-position!) (apply set-position! args))
             ((eq? cmd 'is-dead?) (apply is-dead? args))
             ((eq? cmd 'take-key!) (apply take-key! args))
             ((eq? cmd 'use-key!) (apply use-key! args))
+            ((eq? cmd 'add-points!) (apply add-points! args))
             ((eq? cmd 'die!) (apply die! args))
             ((eq? cmd 'revive!) (apply revive! args))
             (else (error "Unkown command" cmd))))

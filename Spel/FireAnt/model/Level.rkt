@@ -56,6 +56,9 @@
     (define (get-eggs)
       eggs)
 
+    (define (get-doors)
+      doors)
+
     (define (get-scorpions)
       scorpions)
 
@@ -106,7 +109,7 @@
 
       ; Check for collisions
       (on-collision (lambda (egg)
-                      (egg 'take!)
+                      (egg 'take! player)
                       (add-update! egg)) eggs)
       (on-collision (lambda (scorpion)
                       (player 'die!)) scorpions))
@@ -114,12 +117,13 @@
     (define (try-opening! player direction)
       (if (not (zero? (player 'get-keys)))
         (let* ((door-pos ((player 'get-position) 'peek direction))
-               (door (find-obj door-pos doors 
+               (door (find-object door-pos doors 
                                (lambda (door to-find)
                                  ((door 'get-position) 'is-colliding? to-find)))))
           (player 'use-key!)
           (door 'open!)
           (maze 'clear-path! (door-pos 'get-y) (door-pos 'get-x))
+          ((player 'get-position) 'move! direction) ; Player can walk through the door
           (add-update! door))))
 
     (define (add-update! object)
@@ -156,7 +160,11 @@
                                                       doors)))
               ((string=? code "SP") (set! spawn (new-position x y))
                                      (respawn))
-              ((string=? code "EG") (set! eggs (cons (new-egg (new-position x y))
+              ((string=? code "EB") (set! eggs (cons (new-egg (new-position x y) 'bronze)
+                                                     eggs)))
+              ((string=? code "ES") (set! eggs (cons (new-egg (new-position x y) 'silver)
+                                                     eggs)))
+              ((string=? code "EG") (set! eggs (cons (new-egg (new-position x y) 'gold)
                                                      eggs)))
               ((string=? code "SY") (set! scorpions (cons (new-scorpion 'yellow (new-position x y) arg)
                                                           scorpions)))
@@ -168,6 +176,7 @@
     (define (dispatch cmd . args)
       (cond ((eq? cmd 'get-maze) (apply get-maze args))
             ((eq? cmd 'get-eggs) (apply get-eggs args))
+            ((eq? cmd 'get-doors) (apply get-doors args))
             ((eq? cmd 'get-scorpions) (apply get-scorpions args))
             ((eq? cmd 'get-updates) (apply get-updates args))
             ((eq? cmd 'is-finished?) (apply is-finished? args))
