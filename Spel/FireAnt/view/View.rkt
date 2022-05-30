@@ -15,13 +15,19 @@
 
 (define (new-view player level)
   (let* ((canvas (make-window WINDOW-WIDTH WINDOW-HEIGHT "Fire Ant"))
+         (layers '())
+         (make-layer! (lambda () ; Create layer and add it to a list
+                        (let ((layer (canvas 'make-layer)))
+                          (set! layers (cons layer layers))
+                          layer)))
+         (views '())
 ;================== LAYERS ===============================;
-         (floor-layer (canvas 'make-layer))
-         (walls-layer (canvas 'make-layer))
-         (egg-layer (canvas 'make-layer))
-         (player-layer (canvas 'make-layer))
-         (scorpion-layer (canvas 'make-layer))
-         (info-layer (canvas 'make-layer))
+         (floor-layer (make-layer!))
+         (walls-layer (make-layer!))
+         (egg-layer (make-layer!))
+         (player-layer (make-layer!))
+         (scorpion-layer (make-layer!))
+         (info-layer (make-layer!))
 ;================== VIEWS ================================;
          (player-view (new-player-view player player-layer))
          (maze-view (new-maze-view (level 'get-maze) floor-layer walls-layer))
@@ -39,16 +45,15 @@
     (define (set-level! new-level)
       (set! level new-level)
       ;; Clean up layers
-      (floor-layer 'empty)
-      (walls-layer 'empty)
-      (egg-layer 'empty)
-      (player-layer 'empty)
-      (scorpion-layer 'empty)
+      (for-each (lambda (layer)
+                  (layer 'empty)) 
+                layers)
       ;; Make new tiles
       (set! player-view (new-player-view player player-layer))
       (set! maze-view (new-maze-view (level 'get-maze) floor-layer walls-layer))
       (set! egg-views (map (lambda (egg) (new-egg-view egg egg-layer)) (level 'get-eggs)))
-      (set! scorpion-views (map (lambda (scorpion) (new-scorpion-view scorpion scorpion-layer)) (level 'get-scorpions))))
+      (set! scorpion-views (map (lambda (scorpion) (new-scorpion-view scorpion scorpion-layer)) (level 'get-scorpions)))
+      )
 
 ;;;;;;;;;;;;;;;;;;; DESTRUCTIVE ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (update! ms)
@@ -63,15 +68,16 @@
                                           (player-view 'reset!)
                                           (player-view 'update! ms)))))
                      ((scorpion) (let* ((view (find-object object scorpion-views 
-                                                           (lambda (vie to-find)
-                                                             (vie 'is-owner? to-find)))))
+                                                           (lambda (view to-find)
+                                                             (view 'is-owner? to-find)))))
                                    (view 'update! ms)
                                    (view 'update-color!)))
                      ((egg) (let* ((view (find-object object egg-views 
-                                                           (lambda (vie to-find)
-                                                             (vie 'is-owner? to-find)))))
+                                                           (lambda (view to-find)
+                                                             (view 'is-owner? to-find)))))
                               (if (object 'is-taken?)
                                 (view 'remove!))))
+                     ((door) (display "Work in progress :/"))
                      (else (error "Unknown type" type))))
                  (iter (cdr lst))))))
 
