@@ -63,14 +63,13 @@
                                           (player-view 'reset!)
                                           (player-view 'update! ms)))))
                      ((scorpion) (let* ((view (find-object object scorpion-views 
-                                                           (lambda (view to-find)
-                                                             (view 'is-owner? to-find))))
-                                        (tile (view 'get-tile)))
+                                                           (lambda (vie to-find)
+                                                             (vie 'is-owner? to-find)))))
                                    (view 'update! ms)
                                    (view 'update-color!)))
                      ((egg) (let* ((view (find-object object egg-views 
-                                                           (lambda (view to-find)
-                                                             (view 'is-owner? to-find)))))
+                                                           (lambda (vie to-find)
+                                                             (vie 'is-owner? to-find)))))
                               (if (object 'is-taken?)
                                 (view 'remove!))))
                      (else (error "Unknown type" type))))

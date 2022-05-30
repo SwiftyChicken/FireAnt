@@ -13,7 +13,7 @@
       (if (pair? objects)
         (let ((object (car objects)))
           (if (comparator object to-find)
-            view
+            object
             (find-object to-find (cdr objects) comparator)))
         #f))
 
