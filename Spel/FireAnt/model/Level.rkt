@@ -17,6 +17,7 @@
   (let ((spawn (new-position 0 0))
         (scorpions '())
         (eggs '())
+        (doors '())
         (maze (new-maze))
         (updates '())
         (finished #f))
@@ -82,8 +83,7 @@
 
 ;;;;;;;;;;;;;;;;;;; DESTRUCTIVE ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (update! ms)
-      ; Clear old updates
-      (set! updates (list player))
+      (add-update! player)
       ; Move Scorpions
       (for-each (lambda (scorpion)
                   (scorpion 'try-boosting! ms)
@@ -100,21 +100,32 @@
                        (scorpion 'turn-back!))))
 
                   (scorpion 'update!)
-                  (set! updates (cons scorpion updates)))
+                  (add-update! scorpion))
                 scorpions)
 
       ; Check for collisions
       (on-collision (lambda (egg)
                       (egg 'take!)
-                      (set! updates (cons egg updates))) eggs)
+                      (add-update! egg)) eggs)
       (on-collision (lambda (scorpion)
                       (player 'die!)) scorpions))
 
     (define (try-opening! player direction)
       (if (not (zero? (player 'get-keys)))
-        (let ((door-pos ((player 'get-position) 'peek direction)))
+        (let* ((door-pos ((player 'get-position) 'peek direction))
+               (door (find-obj door-pos doors 
+                               (lambda (door to-find)
+                                 ((door 'get-position) 'is-colliding? to-find)))))
           (player 'use-key!)
-          (maze 'clear-path! (door-pos 'get-y) (door-pos 'get-x)))))
+          (door 'open!)
+          (maze 'clear-path! (door-pos 'get-y) (door-pos 'get-x))
+          (add-update! door))))
+
+    (define (add-update! object)
+      (set! updates (cons object updates)))
+
+    (define (clear-updates!)
+      (set! updates '()))
 ;;;;;;;;;;;;;;;;;;; NON-DESTRUCTIVE ;;;;;;;;;;;;;;;;;;;;;;;;
     (define (respawn)
       (let ((x (spawn 'get-x))
@@ -139,7 +150,9 @@
             (arg (list-tail (string->list text) 2))) ;; The other characters are used as arguments for object creation
         (cond ((string=? code "  ") (maze 'clear-path! y x))
               ((string=? code "[]") (maze 'add-wall! y x))
-              ((string=? code "{}") (maze 'add-door! y x))
+              ((string=? code "{}") (maze 'add-door! y x)
+                                    (set! doors (cons (new-door (new-position x y))
+                                                      doors)))
               ((string=? code "SP") (set! spawn (new-position x y))
                                      (respawn))
               ((string=? code "EG") (set! eggs (cons (new-egg (new-position x y))
@@ -159,6 +172,7 @@
             ((eq? cmd 'is-finished?) (apply is-finished? args))
             ((eq? cmd 'is-legal-move?) (apply is-legal-move? args))
             ((eq? cmd 'update!) (apply update! args))
+            ((eq? cmd 'clear-updates!) (apply clear-updates! args))
             ((eq? cmd 'try-opening!) (apply try-opening! args))
             ((eq? cmd 'respawn) (apply respawn args))
             (else error "Unknown command" cmd)))

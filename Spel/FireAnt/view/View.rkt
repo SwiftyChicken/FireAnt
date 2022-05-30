@@ -50,8 +50,8 @@
       (set! egg-views (map (lambda (egg) (new-egg-view egg egg-layer)) (level 'get-eggs)))
       (set! scorpion-views (map (lambda (scorpion) (new-scorpion-view scorpion scorpion-layer)) (level 'get-scorpions))))
 
-;;;;;;;;;;;;;;;;;;; NON-DESTRUCTIVE ;;;;;;;;;;;;;;;;;;;;;;;;
-    (define (update ms)
+;;;;;;;;;;;;;;;;;;; DESTRUCTIVE ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    (define (update! ms)
       (let iter ((lst (level 'get-updates)))
         (if (not (null? lst))
           (begin (let* ((object (car lst))
@@ -62,31 +62,26 @@
                                  (begin (if (player-view 'is-removed?)
                                           (player-view 'reset!)
                                           (player-view 'update! ms)))))
-                     ((scorpion) (let* ((view (get-view object scorpion-views))
+                     ((scorpion) (let* ((view (find-object object scorpion-views 
+                                                           (lambda (view to-find)
+                                                             (view 'is-owner? to-find))))
                                         (tile (view 'get-tile)))
                                    (view 'update! ms)
                                    (view 'update-color!)))
-                     ((egg) (let* ((view (get-view object egg-views)))
+                     ((egg) (let* ((view (find-object object egg-views 
+                                                           (lambda (view to-find)
+                                                             (view 'is-owner? to-find)))))
                               (if (object 'is-taken?)
                                 (view 'remove!))))
                      (else (error "Unknown type" type))))
                  (iter (cdr lst))))))
-
-;;;;;;;;;;;;;;;;;;; AUXILIARY ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    (define (get-view obj views)
-      (if (pair? views)
-        (let ((view (car views)))
-          (if (view 'is-owner? obj)
-            view
-            (get-view obj (cdr views))))
-        #f))
 
 ;;;;;;;;;;;;;;;;;;; DISPATCH ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (dispatch cmd . args)
       (cond ((eq? cmd 'game-loop) (apply game-loop args))
             ((eq? cmd 'key-handler) (apply key-handler args))
             ((eq? cmd 'set-level!) (apply set-level! args))
-            ((eq? cmd 'update) (apply update args))
+            ((eq? cmd 'update!) (apply update! args))
             (else (error "Unknown command" cmd))))
 
     dispatch))

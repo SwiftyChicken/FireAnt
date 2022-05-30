@@ -46,10 +46,11 @@
 ;;;;;;;;;;;;;;;;;;; GAME LOOP ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       (define (game-loop ms)
         (if (not (current-level 'is-finished? player))
-          (begin (current-level 'update! ms)
-                 (view 'update ms)
+          (begin (current-level 'update! ms) ; Update all the models
+                 (view 'update! ms) ; Update all the views
+                 (current-level 'clear-updates!) ; Clean up updates list after updating
                  (if (player 'is-dead?)
-                   (current-level 'respawn)))
+                   (current-level 'respawn))) 
           (next-level!)))
 
 ;;;;;;;;;;;;;;;;;;; START LOOP ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
