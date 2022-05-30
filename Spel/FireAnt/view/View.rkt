@@ -11,11 +11,12 @@
 (load "view/Maze-View.rkt")
 (load "view/Egg-View.rkt")
 (load "view/Key-View.rkt")
+(load "view/Scoreboard-View.rkt")
 (load "view/Door-View.rkt")
 (load "view/Player-View.rkt")
 (load "view/Scorpion-View.rkt")
 
-(define (new-view player level)
+(define (new-view player level scoreboard)
   (let* ((canvas (make-window WINDOW-WIDTH WINDOW-HEIGHT "Fire Ant"))
          (layers '())
          (make-layer! (lambda () ; Create layer, add it to a list and returns it
@@ -29,10 +30,11 @@
          (item-layer (make-layer!))
          (player-layer (make-layer!))
          (scorpion-layer (make-layer!))
-         (info-layer (make-layer!))
+         (scoreboard-layer (make-layer!))
 ;================== VIEWS ================================;
          (player-view #f)
          (maze-view #f)
+         ;(scoreboard-view #f)
          (item-views #f)
          (door-views #f)
          (scorpion-views #f))
@@ -91,6 +93,7 @@
           (new-view owner layer)))
 
       (set! player-view (new-player-view player player-layer))
+      ;(set! scoreboard-view (new-scoreboard-view scoreboard scoreboard-layer))
       (set! maze-view (new-maze-view (level 'get-maze) floor-layer walls-layer))
       (set! item-views (make-views! get-new-item-view item-layer (level 'get-items)))
       (set! door-views (make-views! new-door-view door-layer (level 'get-doors)))

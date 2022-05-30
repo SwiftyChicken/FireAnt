@@ -5,8 +5,8 @@
 ;; [x] Checken of een object de eigenaar is
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(define (new-info-view owner layer)
-  (let* ((bitmap (string-append bitmap-dir "info.png"))
+(define (new-scoreboard-view owner layer)
+  (let* ((bitmap (string-append bitmap-dir "scoreboard.png"))
          (tile (make-bitmap-tile bitmap)))
 
 ;;;;;;;;;;;;;;;;;;; INITIALIZATION ;;;;;;;;;;;;;;;;;;;;;;;;

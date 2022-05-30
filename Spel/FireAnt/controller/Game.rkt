@@ -11,8 +11,9 @@
                                      directory-list
                                      path->string))
 
-(load "model/Level.rkt")
 (load "model/Player.rkt")
+(load "model/Level.rkt")
+(load "model/Scoreboard.rkt")
 (load "view/View.rkt")
 
 (define (new-game)
@@ -23,10 +24,12 @@
                         (list->mlist (directory-list level-dir))))
            (current-level (new-level player 
                                      (car levels)))
-           (view (new-view player current-level)))
+           (scoreboard (new-scoreboard player (string-append score-dir "high-score.txt")))
+           (view (new-view player current-level scoreboard)))
 
 ;;;;;;;;;;;;;;;;;;; DESTRUCTIVE ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       (define (next-level!) ;; Update variables and return next level
+        (scoreboard 'save-high-score)
         (if (not (null? (cdr levels)))
           (begin (set! levels (cdr levels))
                  (set! current-level (new-level player 
