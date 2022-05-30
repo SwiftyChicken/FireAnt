@@ -51,6 +51,10 @@
                                          ((player 'get-position) 'move! key)
                                          (current-level 'try-opening! player key)))
                  ;; CHEAT CODES
+                 ((#\r) (player 'reset!)
+                        (set! current-level (new-level player 
+                                                       (car levels)))
+                        (view 'set-level! current-level))
                  ((#\n) (next-level!))))))
 
 ;;;;;;;;;;;;;;;;;;; GAME LOOP ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
