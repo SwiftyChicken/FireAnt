@@ -1,12 +1,3 @@
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Position ADT is verantwoordelijk voor:
-;; [x] Heeft een type die opgevraagd kan worden
-;; [x] Onthoudt zijn x en y positie, oriëntatie, snelheid en of hij beweegt van positie
-;; [x] Checken van collisies met een andere positie
-;; [x] Zijn buur posities kunnen terug geven 
-;; [x] Verplaatsen van een positie wanneer mogelijk
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
 (define (new-position pos-x pos-y)
   (let ((type 'position)
         (position (cons pos-x pos-y))

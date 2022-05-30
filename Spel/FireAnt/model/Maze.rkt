@@ -1,10 +1,3 @@
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Maze ADT is verantwoordelijk voor:
-;; [x] Heeft een type die opgevraagd kan worden
-;; [x] Onthouden van de positie van de muren
-;; [x] Kan zeggen of een positie een muur is
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
 (define (new-maze)
   (let* ((type 'maze)
         (height GRID-HEIGHT)

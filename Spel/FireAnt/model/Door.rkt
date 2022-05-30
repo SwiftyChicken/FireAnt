@@ -1,10 +1,3 @@
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Egg ADT is verantwoordelijk voor:
-;; [x] Heeft een type die opgevraagd kan worden
-;; [x] Onthoudt zijn positie
-;; [x] Onthoudt of het egg is genomen
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
 (define (new-door pos)
   (let ((type 'door)
         (position pos)

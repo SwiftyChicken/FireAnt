@@ -1,13 +1,3 @@
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Player View ADT is verantwoordelijk voor:
-;; [x] Maken, initialiseren en onthouden van de tile
-;; [x] Onthouden van tile direction en off het verwijderd is van de laag
-;; [x] Onthouden van eigenaar object en de laag waar hij in zit
-;; [x] Het reseten en verwijderen van de tile
-;; [x] Updaten van de tiles positie en direction
-;; [x] Maken van positie verandering "animatie/transitie"
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
 (load "view/Character-View.rkt")
 
 (define (new-player-view owner layer)

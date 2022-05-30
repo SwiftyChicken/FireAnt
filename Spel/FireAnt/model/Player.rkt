@@ -1,15 +1,8 @@
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Player ADT is verantwoordelijk voor:
-;; [x] Heeft een type die opgevraagd kan worden
-;; [x] Onthoudt zijn positie, levens en conditie (levend/doood)
-;; [x] Kan sterven en terug tot leven komen
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
 (define (new-player)
   (let ((type 'player)
         (position #f)
         (changed #f) ; Check if player has changed his local var.
-        (lives 3)
+        (lives STARTING-LIVES)
         (keys 0)
         (points 0)
         (alive #t))

@@ -1,12 +1,3 @@
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Level ADT is verantwoordelijk voor:
-;; [x] Het lezen van een csv tekst bestand en zijn  elementen te interpreteren
-;; [x] Onthouden van de start positie, speler, scorpions, eggs en maze
-;; [x] Het verplaatsen van de speler naar de start positie wanneer nodig
-;; [x] Updaten van de element in de level o.a. Collision detection, Movement update, Object status, etc.
-;; [x] Checken of het level uitgespeeld is
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
 (load "model/Maze.rkt")
 (load "model/Egg.rkt")
 (load "model/Key.rkt")
@@ -153,8 +144,8 @@
 
     ;; Interpret needs a text of at least length 2
     (define (interpret! text x y)
-      (let ((code (substring text 0 2)) ;; First 2 characters represent the object type
-            (arg (list-tail (string->list text) 2))) ;; The other characters are used as arguments for object creation
+      (let ((code (substring text 0 CODE-LENGTH)) ;; First 2 characters represent the object type
+            (arg (list-tail (string->list text) CODE-LENGTH))) ;; The other characters are used as arguments for object creation
         (cond ((string=? code "  ") (maze 'clear-path! y x))
               ((string=? code "[]") (maze 'add-wall! y x))
               ((string=? code "{}") (maze 'add-door! y x)

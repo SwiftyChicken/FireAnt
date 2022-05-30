@@ -1,13 +1,3 @@
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; View ADT is verantwoordelijk voor:
-;; [x] Het onthouden van de speler en level
-;; [x] Het maken van alle nodige layers
-;; [x] Het maken van de nodige views
-;; [x] Het updaten van de view als er objecten van modellen geüpdatet zijn
-;; [x] Het aanpassen van de view als de level veranderd
-;; [x] Het geven van de game loop en key handler
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
 (load "view/Maze-View.rkt")
 (load "view/Egg-View.rkt")
 (load "view/Key-View.rkt")

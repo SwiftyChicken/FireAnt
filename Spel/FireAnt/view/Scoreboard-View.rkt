@@ -1,10 +1,3 @@
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Egg View ADT is verantwoordelijk voor:
-;; [x] Maken, initialiseren en onthouden van de tile
-;; [x] Verwijder tile als wanneer nodig
-;; [x] Checken of een object de eigenaar is
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
 (define (new-scoreboard-view owner layer)
   (let* ((bitmap (string-append bitmap-dir "scoreboard.png"))
          (tile (make-bitmap-tile bitmap)))

@@ -1,10 +1,3 @@
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Egg ADT is verantwoordelijk voor:
-;; [x] Heeft een type die opgevraagd kan worden
-;; [x] Onthoudt zijn positie
-;; [x] Onthoudt of het egg is genomen
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
 (define (new-scoreboard player file)
   (define (print-high-score)
     (let ((high-score ""))
@@ -45,12 +38,13 @@
 
 ;;;;;;;;;;;;;;;;;;; I/O FILE FUNC ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (save-high-score) ; Overwrite file with new score if higher than old high score [etc/high-score.txt]
-      (if (> current-score high-score)
+      (let ((current-score (player 'get-points)))
+        (if (> current-score high-score)
         (begin (set! changed #t)
                (call-with-output-file file
                                       #:exists 'truncate
                                       (lambda (output-port)
-                                        (display current-score output-port))))))
+                                        (display current-score output-port)))))))
 
 ;;;;;;;;;;;;;;;;;;; PREDICATES ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (is-changed?) ; Do we need to redraw scoreboard?

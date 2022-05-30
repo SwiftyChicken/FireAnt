@@ -1,10 +1,3 @@
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Maze View ADT is verantwoordelijk voor:
-;; [x] Onthoud zijn eigenaar en lagen
-;; [x] Teken een muur op geschikte posities en voeg toe aan de laag
-;; [x] Teken de vloer
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
 (define (new-maze-view owner floor-layer walls-layer)
   (let* ((height (owner 'get-height))
          (width (owner 'get-width))

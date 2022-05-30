@@ -1,10 +1,3 @@
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Egg View ADT is verantwoordelijk voor:
-;; [x] Maken, initialiseren en onthouden van de tile
-;; [x] Verwijder tile als wanneer nodig
-;; [x] Checken of een object de eigenaar is
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
 (define (new-item-view owner layer bitmap . mask)
   (let* ((tile (apply make-bitmap-tile (cons bitmap mask)))
          (removed #f))

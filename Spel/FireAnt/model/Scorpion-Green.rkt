@@ -1,11 +1,3 @@
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Scorpion ADT is verantwoordelijk voor:
-;; [x] Heeft een type die opgevraagd kan worden
-;; [x] Onthoud zijn positie en route (stappen plan)
-;; [x] Kan een gegeven path interpreteren naar een bruikbare circulaire lijst
-;; [x] Updaten van zijn beweging volgens de route plan
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
 (define (new-scorpion-green position direction)
 ;;;;;;;;;;;;;;;;;;; DISPATCH LET ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   (let* ((race 'green))
