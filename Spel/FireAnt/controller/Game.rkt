@@ -31,7 +31,7 @@
                                                 (car levels)))
                  (view 'set-level! current-level))
           (begin (scoreboard 'save-high-score)
-                 (game-running #f))))
+                 (set! game-running #f))))
 
       (define (reset-game!)
         (scoreboard 'save-high-score)
@@ -49,7 +49,9 @@
                (case key
                  ((up down left right) (if (current-level 'is-legal-move? player key)
                                          ((player 'get-position) 'move! key)
-                                         (current-level 'try-opening! player key)))))))
+                                         (current-level 'try-opening! player key)))
+                 ;; CHEAT CODES
+                 ((#\n) (next-level!))))))
 
 ;;;;;;;;;;;;;;;;;;; GAME LOOP ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       (define (game-loop ms)
