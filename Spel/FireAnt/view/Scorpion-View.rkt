@@ -1,4 +1,4 @@
-(load "view/Character-View.rkt")
+(load "view/Movable-View.rkt")
 
 (define (new-scorpion-view owner layer)
   (define (get-bitmap-file color)
@@ -15,7 +15,7 @@
   (let* ((color (owner 'get-color))
          (bitmap (get-bitmap-file color))
          (mask "scorpion.png")
-         (character (new-character-view owner layer bitmap mask)))
+         (movable (new-movable-view owner layer bitmap mask)))
 
 ;;;;;;;;;;;;;;;;;;; GETTERS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (get-bitmap)
@@ -26,19 +26,19 @@
     
 ;;;;;;;;;;;;;;;;;;; DESTRUCTIVE ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (update-color!)
-      (if (not (character 'is-moving?))
+      (if (not (movable 'is-moving?))
         (let ((owner-color (owner 'get-color)))
           (if (not (eq? color owner-color))
             (begin (set! color owner-color)
                    (set! bitmap (get-bitmap-file color))
-                   ((layer 'remove-drawable) (character 'get-tile))
-                   (set! character (new-character-view owner layer bitmap mask)))))))
+                   ((layer 'remove-drawable) (movable 'get-tile))
+                   (set! movable (new-movable-view owner layer bitmap mask)))))))
 
 ;;;;;;;;;;;;;;;;;;; DISPATCH ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (dispatch cmd . args)
       (cond ((eq? cmd 'get-bitmap) (apply get-bitmap args))
             ((eq? cmd 'get-mask) (apply get-mask args))
             ((eq? cmd 'update-color!) (apply update-color! args))
-            (else (apply character (cons cmd args)))))
+            (else (apply movable (cons cmd args)))))
 
     dispatch))

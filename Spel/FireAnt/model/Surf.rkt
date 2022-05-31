@@ -1,5 +1,5 @@
 (define (new-surf position direction)
-  (position 'set-speed! VERY-FAST-SPEED)
+  (position 'set-speed! FAST-SPEED)
   (let ((type 'surf)
         (arrived #f))
 

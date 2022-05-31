@@ -1,4 +1,4 @@
-(define (new-character-view owner layer bitmap-pic . mask-pic)
+(define (new-movable-view owner layer bitmap-pic . mask-pic)
   (let* ((direction 0) ;; Tile direction
          (bitmap (string-append bitmap-dir bitmap-pic))
          (mask (if (pair? mask-pic)
