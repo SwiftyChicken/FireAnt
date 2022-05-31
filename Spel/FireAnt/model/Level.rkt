@@ -68,12 +68,15 @@
                           (- (maze 'get-height) 1)))
           finished)
 
+    (define (is-accessible? position)
+      (let* ((x (position 'get-x))
+             (y (position 'get-y)))
+        (maze 'is-accessible? y x)))
+
     (define (is-legal-move? object direction)
       (let* ((pos (object 'get-position))
-             (peek-pos (pos 'peek direction))
-             (new-x (peek-pos 'get-x))
-             (new-y (peek-pos 'get-y)))
-        (maze 'is-accessible? new-y new-x)))
+             (peek-pos (pos 'peek direction)))
+        (is-accessible? peek-pos)))
 
     (define (is-intersection? object direction)
       (if (member direction (list 'up 'down))
@@ -108,7 +111,7 @@
       (if bullet
         (if (bullet 'has-collided?)
           (set! bullet #f)
-          (begin (if (is-legal-move? bullet (bullet 'get-direction))
+          (begin (if (is-accessible? (bullet 'get-position))
                    (bullet 'update!)
                    (bullet 'collide!))
                  (add-update! bullet))))

@@ -1,4 +1,5 @@
 (define (new-bullet position direction)
+  (position 'set-speed! VERY-FAST-SPEED)
   (let ((type 'bullet)
         (collide #f))
 

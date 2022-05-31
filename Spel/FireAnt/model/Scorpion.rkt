@@ -47,7 +47,7 @@
             (begin (if (coin-flip BOOST-RATE)
                      (begin (set! boosting #t)
                             (set! color 'purple)
-                            (position 'increase-speed!)))))))
+                            (position 'set-speed! FAST-SPEED)))))))
 
     (define (die!)
       (set! alive #f))

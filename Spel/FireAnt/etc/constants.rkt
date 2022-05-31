@@ -17,5 +17,6 @@
 (define BOOST-DURATION 1000)
 (define NORMAL-SPEED 0.15)
 (define FAST-SPEED 0.22)
+(define VERY-FAST-SPEED 0.30)
 (define HIGH-SCORE-FILE (string-append score-dir "high-score.txt"))
 (define DIRECTIONS (vector 'up 'right 'down 'left))

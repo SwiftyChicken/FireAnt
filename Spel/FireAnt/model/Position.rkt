@@ -34,11 +34,8 @@
     (define (set-moving! bool)
       (set! moving bool))
 
-    (define (increase-speed!)
-      (set! speed FAST-SPEED))
-
-    (define (reset-speed!)
-      (set! speed NORMAL-SPEED))
+    (define (set-speed! new-speed)
+      (set! speed new-speed))
 
 ;;;;;;;;;;;;;;;;;;; PREDICATES ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (is-moving?)
@@ -69,6 +66,9 @@
                      (set! orientation 'right)))
           (set-moving! #t))))
 
+    (define (reset-speed!)
+      (set! speed NORMAL-SPEED))
+
 ;;;;;;;;;;;;;;;;;;; NON-DESTRUCTIVE ;;;;;;;;;;;;;;;;;;;;;;;;
     (define (peek direction) ;; Give neighbouring position
       (let ((x (get-x))
@@ -91,7 +91,7 @@
             ((eq? cmd 'set-y) (apply set-y! args))
             ((eq? cmd 'set-moving!) (apply set-moving! args))
             ((eq? cmd 'set-orientation!) (apply set-orientation! args))
-            ((eq? cmd 'increase-speed!) (apply increase-speed! args))
+            ((eq? cmd 'set-speed!) (apply set-speed! args))
             ((eq? cmd 'reset-speed!) (apply reset-speed! args))
             ((eq? cmd 'is-moving?) (apply is-moving? args))
             ((eq? cmd 'is-colliding?) (apply is-colliding? args))
