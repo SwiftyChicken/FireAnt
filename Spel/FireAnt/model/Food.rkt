@@ -4,9 +4,8 @@
   (let ((item (new-item position)))
 
     (define (take! player)
-      (if (not (item 'is-taken?))
-        (begin (item 'take!)
-               (player 'add-points! points))))
+      (item 'take!)
+      (player 'add-points! points))
 
 ;;;;;;;;;;;;;;;;;;; DISPATCH ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (dispatch cmd . args)

@@ -29,6 +29,9 @@
     (define (is-moving?)
       moving)
 
+    (define (is-removed?)
+      removed)
+
 ;;;;;;;;;;;;;;;;;;; DESTRUCTIVE ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (update! ms) ;; Update position and direction
       (update-direction!)
@@ -44,6 +47,11 @@
                          (transition (tile 'set-y!) old-y y step)))
         (position 'set-moving! moving)))
     
+    (define (remove!)
+      (if (not removed)
+        (begin ((layer 'remove-drawable) tile)
+               (set! removed #t))))
+
 ;;;;;;;;;;;;;;;;;;; AUXILIARY ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (transition setter old new step) ;; Create transitioning effect for tiles going from old to new position
       (if (< (abs (- new old)) step)
@@ -72,8 +80,10 @@
     (define (dispatch cmd . args)
       (cond ((eq? cmd 'get-owner) (apply get-owner args))
             ((eq? cmd 'get-tile) (apply get-tile args))
+            ((eq? cmd 'is-removed?) (apply is-removed? args))
             ((eq? cmd 'is-moving?) (apply is-moving? args))
             ((eq? cmd 'update!) (apply update! args))
+            ((eq? cmd 'remove!) (apply remove! args))
             (else (error "Unkown command" cmd))))
 
     (init)

@@ -88,6 +88,12 @@
 ;;;;;;;;;;;;;;;;;;; DESTRUCTIVE ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (update! ms)
       (add-update! player)
+
+      ; Remove dead scorpions from list first
+      (set! scorpions (filter (lambda (scorpion) (scorpion 'is-alive?)) scorpions))
+      ; Remove picked up items
+      (set! items (filter (lambda (item) (not (item 'is-taken?))) items))
+
       ; Move Scorpions
       (for-each (lambda (scorpion)
                   (scorpion 'try-boosting! ms)

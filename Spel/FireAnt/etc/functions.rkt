@@ -18,6 +18,15 @@
             (find-object to-find (cdr objects) comparator)))
         #f))
 
+		(define (filter test lst)
+			(if (null? lst)
+				lst
+				(let ((element (car lst))
+							(rest (cdr lst)))
+					(if (test element)
+						(cons element (filter test rest))
+						(filter test rest)))))
+
 ;;;;;;;;;;;;;;;;;;; MATRIX FUNC ;;;;;;;;;;;;;;;;;;;;;;;;;
 (define (new-matrix height width blank)
 	(let iter ((vect (make-vector height))

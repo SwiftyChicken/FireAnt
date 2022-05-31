@@ -10,9 +10,8 @@
 
 ;;;;;;;;;;;;;;;;;;; DESTRUCTIVE ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (take! player)
-      (if (not (item 'is-taken?))
-        (begin (player 'take-key!)
-               (item 'take!))))
+      (item 'take!) 
+      (player 'take-key!))
 
 ;;;;;;;;;;;;;;;;;;; DISPATCH ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (dispatch cmd . args)
