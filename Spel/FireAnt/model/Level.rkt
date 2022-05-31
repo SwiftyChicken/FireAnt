@@ -187,10 +187,11 @@
       (let ((code (substring text 0 CODE-LENGTH)) ;; First 2 characters represent the object type
             (arg (list-tail (string->list text) CODE-LENGTH))) ;; The other characters are used as arguments for object creation
         (cond ((string=? code "  ") (maze 'clear-path! y x))
-              ((string=? code "[]") (maze 'add-wall! y x))
-              ((string=? code "{}") (maze 'add-door! y x)
+              ((string=? code "[]") (maze 'add! y x 'wall))
+              ((string=? code "{}") (maze 'add! y x 'door)
                                     (set! doors (cons (new-door (new-position x y))
                                                       doors)))
+              ((string=? code "##") (maze 'add! y x 'water))
               ((string=? code "SP") (set! spawn (new-position x y))
                                      (respawn))
               ((string=? code "EB") (set! items (cons (new-egg (new-position x y) 'bronze)

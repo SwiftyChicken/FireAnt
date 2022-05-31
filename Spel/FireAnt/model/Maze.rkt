@@ -22,11 +22,8 @@
     (define (clear-path! row column)
       (set-cell! maze row column 'empty))
 
-    (define (add-wall! row column)
-      (set-cell! maze row column 'wall))
-
-    (define (add-door! row column)
-      (set-cell! maze row column 'door))
+    (define (add! row column object)
+      (set-cell! maze row column object))
 
 ;;;;;;;;;;;;;;;;;;; PREDICATES ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (is-accessible? row column)
@@ -40,8 +37,7 @@
       (cond ((eq? cmd 'get-type) (apply get-type args))
             ((eq? cmd 'get-unit) (apply get-unit args))
             ((eq? cmd 'clear-path!) (apply clear-path! args))
-            ((eq? cmd 'add-wall!) (apply add-wall! args))
-            ((eq? cmd 'add-door!) (apply add-door! args))
+            ((eq? cmd 'add!) (apply add! args))
             ((eq? cmd 'is-accessible?) (apply is-accessible? args))
             ((eq? cmd 'get-height) (apply get-height args))
             ((eq? cmd 'get-width) (apply get-width args))
