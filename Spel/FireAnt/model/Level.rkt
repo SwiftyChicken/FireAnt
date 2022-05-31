@@ -1,10 +1,12 @@
 (load "model/Maze.rkt")
 (load "model/Egg.rkt")
 (load "model/Key.rkt")
+(load "model/Board.rkt")
 (load "model/Health.rkt")
 (load "model/Poison.rkt")
 (load "model/Ammo.rkt")
 (load "model/Bullet.rkt")
+(load "model/Surf.rkt")
 (load "model/Door.rkt")
 (load "model/Scorpion.rkt")
 (load "model/Position.rkt")
@@ -12,11 +14,12 @@
 (define (new-level player map-file)
 
   (let ((spawn (new-position 0 0))
+        (surf #f)
+        (maze (new-maze))
         (scorpions '())
         (items '())
         (doors '())
         (bullets '())
-        (maze (new-maze))
         (updates '())
         (finished #f))
 
@@ -94,6 +97,10 @@
       (set! items (filter (lambda (item) (not (item 'is-taken?))) items))
       (set! bullets (filter (lambda (bullet) (not (bullet 'has-collided?))) bullets))
 
+      ; Remove Surf(plank) if it isn't used
+      (if (and surf (surf 'has-arrived?))
+        (set! surf #f))
+
       ; Move Scorpions
       (for-each (lambda (scorpion)
                   (scorpion 'try-boosting! ms)
@@ -113,13 +120,32 @@
                   (add-update! scorpion))
                 scorpions)
 
-      ; Update bullet if it exist
+      ; Move all the bullets
       (for-each (lambda (bullet)
                   (if (is-accessible? (bullet 'get-position))
                     (bullet 'update!)
                     (bullet 'collide!))
                   (add-update! bullet))
                 bullets)
+
+      ; Move surf plank if it exists
+      (if surf
+        (let* ((direction (surf 'get-direction))
+               (pos (surf 'get-position))
+               (next-pos (pos 'peek direction))
+               (x (pos 'get-x))
+               (y (pos 'get-y))
+               (x-next (next-pos 'get-x))
+               (y-next (next-pos 'get-y))
+               (current (maze 'get-unit y x))
+               (next (maze 'get-unit y-next x-next)))
+          (if (not (or (eq? next 'water)
+                       (eq? next 'empty)))
+            (surf 'turn-back!))
+          (case current 
+            ((water) (surf 'update!)) 
+            ((empty) (surf 'arrive!)))
+          (add-update! surf)))
 
       ; Check for collisions
       (on-collision player
@@ -142,8 +168,20 @@
         (let* ((position ((player 'get-position) 'copy))
                (direction ((player 'get-position) 'get-orientation)))
           (if (is-legal-move? player direction)
-            (begin (player 'use-ammo!)
+            (begin (player 'use! 'ammo)
                    (set! bullets (cons (new-bullet position direction) bullets))))))
+
+    (define (try-surfing! player direction)
+      (if (not (zero? (player 'get-boards)))
+        (let* ((water-pos ((player 'get-position) 'peek direction))
+               (x (water-pos 'get-x))
+               (y (water-pos 'get-y)))
+          (if (eq? (maze 'get-unit y x) 'water)
+            (let* ((position (player 'get-position)))
+              (if (not (position 'is-moving?))
+                (begin (position 'move! direction) ; Move the player on the water
+                       (set! surf (new-surf position direction))
+                       (player 'use! 'board))))))))
 
     (define (try-opening! player direction)
       (if (not (zero? (player 'get-keys)))
@@ -153,7 +191,7 @@
                                  ((door 'get-position) 'is-colliding? to-find)))))
 
           (if door ; If the peeked position is a door
-            (begin (player 'use-key!)
+            (begin (player 'use! 'key)
                    (door 'open!)
                    (maze 'clear-path! (door-pos 'get-y) (door-pos 'get-x))
                    ((player 'get-position) 'move! direction) ; Player can walk through the door
@@ -202,6 +240,8 @@
                                                      items)))
               ((string=? code "KY") (set! items (cons (new-key (new-position x y))
                                                      items)))
+              ((string=? code "BD") (set! items (cons (new-board (new-position x y))
+                                                     items)))
               ((string=? code "<3") (set! items (cons (new-health (new-position x y))
                                                      items)))
               ((string=? code "XX") (set! items (cons (new-poison (new-position x y))
@@ -227,6 +267,7 @@
             ((eq? cmd 'clear-updates!) (apply clear-updates! args))
             ((eq? cmd 'try-shooting!) (apply try-shooting! args))
             ((eq? cmd 'try-opening!) (apply try-opening! args))
+            ((eq? cmd 'try-surfing!) (apply try-surfing! args))
             ((eq? cmd 'respawn) (apply respawn args))
             (else error "Unknown command" cmd)))
 

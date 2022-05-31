@@ -1,8 +1,9 @@
 (define (new-maze-view owner floor-layer walls-layer)
   (let* ((height (owner 'get-height))
          (width (owner 'get-width))
-         (wall-bitmap (string-append bitmap-dir "wall.png"))
-         (floor-bitmap (string-append bitmap-dir "floor.png")))
+         (wall-bitmap "wall.png")
+         (water-bitmap "water.png")
+         (floor-bitmap "floor.png"))
 
 ;;;;;;;;;;;;;;;;;;; INITIALIZATION ;;;;;;;;;;;;;;;;;;;;;;;;
     (define (init)
@@ -11,8 +12,9 @@
         (if (< row height)
           (begin (let inner-loop ((column 0))
                    (if (< column width)
-                     (begin (if (eq? 'wall (owner 'get-unit row column))
-                              (draw-wall row column))
+                     (begin (case (owner 'get-unit row column) 
+                              ((wall) (draw! row column wall-bitmap))
+                              ((water) (draw! row column water-bitmap)))
                             (inner-loop (+ column 1)))))
                  (outer-loop (+ row 1))))))
 
@@ -22,11 +24,11 @@
 
 ;;;;;;;;;;;;;;;;;;; AUXILIARY ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (draw-floor)
-      (let ((tile (make-bitmap-tile floor-bitmap)))
+      (let ((tile (make-bitmap-tile (string-append bitmap-dir floor-bitmap))))
         ((floor-layer 'add-drawable) tile)))
 
-    (define (draw-wall row column)
-      (let* ((tile (make-bitmap-tile wall-bitmap))
+    (define (draw! row column bitmap)
+      (let* ((tile (make-bitmap-tile (string-append bitmap-dir bitmap)))
              (pos_x (* column TILE-SIZE))
              (pos_y (* row TILE-SIZE)))
         ((tile 'set-x!) pos_x)

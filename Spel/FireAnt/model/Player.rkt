@@ -5,6 +5,7 @@
         (lives STARTING-LIVES)
         (keys 0)
         (ammo 0)
+        (boards 0)
         (points 0)
         (alive #t))
 
@@ -20,6 +21,9 @@
 
     (define (get-keys)
       keys)
+
+    (define (get-boards)
+      boards)
 
     (define (get-ammo)
       ammo)
@@ -39,25 +43,18 @@
       changed)
 
 ;;;;;;;;;;;;;;;;;;; DESTRUCTIVE ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    (define (take-key!)
-      (set! changed #t)
-      (set! keys (+ keys 1)))
+    (define (collect! item ammount)
+      (case item
+        ((key) (set! keys (+ keys ammount)))
+        ((ammo) (set! ammo (+ ammo ammount)))
+        ((food) (set! points (+ points ammount)))
+        ((health) (set! lives (+ lives ammount)))
+        ((board) (set! boards (+ boards ammount)))
+        (else (error "Unkown item" item)))
+      (set! changed #t))
 
-    (define (take-ammo!)
-      (set! changed #t)
-      (set! ammo (+ ammo 1)))
-
-    (define (use-key!)
-      (set! changed #t)
-      (set! keys (- keys 1)))
-
-    (define (use-ammo!)
-      (set! changed #t)
-      (set! ammo (- ammo 1)))
-
-    (define (add-points! p)
-      (set! changed #t)
-      (set! points (+ points p)))
+    (define (use! item)
+      (collect! item -1))
 
     (define (reset!)
       (set! changed #t)
@@ -67,10 +64,6 @@
       (set! ammo 0)
       (set! points 0)
       (set! alive #t))
-
-    (define (add-life!)
-      (set! changed #t)
-      (set! lives (+ lives 1)))
 
     (define (die!)
       (if alive
@@ -92,18 +85,15 @@
             ((eq? cmd 'get-position) (apply get-position args))
             ((eq? cmd 'get-lives) (apply get-lives args))
             ((eq? cmd 'get-keys) (apply get-keys args))
+            ((eq? cmd 'get-boards) (apply get-boards args))
             ((eq? cmd 'get-ammo) (apply get-ammo args))
             ((eq? cmd 'get-points) (apply get-points args))
             ((eq? cmd 'set-position!) (apply set-position! args))
             ((eq? cmd 'is-dead?) (apply is-dead? args))
             ((eq? cmd 'is-changed?) (apply is-changed? args))
-            ((eq? cmd 'take-key!) (apply take-key! args))
-            ((eq? cmd 'take-ammo!) (apply take-ammo! args))
-            ((eq? cmd 'use-key!) (apply use-key! args))
-            ((eq? cmd 'use-ammo!) (apply use-ammo! args))
-            ((eq? cmd 'add-points!) (apply add-points! args))
+            ((eq? cmd 'collect!) (apply collect! args))
+            ((eq? cmd 'use!) (apply use! args))
             ((eq? cmd 'reset!) (apply reset! args))
-            ((eq? cmd 'add-life!) (apply add-life! args))
             ((eq? cmd 'die!) (apply die! args))
             ((eq? cmd 'revive!) (apply revive! args))
             ((eq? cmd 'update!) (apply update! args))

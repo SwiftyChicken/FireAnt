@@ -6,7 +6,8 @@
       position)
 
 ;;;;;;;;;;;;;;;;;;; DESTRUCTIVE ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    (define (take!)
+    (define (take! player type ammount)
+      (player 'collect! type ammount)
       (set! taken #t))
 
 ;;;;;;;;;;;;;;;;;;; PREDICATES ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

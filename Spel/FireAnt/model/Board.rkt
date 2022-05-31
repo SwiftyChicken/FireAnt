@@ -1,16 +1,16 @@
 (load "model/Item.rkt")
 
-(define (new-food position points)
-  (let ((type 'food)
+(define (new-board position)
+  (let ((type 'board)
         (item (new-item position)))
 
 ;;;;;;;;;;;;;;;;;;; GETTERS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (get-type)
       type)
 
-;;;;;;;;;;;;;;;;;;; DESTRUCTIVE ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;; DESTRUCTIVE ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (take! player)
-      (item 'take! player type points))
+        (item 'take! player type 1))
 
 ;;;;;;;;;;;;;;;;;;; DISPATCH ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (dispatch cmd . args)

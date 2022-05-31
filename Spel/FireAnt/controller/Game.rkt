@@ -50,7 +50,8 @@
            (case key
              ((up down left right) (if (current-level 'is-legal-move? player key)
                                      ((player 'get-position) 'move! key)
-                                     (current-level 'try-opening! player key)))
+                                     (begin (current-level 'try-opening! player key)
+                                            (current-level 'try-surfing! player key))))
              ;; CHEAT CODES
              ((#\r) (player 'reset!)
                     (set! current-level (new-level player 
