@@ -15,6 +15,7 @@
 
   (let ((spawn (new-position 0 0))
         (surf #f)
+        (kill-all #f)
         (maze (new-maze))
         (scorpions '())
         (items '())
@@ -162,7 +163,14 @@
                                 (lambda (scorpion)
                                   (scorpion 'die!)
                                   (bullet 'collide!)) scorpions))
-                bullets))
+                bullets)
+      (if kill-all
+        (for-each (lambda (scorpion) 
+                  (scorpion 'die!)) 
+                scorpions)))
+
+    (define (kill-all!)
+      (set! kill-all #t))
 
     (define (try-shooting! player)
         (let* ((position ((player 'get-position) 'copy))
@@ -264,6 +272,7 @@
             ((eq? cmd 'is-finished?) (apply is-finished? args))
             ((eq? cmd 'is-legal-move?) (apply is-legal-move? args))
             ((eq? cmd 'update!) (apply update! args))
+            ((eq? cmd 'kill-all!) (apply kill-all! args))
             ((eq? cmd 'clear-updates!) (apply clear-updates! args))
             ((eq? cmd 'try-shooting!) (apply try-shooting! args))
             ((eq? cmd 'try-opening!) (apply try-opening! args))

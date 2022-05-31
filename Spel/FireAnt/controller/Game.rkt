@@ -57,7 +57,8 @@
                     (set! current-level (new-level player 
                                                    (car levels)))
                     (view 'set-level! current-level))
-             ((#\n) (next-level!))))
+             ((#\n) (next-level!))
+             ((#\x) (current-level 'kill-all!))))
               ((released)
                (case key
                  ((#\space) (if (> (player 'get-ammo) 0)

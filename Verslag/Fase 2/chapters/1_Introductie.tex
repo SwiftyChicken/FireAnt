@@ -1,0 +1,36 @@
+Dit document beschrijft het implementatie in fase 2 van het spel \texttt{Fire Ant} in scheme \textbf{r5rs}.
+Het maakt deel uit van het opleidingsonderdeel "Programmeerproject 1".
+
+\section{Spelbeschrijving}
+In dit spel is het de bedoeling dat een speler een \textit{vuurmier} bestuurt,
+die tracht zijn mierenkoningin te redden van schorpioenenleger.
+Om dit te voltooien moet de speler een serie van levels, die toenemen in moeilijkheidsgraad,
+oplossen zodat hij tot bij de koningin geraakt.
+Een level bestaat uit een doolhof gevuld met puzzels, items en vijanden.
+Enkel door deze puzzels op te lossen en de schorpioenen te vermijden, kan de speler het level oplossen.
+Het spel eindigt dan tot dat alle levels opgelost zijn of tot dat de speler al zijn levens verloren heeft.
+
+\section{Implementatie}
+Voor het tweede fase werd het spel uitgebreid met meerdere nieuwe functionaliteiten.
+
+Onder andere:
+\begin{itemize}
+	\item Een kan 2 soorten schorpioenen bevatten die elk op een verschillend manier bewegen.
+		Deze schorpioenen kunnen ook tijdelijk versnellen, op een willekeurige moment.
+	\item	Het doolhof kan ook deuren bevatten die open gemaakt moeten worden door een sleutel die de speler moet nemen.
+	\item Het doolhof bevat overstroomt gebieden die de speler enkel kan overlopen met een surfplank.
+	\item Het doolhof bevat verschillende voedsel objecten die elk een verschillende effect heeben op de score.
+	\item Het doolhof bevat verschillende voedsel objecten die elk een verschillende effect heeben op de score.
+	\item Het spel bevat ook een scorebord die enkele belangrijke informaties weergeeft.
+		Zoals hoogste score, levens, sleutels, etc.
+	\item Het spel bevat voeding dat levens terug geeft.
+	\item Een doolhof kan kogels bevatten, die gebruikt kunnen worden om schorpioenen dood te schieten.
+	\item Het spel bevat 3 verschillende levels met verschillende puzzels.
+		Het Spel herstart als het laatste level bereikt wordt
+\end{itemize}
+
+Het programma werd verdeelt uit
+een controller (zal tussen de modellen en views moeten communiceren)
+modellen (bezitten al de spellogica)
+en de views (zorgt voor het tekenlogica van het spel)
+
