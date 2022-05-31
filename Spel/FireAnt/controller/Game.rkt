@@ -50,6 +50,8 @@
                  ((up down left right) (if (current-level 'is-legal-move? player key)
                                          ((player 'get-position) 'move! key)
                                          (current-level 'try-opening! player key)))
+                 ((#\space) (if (> (player 'get-ammo) 0)
+                              (current-level 'try-shooting! player))) ; Can only shoot one bullet at the time
                  ;; CHEAT CODES
                  ((#\r) (player 'reset!)
                         (set! current-level (new-level player 

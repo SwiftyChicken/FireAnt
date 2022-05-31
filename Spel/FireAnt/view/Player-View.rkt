@@ -1,10 +1,9 @@
 (load "view/Character-View.rkt")
 
 (define (new-player-view owner layer)
-  (let* ((bitmap (string-append bitmap-dir "ant.png"))
-         (mask (string-append mask-dir "ant.png"))
+  (let* ((pic-name "ant.png")
          (removed #f) ;; Removed from layer
-         (character (new-character-view owner layer bitmap mask)))
+         (character (new-character-view owner layer pic-name pic-name)))
 
 ;;;;;;;;;;;;;;;;;;; PREDICATES ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (is-removed?)
@@ -18,7 +17,7 @@
 
     (define (reset!)
       (set! removed #f)
-      (set! character (new-character-view owner layer bitmap mask)))
+      (set! character (new-character-view owner layer pic-name pic-name)))
 
 ;;;;;;;;;;;;;;;;;;; DISPATCH ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (dispatch cmd . args)

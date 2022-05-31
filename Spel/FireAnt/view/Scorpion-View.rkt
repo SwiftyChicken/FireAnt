@@ -13,8 +13,8 @@
 
 ;;;;;;;;;;;;;;;;;;; DISPATCH LET ;;;;;;;;;;;;;;;;;;;;;;;;;;;
   (let* ((color (owner 'get-color))
-         (bitmap (string-append bitmap-dir (get-bitmap-file color)))
-         (mask (string-append mask-dir "scorpion.png"))
+         (bitmap (get-bitmap-file color))
+         (mask "scorpion.png")
          (character (new-character-view owner layer bitmap mask)))
 
 ;;;;;;;;;;;;;;;;;;; GETTERS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -34,7 +34,7 @@
         (let ((owner-color (owner 'get-color)))
           (if (not (eq? color owner-color))
             (begin (set! color owner-color)
-                   (set! bitmap (string-append bitmap-dir (get-bitmap-file color)))
+                   (set! bitmap (get-bitmap-file color))
                    ((layer 'remove-drawable) (character 'get-tile))
                    (set! character (new-character-view owner layer bitmap mask)))))))
 

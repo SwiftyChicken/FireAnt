@@ -25,11 +25,14 @@
     (define (print-lives)
       (print-number "Extra Lives:\t# " (player 'get-lives)))
 
-    (define (print-keys)
-      (print-number "Collected Keys:\t# "(player 'get-keys)))
-
     (define (print-level)
       (print-number "Chamber:   \t# " level))
+
+    (define (print-keys)
+      (print-number "Collected Keys:     # "(player 'get-keys)))
+
+    (define (print-ammo)
+      (print-number "Ammo:\t  \t # " (player 'get-ammo)))
 
 ;;;;;;;;;;;;;;;;;;; I/O FILE FUNC ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (save-high-score) ; Overwrite file with new score if higher than old high score [etc/high-score.txt]
@@ -71,6 +74,7 @@
             ((eq? cmd 'print-lives) (apply print-lives args))
             ((eq? cmd 'print-keys) (apply print-keys args))
             ((eq? cmd 'print-level) (apply print-level args))
+            ((eq? cmd 'print-ammo) (apply print-ammo args))
             ((eq? cmd 'save-high-score) (apply save-high-score args))
             ((eq? cmd 'is-changed?) (apply is-changed? args))
             ((eq? cmd 'next-level!) (apply next-level! args))

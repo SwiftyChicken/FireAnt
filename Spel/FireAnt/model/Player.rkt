@@ -4,6 +4,7 @@
         (changed #f) ; Check if player has changed his local var.
         (lives STARTING-LIVES)
         (keys 0)
+        (ammo 0)
         (points 0)
         (alive #t))
 
@@ -19,6 +20,9 @@
 
     (define (get-keys)
       keys)
+
+    (define (get-ammo)
+      ammo)
 
     (define (get-points)
       points)
@@ -39,9 +43,17 @@
       (set! changed #t)
       (set! keys (+ keys 1)))
 
+    (define (take-ammo!)
+      (set! changed #t)
+      (set! ammo (+ ammo 1)))
+
     (define (use-key!)
       (set! changed #t)
       (set! keys (- keys 1)))
+
+    (define (use-ammo!)
+      (set! changed #t)
+      (set! ammo (- ammo 1)))
 
     (define (add-points! p)
       (set! changed #t)
@@ -52,6 +64,7 @@
       (set! position #f)
       (set! lives STARTING-LIVES)
       (set! keys 0)
+      (set! ammo 0)
       (set! points 0)
       (set! alive #t))
 
@@ -79,12 +92,15 @@
             ((eq? cmd 'get-position) (apply get-position args))
             ((eq? cmd 'get-lives) (apply get-lives args))
             ((eq? cmd 'get-keys) (apply get-keys args))
+            ((eq? cmd 'get-ammo) (apply get-ammo args))
             ((eq? cmd 'get-points) (apply get-points args))
             ((eq? cmd 'set-position!) (apply set-position! args))
             ((eq? cmd 'is-dead?) (apply is-dead? args))
             ((eq? cmd 'is-changed?) (apply is-changed? args))
             ((eq? cmd 'take-key!) (apply take-key! args))
+            ((eq? cmd 'take-ammo!) (apply take-ammo! args))
             ((eq? cmd 'use-key!) (apply use-key! args))
+            ((eq? cmd 'use-ammo!) (apply use-ammo! args))
             ((eq? cmd 'add-points!) (apply add-points! args))
             ((eq? cmd 'reset!) (apply reset! args))
             ((eq? cmd 'add-life!) (apply add-life! args))

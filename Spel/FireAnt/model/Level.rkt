@@ -3,6 +3,8 @@
 (load "model/Key.rkt")
 (load "model/Health.rkt")
 (load "model/Poison.rkt")
+(load "model/Ammo.rkt")
+(load "model/Bullet.rkt")
 (load "model/Door.rkt")
 (load "model/Scorpion.rkt")
 (load "model/Position.rkt")
@@ -13,6 +15,7 @@
         (scorpions '())
         (items '())
         (doors '())
+        (bullet #f)
         (maze (new-maze))
         (updates '())
         (finished #f))
@@ -101,12 +104,38 @@
                   (add-update! scorpion))
                 scorpions)
 
+      ; Update bullet if it exist
+      (if bullet
+        (if (bullet 'has-collided?)
+          (set! bullet #f)
+          (begin (if (is-legal-move? bullet (bullet 'get-direction))
+                   (bullet 'update!)
+                   (bullet 'collide!))
+                 (add-update! bullet))))
+
       ; Check for collisions
-      (on-collision (lambda (item)
+      (on-collision player
+                    (lambda (item)
                       (item 'take! player)
                       (add-update! item)) items)
-      (on-collision (lambda (scorpion)
-                      (player 'die!)) scorpions))
+
+      (on-collision player
+                    (lambda (scorpion)
+                      (player 'die!)) scorpions)
+
+      (if bullet ; if it exist
+        (on-collision bullet
+                    (lambda (scorpion)
+                      (scorpion 'die!)
+                      (bullet 'collide!)) scorpions)))
+
+    (define (try-shooting! player)
+      (if (not bullet)
+        (let* ((player-pos (player 'get-position))
+               (direction (player-pos 'get-orientation))
+               (position (player-pos 'peek direction)))
+          (player 'use-ammo!)
+          (set! bullet (new-bullet position direction)))))
 
     (define (try-opening! player direction)
       (if (not (zero? (player 'get-keys)))
@@ -114,6 +143,7 @@
                (door (find-object door-pos doors 
                                (lambda (door to-find)
                                  ((door 'get-position) 'is-colliding? to-find)))))
+
           (if door ; If the peeked position is a door
             (begin (player 'use-key!)
                    (door 'open!)
@@ -134,15 +164,15 @@
         (player 'revive!)))
 
 ;;;;;;;;;;;;;;;;;;; AUXILIARY ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    (define (on-collision to-do objects) ;; Check collisions for a list of objects and apply a function
+    (define (on-collision target to-do objects) ;; Check collisions for a list of objects and apply a function
       (if (pair? objects)
           (let* ((object (car objects))
                  (obj-pos (object 'get-position))
-                 (player-pos (player 'get-position))
+                 (target-pos (target 'get-position))
                  (rest (cdr objects)))
-            (if (obj-pos 'is-colliding? player-pos)
+            (if (obj-pos 'is-colliding? target-pos)
               (to-do object))
-            (on-collision to-do rest))))
+            (on-collision target to-do rest))))
 
     ;; Interpret needs a text of at least length 2
     (define (interpret! text x y)
@@ -167,6 +197,8 @@
                                                      items)))
               ((string=? code "XX") (set! items (cons (new-poison (new-position x y))
                                                      items)))
+              ((string=? code "AM") (set! items (cons (new-ammo (new-position x y))
+                                                     items)))
               ((string=? code "SY") (set! scorpions (cons (new-scorpion 'yellow (new-position x y) arg)
                                                           scorpions)))
               ((string=? code "SG") (set! scorpions (cons (new-scorpion 'green (new-position x y) (get-random-direction))
@@ -184,6 +216,7 @@
             ((eq? cmd 'is-legal-move?) (apply is-legal-move? args))
             ((eq? cmd 'update!) (apply update! args))
             ((eq? cmd 'clear-updates!) (apply clear-updates! args))
+            ((eq? cmd 'try-shooting!) (apply try-shooting! args))
             ((eq? cmd 'try-opening!) (apply try-opening! args))
             ((eq? cmd 'respawn) (apply respawn args))
             (else error "Unknown command" cmd)))

@@ -1,6 +1,10 @@
-(define (new-character-view owner layer bitmap mask)
+(define (new-character-view owner layer bitmap-pic . mask-pic)
   (let* ((direction 0) ;; Tile direction
-         (tile (make-bitmap-tile bitmap mask))
+         (bitmap (string-append bitmap-dir bitmap-pic))
+         (mask (if (pair? mask-pic)
+                 (list (string-append mask-dir (car mask-pic)))
+                 '()))
+         (tile (apply make-bitmap-tile (cons bitmap mask)))
          (moving #f)
          (removed #f)) ;; Removed from layer
 

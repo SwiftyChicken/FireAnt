@@ -19,6 +19,7 @@
       ((tile 'draw-text) (owner 'print-lives) 20 470 5 "white")
       ((tile 'draw-text) (owner 'print-level) 20 470 35 "white")
       ((tile 'draw-text) (owner 'print-keys) 20 920 5 "white")
+      ((tile 'draw-text) (owner 'print-ammo) 20 920 35 "white")
       (owner 'update!))
 
 ;;;;;;;;;;;;;;;;;;; DISPATCH ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

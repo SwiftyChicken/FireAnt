@@ -37,8 +37,8 @@
 (define (get-random-direction) ; give back a random direction
 	(vector-ref DIRECTIONS (random (vector-length DIRECTIONS))))
 
-(define (coin-flip succes-rate) ; gives back #t for succes-rate% of the time
-	(< (random 100) succes-rate))
+(define (coin-flip succes-rate) ; gives back #t for a succes-rate per 10000 of the time
+	(< (random 10000) succes-rate))
 
 ;;;;;;;;;;;;;;;;;;; DIRECTION FUNC ;;;;;;;;;;;;;;;;;;;;;;;;;
 (define (get-opposite direction)
