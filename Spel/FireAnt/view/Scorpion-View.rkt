@@ -24,10 +24,6 @@
     (define (get-mask)
       mask)
     
-;;;;;;;;;;;;;;;;;;; PREDICATES ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    (define (is-owner? object)
-      (eq? object owner))
-
 ;;;;;;;;;;;;;;;;;;; DESTRUCTIVE ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (update-color!)
       (if (not (character 'is-moving?))
@@ -42,7 +38,6 @@
     (define (dispatch cmd . args)
       (cond ((eq? cmd 'get-bitmap) (apply get-bitmap args))
             ((eq? cmd 'get-mask) (apply get-mask args))
-            ((eq? cmd 'is-owner?) (apply is-owner? args))
             ((eq? cmd 'update-color!) (apply update-color! args))
             (else (apply character (cons cmd args)))))
 

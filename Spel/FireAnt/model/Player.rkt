@@ -4,7 +4,7 @@
         (changed #f) ; Check if player has changed his local var.
         (lives STARTING-LIVES)
         (keys 0)
-        (ammo 0)
+        (ammo 100)
         (points 0)
         (alive #t))
 

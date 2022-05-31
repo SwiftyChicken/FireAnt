@@ -80,6 +80,11 @@
           ((right) (set! x (+ x 1))))
         (new-position x y)))
 
+    (define (copy)
+      (let ((x (get-x))
+            (y (get-y)))
+        (new-position x y)))
+
 ;;;;;;;;;;;;;;;;;;; DISPATCH ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (dispatch cmd . args)
       (cond ((eq? cmd 'get-type) (apply get-type args))
@@ -97,6 +102,7 @@
             ((eq? cmd 'is-colliding?) (apply is-colliding? args))
             ((eq? cmd 'move!)(apply move! args))
             ((eq? cmd 'peek)(apply peek args))
+            ((eq? cmd 'copy)(apply copy args))
             (else (error "Unknown command" cmd))))
 
     dispatch))

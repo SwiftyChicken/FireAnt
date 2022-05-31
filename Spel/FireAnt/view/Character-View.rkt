@@ -32,6 +32,9 @@
     (define (is-removed?)
       removed)
 
+    (define (is-owner? object)
+      (eq? object owner))
+
 ;;;;;;;;;;;;;;;;;;; DESTRUCTIVE ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (define (update! ms) ;; Update position and direction
       (update-direction!)
@@ -82,6 +85,7 @@
             ((eq? cmd 'get-tile) (apply get-tile args))
             ((eq? cmd 'is-removed?) (apply is-removed? args))
             ((eq? cmd 'is-moving?) (apply is-moving? args))
+            ((eq? cmd 'is-owner?) (apply is-owner? args))
             ((eq? cmd 'update!) (apply update! args))
             ((eq? cmd 'remove!) (apply remove! args))
             (else (error "Unkown command" cmd))))

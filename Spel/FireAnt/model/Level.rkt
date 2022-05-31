@@ -15,7 +15,7 @@
         (scorpions '())
         (items '())
         (doors '())
-        (bullet #f)
+        (bullets '())
         (maze (new-maze))
         (updates '())
         (finished #f))
@@ -89,10 +89,10 @@
     (define (update! ms)
       (add-update! player)
 
-      ; Remove dead scorpions from list first
+      ; Remove all the unused elements out of the list
       (set! scorpions (filter (lambda (scorpion) (scorpion 'is-alive?)) scorpions))
-      ; Remove picked up items
       (set! items (filter (lambda (item) (not (item 'is-taken?))) items))
+      (set! bullets (filter (lambda (bullet) (not (bullet 'has-collided?))) bullets))
 
       ; Move Scorpions
       (for-each (lambda (scorpion)
@@ -114,13 +114,12 @@
                 scorpions)
 
       ; Update bullet if it exist
-      (if bullet
-        (if (bullet 'has-collided?)
-          (set! bullet #f)
-          (begin (if (is-accessible? (bullet 'get-position))
-                   (bullet 'update!)
-                   (bullet 'collide!))
-                 (add-update! bullet))))
+      (for-each (lambda (bullet)
+                  (if (is-accessible? (bullet 'get-position))
+                    (bullet 'update!)
+                    (bullet 'collide!))
+                  (add-update! bullet))
+                bullets)
 
       ; Check for collisions
       (on-collision player
@@ -132,19 +131,19 @@
                     (lambda (scorpion)
                       (player 'die!)) scorpions)
 
-      (if bullet ; if it exist
-        (on-collision bullet
-                    (lambda (scorpion)
-                      (scorpion 'die!)
-                      (bullet 'collide!)) scorpions)))
+      (for-each (lambda (bullet)
+                  (on-collision bullet
+                                (lambda (scorpion)
+                                  (scorpion 'die!)
+                                  (bullet 'collide!)) scorpions))
+                bullets))
 
     (define (try-shooting! player)
-      (if (not bullet)
-        (let* ((player-pos (player 'get-position))
-               (direction (player-pos 'get-orientation))
-               (position (player-pos 'peek direction)))
-          (player 'use-ammo!)
-          (set! bullet (new-bullet position direction)))))
+        (let* ((position ((player 'get-position) 'copy))
+               (direction ((player 'get-position) 'get-orientation)))
+          (if (is-legal-move? player direction)
+            (begin (player 'use-ammo!)
+                   (set! bullets (cons (new-bullet position direction) bullets))))))
 
     (define (try-opening! player direction)
       (if (not (zero? (player 'get-keys)))
