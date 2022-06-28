@@ -12,7 +12,7 @@
 (define TILE-SIZE 40)
 (define STARTING-LIVES 3)
 (define CODE-LENGTH 2)
-(define BOOST-RATE 0)
+(define BOOST-RATE 5)
 (define BOOST-COOLDOWN 2000)
 (define BOOST-DURATION 1000)
 (define NORMAL-SPEED 0.15)

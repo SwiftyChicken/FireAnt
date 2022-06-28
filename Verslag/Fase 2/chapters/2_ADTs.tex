@@ -26,9 +26,6 @@ en het behandelen van het spellus.
 {\color[HTML]{FFFFFF} \textbf{Naam}} & {\color[HTML]{FFFFFF} \textbf{Signatuur}} \\ \hline
 new-game    & $($list $\rightarrow$ Game$)$                  \\ \hline
 start       & $(\varnothing \rightarrow \varnothing)$        \\ \hline
-next-level! & $(\varnothing \rightarrow \varnothing)$     	 \\ \hline
-key-handler & $($symbol symbol $\rightarrow \varnothing)$    \\ \hline
-game-loop   & $($number $\rightarrow \varnothing)$           \\ \hline
 \end{tabular}
 \caption{Operaties van het \texttt{\nameref{section:game}}}
 \label{table:1}
@@ -43,18 +40,6 @@ Het \texttt{\nameref{section:game}} bevat de volgende operaties:
 		Deze lijst gebruikt het om de eerste \texttt{\nameref{section:level}} object te maken.
 		Vervolgens maakt het een nieuwe object van het \texttt{\nameref{section:player}} en het \texttt{\nameref{section:view}}.
 		Tenslotte "start" het, de spellus en gebruikers invoer met behulp van de game-loop en key-handler procedures respectievelijk. 
-	\item \textbf{next-level!}: Veranderd de huidige level (current-level) naar de volgende level in de levels lijst.
-		De oude level wordt ook verwijderd uit de levels lijst.
-		Het update ook de huidige level van de \texttt{\nameref{section:view}}.
-	\item \textbf{key-handler}: Neemt twee argumenten op state en key.
-		State is de status van de toets (key) op het huidige moment.
-		Op dit moment ondersteunt de functie enkel de pijltjes toetsen ingedrukt.
-		Wanneer dit gebeurt, beweegt het respectievelijk de speler als deze niet tegen een muur aanloopt.
-	\item \textbf{game-loop}: Neemt een argument op ms (milliseconde voor vorige aanroep).
-		Als de huidige level niet uitgespeeld is dan
-		update het de huidige level en de view object.
-		Daarnaast als de speler sterft, herleeft de level, de speler opnieuw.
-		In het geval dat het huidige level uitgespeeld is voer het next-level procedure op.
 \end{itemize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% MODELLEN %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -80,17 +65,20 @@ en te checken of het level is uitgespeeld.
 \rowcolor[HTML]{000000} 
 {\color[HTML]{FFFFFF} \textbf{Naam}} & {\color[HTML]{FFFFFF} \textbf{Signatuur}} \\ \hline
 new-level      & (Player string $\rightarrow$ Level)   \\ \hline
-init           & (string $\rightarrow$ $\varnothing$)                      \\ \hline
 get-maze       & ($\varnothing$ $\rightarrow$ Maze)                        \\ \hline
-get-eggs       & ($\varnothing$ $\rightarrow$ list)                        \\ \hline
+get-items       & ($\varnothing$ $\rightarrow$ list)                        \\ \hline
+get-doors       & ($\varnothing$ $\rightarrow$ list)                        \\ \hline
 get-scorpions  & ($\varnothing$ $\rightarrow$ list)                        \\ \hline
 get-updates    & ($\varnothing$ $\rightarrow$ list)                        \\ \hline
 is-finished?   & (Player $\rightarrow$ boolean)                            \\ \hline
 is-legal-move? & (Object\footnotemark{} symbol $\rightarrow$ boolean)      \\ \hline
 update!        & ($\varnothing$ $\rightarrow$ $\varnothing)$               \\ \hline
+kill-all!        & ($\varnothing$ $\rightarrow$ $\varnothing)$               \\ \hline
+clear-updates!        & ($\varnothing$ $\rightarrow$ $\varnothing)$               \\ \hline
+try-shooting!        & ($\varnothing$ $\rightarrow$ $\varnothing)$               \\ \hline
+try-opening!        & ($\varnothing$ $\rightarrow$ $\varnothing)$               \\ \hline
+try-surfing!        & ($\varnothing$ $\rightarrow$ $\varnothing)$               \\ \hline
 respawn        & ($\varnothing$ $\rightarrow$ $\varnothing$)               \\ \hline
-on-collision   & ((Object\footnotemark[\value{footnote}] $\rightarrow$ $\varnothing$) $\rightarrow$ $\varnothing$) \\ \hline
-interpret!     & (string number number $\rightarrow$ $\varnothing$)        \\ \hline
 \end{tabular}
 \caption{Operaties van het \texttt{\nameref{section:level}}}
 \label{table:level}
@@ -102,30 +90,22 @@ Het \texttt{\nameref{section:level}} bevat de volgende operaties:
 	\item \textbf{new-level}: Neemt een \texttt{\nameref{section:level}} en de naam van level csv bestand op als argument op.
 		Deze procedure geeft een object van het type level terug.
 		Deze level object bezit alle elementen die het level bezit.
-	\item \textbf{init}: Deze procedure initialiseert het level door de element van het csv bestaand een na een door te geven aan het interpret! procedure
-		met de x en y positie van de element in de csv bestand.
 	\item \textbf{get-maze}: Geeft de \texttt{\nameref{section:maze}} object terug opgeslagen in de \texttt{\nameref{section:level}}.
-	\item \textbf{get-eggs}: Geeft een lijst van \texttt{\nameref{section:egg}} objecten terug die opgeslagen zijn in de \texttt{\nameref{section:level}}.
+	\item \textbf{get-items}: Geeft een lijst van \texttt{Items} objecten terug die opgeslagen zijn in de \texttt{\nameref{section:level}}.
+	\item \textbf{get-items}: Geeft een lijst van \texttt{Doors} objecten terug die opgeslagen zijn in de \texttt{\nameref{section:level}}.
 	\item \textbf{get-scorpions}: Geeft een lijst van \texttt{\nameref{section:scorpion}} objecten terug die opgeslagen zijn in de \texttt{\nameref{section:level}}.
 	\item \textbf{get-updates}: Geeft een lijst van objecten terug die in de huidige iteratie van de spellus geüpdatet zijn.
 	\item \textbf{is-finished?}: Geeft aan of het spel is uitgespeeld door te kijken of de \texttt{\nameref{section:player}} helemaal onderaan de doolhof is geraakt.
 	\item \textbf{is-legal-move?}: Neemt een Object (dat een \texttt{\nameref{section:positie}} bezit) en een direction ('up, 'down, 'left or 'right) als argument op.
-		Het zoekt met met behulp van de positie van het Object naar zijn buur positie gelegen op de ``direction''.
-		Tenslotte kijkt de functie of de gebuurt positie een muur is aan de hand van de \texttt{\nameref{section:maze}}.
-	\item \textbf{update!}: De procedure update de ``updates'' lijst
-		door eerst de nodige objecten te updaten (en dus ook toe te voegen aan de lijst).
-		Vervolgens checkt het of er objecten zijn die botsen met het Player object 
-		en zo ja, voeren ze hun eigen procedure uit 
-		(bv. schorpioenen vermoorden de speler en eiren worden genomen/verdwijnen).
-		Deze objecten worden dan ook toegevoegd aan de lijst.
+		Het kijk dan of het object die richting uit kan gaan.
+	\item \textbf{update!}: Deze functie update alle nodige objecten die zich in het level bevinden.
+	\item \textbf{kill-all!}: Deze functie zorgt er voor dat alle schorpioenen verwijderd worden in het volgende update iteratie.
+	\item \textbf{clear-updates!}: Maakt de lijst leeg van de elementen die geüpdatet moeten worden
+	\item \textbf{try-shooting!}: Kijkt of de speler een kogel kan schieten.
+		Door een object van de type \texttt{Bullet} maken als de Speler genoeg ammo heeft.
+	\item \textbf{try-opening!}: Kijkt of de speler tegen aan een deur loopt en of deze open gemaakt kan worden.
+	\item \textbf{try-surfing!}: Kijkt of de speler tegen aan water loopt en of het deze kan oversteken.
 	\item \textbf{respawn}: Deze procedure plaatst de Player terug op zijn start positie en geeft hem terug ``leven''.
-	\item \textbf{on-collision}: Neemt een procedure (die wordt uitgevoerd als er een botsing met de Player gebeurt) 
-		en een lijst van objecten die gecheckt moeten worden voor botsingen met de Player.
-	\item \textbf{interpret!}: Deze procedure neemt een string
-		(dat een element uit de csv bestand is)
-		, een x en y positie (dat de positie van de string voorstelt in de csv bestand).
-		Deze warden worden gebruikt om Objecten (zoals een Egg, Scorpion of Start Positie) maken 
-		of de \texttt{\nameref{section:maze}} aan te vullen in het \texttt{\nameref{section:level}}.
 \end{itemize}
 
 \footnotetext{Object is een object dat een Positie ADT bezit.}
@@ -142,10 +122,12 @@ Het \texttt{\nameref{section:maze}} is verantwoordelijk om het spellogica van he
 {\color[HTML]{FFFFFF} \textbf{Naam}} & {\color[HTML]{FFFFFF} \textbf{Signatuur}} \\ \hline
 new-maze   & ($\varnothing$ $\rightarrow$ Maze)                          \\ \hline
 get-type   & ($\varnothing$ $\rightarrow$ symbol)                        \\ \hline
-get-height & ($\varnothing$ $\rightarrow$ number)                        \\ \hline
-get-width  & ($\varnothing$ $\rightarrow$ number)                        \\ \hline
-is-wall?   & (number number $\rightarrow$ boolean)                       \\ \hline
-set-wall!  & (number number boolean $\rightarrow$ $\varnothing$)         \\ \hline
+get-unit   & (number number $\rightarrow$ symbol)                        \\ \hline
+clear-path! & (number number $\rightarrow$ $\varnothing$)                        \\ \hline
+add!  & (number number symbol $\rightarrow$ $\varnothing$)                        \\ \hline
+is-accessible?   & (number number $\rightarrow$ boolean)                       \\ \hline
+get-height   & ($\varnothing$ $\rightarrow$ number)                        \\ \hline
+get-width   & ($\varnothing$ $\rightarrow$ number)                        \\ \hline
 \end{tabular}
 \caption{Operaties van het \texttt{\nameref{section:maze}}}
 \label{table:maze}
@@ -156,15 +138,14 @@ Het \texttt{\nameref{section:maze}} bevat de volgende operaties:
 \begin{itemize}
 	\item \textbf{new-maze}: Deze operatie maakt een object van het \texttt{\nameref{section:maze}} aan.
 	\item \textbf{get-type}: Geeft het type van de ADT terug in dit geval 'maze.
+	\item \textbf{get-unit}: Geeft het symbol terug dat op de meegegeven rij en kolom staat.
+	\item \textbf{clear-path!}: Vervang de symbool, op de meegegeven positie, met 'empty.
+	\item \textbf{add!}: Zet een symbol op de mee gegeven rij en kolom.
+	\item \textbf{is-accessible?}: Checkt of de gegeven rij en kolom leeg ('empty) is en of de positie bestaat in het \texttt{\nameref{section:maze}}.
 	\item \textbf{get-height}: Geeft het hoogte van de doolhof terug.
 		Deze is gedefinieerd door het GRID-HEIGHT constante in het ``etc/constante.rkt'' bestand.
 	\item \textbf{get-width}: Geeft het hoogte van de doolhof terug.
 		Deze is gedefinieerd door het GRID-WIDTH constante in het ``etc/constante.rkt'' bestand.
-	\item \textbf{is-wall?}: Checkt of de gegeven rij en kolom een muur is en of de positie bestaat in het \texttt{\nameref{section:maze}}.
-	\item \textbf{set-wall!}: Zet of verwijderd een muur 
-		(op basis van de gegeven
-
-		boolean warden) in het \texttt{\nameref{section:maze}} op de gegeven rij en kolom.
 \end{itemize}
 
 \subsection{Position ADT}
@@ -186,12 +167,15 @@ get-orientation  & ($\varnothing$ $\rightarrow$ symbol $\cup\{\#f\}$)          \
 get-speed        & ($\varnothing$ $\rightarrow$ number)                        \\ \hline
 set-x!           & (number $\rightarrow$ $\varnothing$)                        \\ \hline
 set-y!           & (number $\rightarrow$ $\varnothing$)                        \\ \hline
-set-orientation! & (symbol $\rightarrow$ $\varnothing$)                        \\ \hline
 set-moving!      & (bool $\rightarrow$ $\varnothing$)                          \\ \hline
+set-orientation! & (symbol $\rightarrow$ $\varnothing$)                        \\ \hline
+set-speed!       & (number $\rightarrow$ $\varnothing$)                        \\ \hline
+reset-speed!     & ($\varnothing$ $\rightarrow$ $\varnothing$)                 \\ \hline
 is-moving?       & ($\varnothing$ $\rightarrow$ boolean)                       \\ \hline
 is-colliding?    & (Position $\rightarrow$ boolean)                            \\ \hline
 move!            & (symbol $\rightarrow$ $\varnothing$)                        \\ \hline
 peek             & (symbol $\rightarrow$ Position)                             \\ \hline
+copy             & ($\varnothing$ $\rightarrow$ Position)                      \\ \hline
 \end{tabular}
 \caption{Operaties van het \texttt{\nameref{section:positie}}}
 \label{table:positie}
@@ -214,20 +198,23 @@ Het \texttt{\nameref{section:positie}} bevat de volgende operaties:
 		Deze is standaard 0,17.
 	\item \textbf{set-x}: Veranderd de x positie door de gegeven nummer.
 	\item \textbf{set-y}: Veranderd de y positie door de gegeven nummer.
-	\item \textbf{set-orientation}: Veranderd de oriëntatie positie door de gegeven richting.
 	\item \textbf{set-moving}: Veranderd boolean waarde van het moving variabel.
 		De variabel geeft aan of het object nog steeds aan het bewegen is van zijn vorige positie naar zijn nieuwe positie.
+	\item \textbf{set-orientation}: Veranderd de oriëntatie positie door de gegeven richting.
+	\item \textbf{set-speed!}: Veranderd de snelheid waarmee het object zich tussen twee posities verplaatst.
+	\item \textbf{reset-speed!}: Veranderd de snelheid naar de standard snelheid waarden.
 	\item \textbf{is-moving?}: Geeft aan of het object zich nog steeds aan het verplaatsen is naar zijn nieuwe positie.
 	\item \textbf{is-colliding?}: Checkt of het meegegeven Positie de zelfde positie heeft in de Maze.
 	\item \textbf{move!}: Verandert het positie en oriëntatie van het \texttt{\nameref{section:positie}} in de gegeven richting.
 		Zolang deze positie nog niet aan het bewegen is naar een nieuw positie.
 	\item \textbf{peek}: Geef de positie terug van buur positie gelegen op de meegegeven richting.
+	\item \textbf{copy}: maakt en geeft een copy van het huidige positie object.
 \end{itemize}
 
-\subsection{Egg ADT}
-\label{section:egg}
+\subsection{Item ADT}
+\label{section:item}
 
-Het \texttt{\nameref{section:egg}} stelt een voorwerp voor dat kan opgeraapt  worden door een \texttt{Player}.
+Het \texttt{\nameref{section:item}} stelt een voorwerp voor dat kan opgeraapt  worden door een \texttt{Player}.
 
 \begin{table}[hbt]
 \centering
@@ -235,32 +222,30 @@ Het \texttt{\nameref{section:egg}} stelt een voorwerp voor dat kan opgeraapt  wo
 \hline
 \rowcolor[HTML]{000000} 
 {\color[HTML]{FFFFFF} \textbf{Naam}} & {\color[HTML]{FFFFFF} \textbf{Signatuur}} \\ \hline
-new-egg                              & (Positie $\rightarrow$ Egg) \\ \hline
-get-type         & ($\varnothing$ $\rightarrow$ symbol)                        \\ \hline
+new-item                              & (Positie $\rightarrow$ Item) \\ \hline
 get-position         & ($\varnothing$ $\rightarrow$ Position)                        \\ \hline
-take!                              & ($\varnothing$ $\rightarrow$ $\varnothing$)                   \\ \hline
 is-taken?                         & ($\varnothing$ $\rightarrow$ boolean)               \\ \hline
+take!                              & ($\varnothing$ $\rightarrow$ $\varnothing$)                   \\ \hline
 \end{tabular}
-\caption{Operaties van het \texttt{\nameref{section:egg}}}
+\caption{Operaties van het \texttt{\nameref{section:item}}}
 \label{table:item}
 \end{table}
 
-Het \texttt{\nameref{section:egg}} bevat de volgende operaties:
+Het \texttt{\nameref{section:item}} bevat de volgende operaties:
 
 \begin{itemize}
-	\item \textbf{new-egg}: Maakt een nieuw object van het \texttt{\nameref{section:egg}}.
-	\item \textbf{get-type}: Geeft het type van de ADT terug in dit geval 'egg.
+	\item \textbf{new-item}: Maakt een nieuw object van het \texttt{\nameref{section:item}}.
 	\item \textbf{get-position}: Geeft het \texttt{\nameref{section:positie}} object terug die het egg object bezit.
+	\item \textbf{is-taken?}: Check of het \texttt{\nameref{section:item}} is opgeraapt of niet.
 	\item \textbf{take!}: Veranderd taken waarden naar \#t.
 		Met andere worden het egg is opgerapen.
-	\item \textbf{is-taken?}: Check of het \texttt{\nameref{section:egg}} is opgeraapt of niet.
 \end{itemize}
 
 \subsection{Player ADT}
 \label{section:player}
 De \texttt{\nameref{section:player}} stelt het speler voor.
 Deze ADT is verantwoordelijk om de conditie van de speler bij te houden.
-Met andere woorden zijn aantal levens, zijn positie en de huidige leven conditie van de speler.
+Met andere woorden zijn aantal levens, items, zijn positie en de huidige leven status.
 
 \begin{table}[hbt]
 \centering
@@ -271,10 +256,20 @@ Met andere woorden zijn aantal levens, zijn positie en de huidige leven conditie
 new-player    & ($\varnothing$ $\rightarrow$ Player) \\ \hline
 get-type      & ($\varnothing$ $\rightarrow$ symbol)                        \\ \hline
 get-position  & ($\varnothing$ $\rightarrow$ Position $\cup\{\#f\}$)                        \\ \hline
+get-lives      & ($\varnothing$ $\rightarrow$ number)                        \\ \hline
+get-keys      & ($\varnothing$ $\rightarrow$ number)                        \\ \hline
+get-boards      & ($\varnothing$ $\rightarrow$ number)                        \\ \hline
+get-ammo      & ($\varnothing$ $\rightarrow$ number)                        \\ \hline
+get-points      & ($\varnothing$ $\rightarrow$ number)                        \\ \hline
 set-position! & (Position $\rightarrow$ $\varnothing$)                        \\ \hline
 is-dead?      & ($\varnothing$ $\rightarrow$ boolean)               \\ \hline
+is-changed?      & ($\varnothing$ $\rightarrow$ boolean)               \\ \hline
+use!          & (symbol $\rightarrow$ $\varnothing$)                   \\ \hline
+collect!          & (symbol number $\rightarrow$ $\varnothing$)                   \\ \hline
+reset!          & ($\varnothing$ $\rightarrow$ $\varnothing$)                   \\ \hline
 die!          & ($\varnothing$ $\rightarrow$ $\varnothing$)                   \\ \hline
 revive!       & ($\varnothing$ $\rightarrow$ $\varnothing$)                   \\ \hline
+update!       & ($\varnothing$ $\rightarrow$ $\varnothing$)                   \\ \hline
 \end{tabular}
 \caption{Operaties van het \texttt{\nameref{section:player}}}
 \label{table:ant}
@@ -286,19 +281,28 @@ De \texttt{\nameref{section:player}} bevat de volgende operaties:
 	\item \textbf{new-player}: Maakt een object van \texttt{\nameref{section:player}} aan.
 	\item \textbf{get-type}: Geeft het type van de ADT terug in dit geval 'player.
 	\item \textbf{get-position}: Geeft de \texttt{\nameref{section:positie}} object terug die het player object bezit.
+	\item \textbf{get-lives}: Geeft aantal levens terug die de Player bezit.
+	\item \textbf{get-keys}: Geeft het aantal Keys terug die de Player bezit.
+	\item \textbf{get-boards}: Geeft het aantal Boards (surfplanken) die de speler bezit.
+	\item \textbf{get-ammo}: Geeft het aantal Ammo terug die de Player bezit.
+	\item \textbf{get-points}: Geeft de huidige score van de Player terug.
 	\item \textbf{set-position!}: Geeft de \texttt{\nameref{section:player}} een nieuw \texttt{\nameref{section:positie}} object.
 	\item \textbf{is-dead?}: Checkt of de \texttt{\nameref{section:player}} dood is of niet.
-	\item \textbf{die!}: Veranderd de alive waarden naar \#f
+	\item \textbf{is-changed?}: Checked of de locale variabelen van Player zijn veranderd.
+	\item \textbf{collect!}: Verhoogd de gevraagde locale variabele van Player met de meegegeven hoeveelheid.
+	\item \textbf{use!}: Verminderd de gevraagde locale variabele met 1.
+	\item \textbf{die!}: Veranderd de ``alive'' waarden naar \#f
 		en trekt 1 leven van lives af.
 		Met andere woorden speler is gestorven.
 	\item \textbf{revive!}: Veranderd de alive waarden naar \#t als de speler nog lives heeft.
 		De oriëntatie wordt ook gezet naar 'down omdat dit de standaard start oriëntatie is.
+	\item \textbf{update!}: Geeft aan dat de Player niet veranderd is door de variabele ``changed'' naar \#f te veranderen.
 \end{itemize}
 
 \subsection{Scorpion ADT}
 \label{section:scorpion}
 De \texttt{\nameref{section:scorpion}} is de ADT verantwoordelijk voor het spellogica van de schorpioen. 
-Deze ADT is verantwoordelijk om het onthouden van de positie, route en volgende beweging van de schorpioen.
+Deze ADT is verantwoordelijk om de snelheid en kleur van de schorpioen aan te passen.
 
 \begin{table}[hbt]
 \centering
@@ -306,13 +310,13 @@ Deze ADT is verantwoordelijk om het onthouden van de positie, route en volgende 
 \hline
 \rowcolor[HTML]{000000} 
 {\color[HTML]{FFFFFF} \textbf{Naam}} & {\color[HTML]{FFFFFF} \textbf{Signatuur}} \\ \hline
-new-scorpion    & (Positie list $\rightarrow$ Scorpion) \\ \hline
+new-scorpion    & (symbol Positie list $\cup$ symbol $\rightarrow$ Scorpion) \\ \hline
 get-type      & ($\varnothing$ $\rightarrow$ symbol)                        \\ \hline
 get-position  & ($\varnothing$ $\rightarrow$ Position)                        \\ \hline
-update!                                 & ($\varnothing$ $\rightarrow$ $\varnothing$)                                       \\ \hline
-next-command!                                 & ($\varnothing$ $\rightarrow$ $\varnothing$)                                       \\ \hline
-interpret                                & (character $\rightarrow$ symbol)                 \\ \hline
-code-$>$path                                & (list $\rightarrow$ list)                 \\ \hline
+get-color  & ($\varnothing$ $\rightarrow$ symbol)                        \\ \hline
+is-alive?  & ($\varnothing$ $\rightarrow$ bool)                        \\ \hline
+try-boosting!                    & (number $\rightarrow$ $\varnothing$)                                       \\ \hline
+die!                                 & ($\varnothing$ $\rightarrow$ $\varnothing$)                                       \\ \hline
 \end{tabular}
 \caption{Operaties van het \texttt{\nameref{section:scorpion}}}
 \label{table:scorpion}
@@ -322,17 +326,15 @@ Het \texttt{\nameref{section:scorpion}} bevat de volgende operaties:
 
 \begin{itemize}
 	\item \textbf{new-scorpion}: Maakt een nieuwe object aan van het \texttt{\nameref{section:scorpion}}.
-		Deze object neemt als argument een Positie (die bewaard wordt)
-		en list van characters dat 3*n lang is.
+		Deze object neemt als argument symbol, dat een kleur aan geeft,
+		een Positie (die bewaard wordt)
+		en een lijst van argumenten of een symbol dat door de Scorpion-Green of Scorpion-Yellow wordt gebruikt.
 	\item \textbf{get-type}: Geeft het type van de ADT terug in dit geval 'scorpion.
 	\item \textbf{get-position}: Geeft de \texttt{\nameref{section:positie}} object terug die het schorpioen object bezit.
-	\item \textbf{update!}: Als de schorpioen klaar is met bewegen dan laat hem de volgende stap doen in zijn route.
-	\item \textbf{next-command!}: Ga naar de volgende element (stap) in de pathing (route plan) lijst.
-	\item \textbf{interpret}: Vertaalt een gegeven character naar de correcte richting.
-	\item \textbf{code-$>$path}: Veranderd een lijst van cijfers en characters naar een lijst dat een route plan voorstelt.
-		Elke element is een cons cell 
-		waarvan het eerste element een nummer is het hoeveelheid iteraties weergeeft
-		en het tweede element de richting waarnaar de schorpioen moet gaan.
+	\item \textbf{get-color}: Geeft het kleur (symbol) van de Scorpion terug
+	\item \textbf{is-alive?}: Checkt of de Scorpion levend is of niet.
+	\item \textbf{try-boosting!}: Probeert de Schorpioen te versnellen zolang deze niet op cooldown is.
+	\item \textbf{die!}: Veranderd de ``alive'' waarden naar \#f
 \end{itemize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% VIEW %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

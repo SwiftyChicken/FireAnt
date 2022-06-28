@@ -1,0 +1,108 @@
+(define (new-position pos-x pos-y)
+  (let ((type 'position)
+        (position (cons pos-x pos-y))
+        (orientation #f)
+        (speed NORMAL-SPEED) ;; The speed at which the corresponding view should move the tile
+        (moving #f)) ;; Checked if the corresponding view is still moving the tile
+
+;;;;;;;;;;;;;;;;;;; GETTERS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    (define (get-type)
+      type)
+
+    (define (get-x)
+      (car position))
+
+    (define (get-y)
+      (cdr position))
+
+    (define (get-orientation)
+      orientation)
+
+    (define (get-speed)
+      speed)
+
+;;;;;;;;;;;;;;;;;;; SETTERS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    (define (set-x! new-x)
+      (set-car! position new-x))
+
+    (define (set-y! new-y)
+      (set-cdr! position new-y))
+
+    (define (set-orientation! direction)
+      (set! orientation direction))
+
+    (define (set-moving! bool)
+      (set! moving bool))
+
+    (define (set-speed! new-speed)
+      (set! speed new-speed))
+
+;;;;;;;;;;;;;;;;;;; PREDICATES ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    (define (is-moving?)
+      moving)
+
+    (define (is-colliding? compared)
+      (define compared-type (compared 'get-type))
+      (if (eq? compared-type 'position)
+        (let ((com-x (compared 'get-x))
+              (com-y (compared 'get-y)))
+          (and (eq? (get-x) com-x)
+               (eq? (get-y) com-y)))
+        (error "Expected a position type but got" compared-type)))
+
+;;;;;;;;;;;;;;;;;;; DESTRUCTIVE ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    (define (move! direction) ;; Update position and orientation
+      (if (not moving)
+        (let ((x (get-x))
+              (y (get-y)))
+          (case direction
+            ((up) (set-y! (- y 1))
+                  (set! orientation 'up))
+            ((down) (set-y! (+ y 1))
+                    (set! orientation 'down))
+            ((left) (set-x! (- x 1))
+                    (set! orientation 'left))
+            ((right) (set-x! (+ x 1))
+                     (set! orientation 'right)))
+          (set-moving! #t))))
+
+    (define (reset-speed!)
+      (set! speed NORMAL-SPEED))
+
+;;;;;;;;;;;;;;;;;;; NON-DESTRUCTIVE ;;;;;;;;;;;;;;;;;;;;;;;;
+    (define (peek direction) ;; Give neighbouring position
+      (let ((x (get-x))
+            (y (get-y)))
+        (case direction
+          ((up) (set! y (- y 1)))
+          ((down) (set! y (+ y 1)))
+          ((left) (set! x (- x 1)))
+          ((right) (set! x (+ x 1))))
+        (new-position x y)))
+
+    (define (copy)
+      (let ((x (get-x))
+            (y (get-y)))
+        (new-position x y)))
+
+;;;;;;;;;;;;;;;;;;; DISPATCH ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    (define (dispatch cmd . args)
+      (cond ((eq? cmd 'get-type) (apply get-type args))
+            ((eq? cmd 'get-x) (apply get-x args))
+            ((eq? cmd 'get-y) (apply get-y args))
+            ((eq? cmd 'get-orientation) (apply get-orientation args))
+            ((eq? cmd 'get-speed) (apply get-speed args))
+            ((eq? cmd 'set-x) (apply set-x! args))
+            ((eq? cmd 'set-y) (apply set-y! args))
+            ((eq? cmd 'set-moving!) (apply set-moving! args))
+            ((eq? cmd 'set-orientation!) (apply set-orientation! args))
+            ((eq? cmd 'set-speed!) (apply set-speed! args))
+            ((eq? cmd 'reset-speed!) (apply reset-speed! args))
+            ((eq? cmd 'is-moving?) (apply is-moving? args))
+            ((eq? cmd 'is-colliding?) (apply is-colliding? args))
+            ((eq? cmd 'move!)(apply move! args))
+            ((eq? cmd 'peek)(apply peek args))
+            ((eq? cmd 'copy)(apply copy args))
+            (else (error "Unknown command" cmd))))
+
+    dispatch))

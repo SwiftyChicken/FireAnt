@@ -90,7 +90,8 @@
                                           (view 'update! ms))))) 
                      ((surf) (if (object 'has-arrived?)
                                (if surf-view
-                                 (surf-view 'remove!))
+                                 (begin (surf-view 'remove!)
+                                        (set! surf-view #f)))
                                (begin (if (not surf-view)
                                         (set! surf-view (new-surf-view object surf-layer)))
                                       (surf-view 'update! ms))))
